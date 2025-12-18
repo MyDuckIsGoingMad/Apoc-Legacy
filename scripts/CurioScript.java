@@ -118,6 +118,11 @@ public class CurioScript extends Thread {
 						System.out.println("==Bear== found. Location: " + m_mainPath.pathName + " Checkpoint: "
 								+ m_mainPath.checkPointNum);
 					}
+				} else if (g.resname().equals("gfx/kritter/wolf/s")) {
+					if (checkID(g)) {
+						System.out.println("==Wolf== found. Location: " + m_mainPath.pathName + " Checkpoint: "
+								+ m_mainPath.checkPointNum);
+					}
 				}
 			}
 

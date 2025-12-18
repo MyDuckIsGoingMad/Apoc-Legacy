@@ -306,10 +306,10 @@ public class Config {
 		inf.show = true; // new
 		hlcfg.put(pat, inf);
 		// wolf
-		pat = "kritter/boar";
-		inf = new HLInfo(pat, "mmap/boar");
+		pat = "kritter/wolf";
+		inf = new HLInfo(pat, "gfx/kritter/wolf/body/standing/standing-0");
 		inf.setColor(col);
-		beasts.put(pat, "Boar");
+		beasts.put(pat, "Wolf");
 		inf.show = true; // new
 		hlcfg.put(pat, inf);
 		// deer
