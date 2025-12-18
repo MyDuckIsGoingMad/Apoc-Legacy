@@ -5,16 +5,15 @@ import jerklib.events.IRCEvent;
 import jerklib.events.InviteEvent;
 
 /**
- *@see InviteEvent
+ * @see InviteEvent
  */
-public class InviteEventImpl implements InviteEvent
-{
+public class InviteEventImpl implements InviteEvent {
     private final String nick, channel, rawEventData, userName, hostName;
     private Type type = IRCEvent.Type.INVITE_EVENT;
     private Session session;
 
-    public InviteEventImpl(String channel, String nick, String userName, String hostName, String rawEventData, Session session)
-    {
+    public InviteEventImpl(String channel, String nick, String userName, String hostName, String rawEventData,
+            Session session) {
         this.channel = channel;
         this.nick = nick;
         this.userName = userName;
@@ -30,8 +29,7 @@ public class InviteEventImpl implements InviteEvent
      *
      * @return <code>Type</code> enum for event.
      */
-    public Type getType()
-    {
+    public Type getType() {
         return type;
     }
 
@@ -40,8 +38,7 @@ public class InviteEventImpl implements InviteEvent
      *
      * @return the channel we were invited to.
      */
-    public String getChannelName()
-    {
+    public String getChannelName() {
         return channel;
     }
 
@@ -50,24 +47,25 @@ public class InviteEventImpl implements InviteEvent
      *
      * @return the nick of the person who invited us
      */
-    public String getNick()
-    {
+    public String getNick() {
         return nick;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.InviteEvent#getHostName()
      */
-    public String getHostName()
-    {
+    public String getHostName() {
         return hostName;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.InviteEvent#getUserName()
      */
-    public String getUserName()
-    {
+    public String getUserName() {
         return userName;
     }
 
@@ -76,13 +74,11 @@ public class InviteEventImpl implements InviteEvent
      *
      * @return <code>String</code> Raw IRC event text.
      */
-    public String getRawEventData()
-    {
+    public String getRawEventData() {
         return rawEventData;
     }
 
-    public Session getSession()
-    {
+    public Session getSession() {
         return session;
     }
 }

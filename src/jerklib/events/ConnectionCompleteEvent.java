@@ -34,17 +34,18 @@ package jerklib.events;
  *
  * @author mohadib
  */
-public interface ConnectionCompleteEvent extends IRCEvent
-{
+public interface ConnectionCompleteEvent extends IRCEvent {
 
     /**
      * Gets the actual hostname
+     * 
      * @return actual host name
      */
     public String getActualHostName();
-    
+
     /**
      * Get the hostname used for the requested connection
+     * 
      * @return old host name
      */
     public String getOldHostName();

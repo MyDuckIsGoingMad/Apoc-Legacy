@@ -9,49 +9,51 @@ import jerklib.events.ServerInformationEvent;
  * @see ServerInformationEvent
  *
  */
-public class ServerInformationEventImpl implements ServerInformationEvent
-{
+public class ServerInformationEventImpl implements ServerInformationEvent {
 
 	private final Session session;
 	private final String rawEventData;
 	private final ServerInformation serverInfo;
 
-	public ServerInformationEventImpl(Session session, String rawEventData, ServerInformation serverInfo)
-	{
+	public ServerInformationEventImpl(Session session, String rawEventData, ServerInformation serverInfo) {
 		this.session = session;
 		this.rawEventData = rawEventData;
 		this.serverInfo = serverInfo;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.ServerInformationEvent#getServerInformation()
 	 */
-	public ServerInformation getServerInformation()
-	{
+	public ServerInformation getServerInformation() {
 		return serverInfo;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public Type getType()
-	{
+	public Type getType() {
 		return Type.SERVER_INFORMATION;
 	}
 

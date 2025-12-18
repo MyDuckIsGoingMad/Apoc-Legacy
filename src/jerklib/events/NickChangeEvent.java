@@ -5,8 +5,7 @@ package jerklib.events;
  *
  * @author mohadib
  */
-public interface NickChangeEvent extends IRCEvent
-{
+public interface NickChangeEvent extends IRCEvent {
 
     /**
      * Returns the previous nick of the user before the change

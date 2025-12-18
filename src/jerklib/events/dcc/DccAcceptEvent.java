@@ -5,8 +5,7 @@ package jerklib.events.dcc;
  * 
  * @author Andres N. Kievsky
  */
-public interface DccAcceptEvent extends DccEvent
-{
+public interface DccAcceptEvent extends DccEvent {
 	String getFilename();
 
 	int getPort();

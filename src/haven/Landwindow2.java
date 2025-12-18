@@ -28,7 +28,7 @@ package haven;
 
 import haven.BuddyWnd.GroupSelector;
 
-public class Landwindow2 extends Window{
+public class Landwindow2 extends Window {
 	Widget bn;
 	Widget be;
 	Widget bs;
@@ -48,64 +48,64 @@ public class Landwindow2 extends Window{
 	MCache map;
 	int[] bflags = new int[8];
 	Landwindow2.PermBox[] perms = new Landwindow2.PermBox[3];
-	private static final String fmt = "Area: %d m" + (char)(0xB2);
-	
-	static{
+	private static final String fmt = "Area: %d m" + (char) (0xB2);
+
+	static {
 		Widget.addtype("ui/land2", new WidgetFactory() {
-			public Widget create(Coord coord, Widget widget, Object aobj[]){
-				Coord coord1 = (Coord)aobj[0];
-				Coord coord2 = (Coord)aobj[1];
+			public Widget create(Coord coord, Widget widget, Object aobj[]) {
+				Coord coord1 = (Coord) aobj[0];
+				Coord coord2 = (Coord) aobj[1];
 				return new Landwindow2(coord, widget, coord1, coord2);
 			}
 		});
 	}
-	
-	private void fmtarea()
-	{
-		this.area.settext(String.format("Area: %d m" + (char)(0xB2), new Object[] { Integer.valueOf((this.c2.x - this.c1.x + 1) * (this.c2.y - this.c1.y + 1)) }));
+
+	private void fmtarea() {
+		this.area.settext(String.format("Area: %d m" + (char) (0xB2),
+				new Object[] { Integer.valueOf((this.c2.x - this.c1.x + 1) * (this.c2.y - this.c1.y + 1)) }));
 	}
-	
-	private void updatecost()
-	{
-		this.cost.settext(String.format("Cost: %d", new Object[] { Integer.valueOf(((this.cc2.x - this.cc1.x + 1) * (this.cc2.y - this.cc1.y + 1) - (this.c2.x - this.c1.x + 1) * (this.c2.y - this.c1.y + 1)) * 10) }));
+
+	private void updatecost() {
+		this.cost.settext(String.format("Cost: %d",
+				new Object[] { Integer.valueOf(((this.cc2.x - this.cc1.x + 1) * (this.cc2.y - this.cc1.y + 1)
+						- (this.c2.x - this.c1.x + 1) * (this.c2.y - this.c1.y + 1)) * 10) }));
 	}
-	
-	private void updflags()
-	{
+
+	private void updflags() {
 		int i = this.bflags[this.group.group];
 		for (Landwindow2.PermBox localPermBox : this.perms) {
 			localPermBox.a = ((i & localPermBox.fl) != 0);
 		}
 	}
-	
-	private class PermBox extends CheckBox{
+
+	private class PermBox extends CheckBox {
 		int fl;
-		
-		PermBox(Coord paramCoord, Widget paramWidget, String paramString, int paramInt)
-		{
+
+		PermBox(Coord paramCoord, Widget paramWidget, String paramString, int paramInt) {
 			super(paramCoord, paramWidget, paramString);
 			this.fl = paramInt;
 		}
-		
-		public void changed(boolean paramBoolean)
-		{
+
+		public void changed(boolean paramBoolean) {
 			int i = 0;
 			for (PermBox localPermBox : Landwindow2.this.perms) {
 				if (localPermBox.a) {
 					i |= localPermBox.fl;
 				}
 			}
-			Landwindow2.this.wdgmsg("shared", new Object[] { Integer.valueOf(Landwindow2.this.group.group), Integer.valueOf(i) });
+			Landwindow2.this.wdgmsg("shared",
+					new Object[] { Integer.valueOf(Landwindow2.this.group.group), Integer.valueOf(i) });
 		}
 	}
-	
-	public Landwindow2(Coord paramCoord1, Widget paramWidget, Coord paramCoord2, Coord paramCoord3){
+
+	public Landwindow2(Coord paramCoord1, Widget paramWidget, Coord paramCoord2, Coord paramCoord3) {
 		super(paramCoord1, new Coord(0, 0), paramWidget, "Stake");
 		this.cc1 = (this.c1 = paramCoord2);
 		this.cc2 = (this.c2 = paramCoord3);
 		this.map = this.ui.sess.glob.map;
 		this.ui.mainview.enol(new int[] { 0, 1, 16 });
-		//tmp111_108 = this.map;tmp111_108.getClass();this.ol = new MCache.Overlay(tmp111_108, this.cc1, this.cc2, 65536);
+		// tmp111_108 = this.map;tmp111_108.getClass();this.ol = new
+		// MCache.Overlay(tmp111_108, this.cc1, this.cc2, 65536);
 		this.ol = map.new Overlay(this.cc1, this.cc2, 0x10000);
 		this.area = new Label(Coord.z, this, "a");
 		this.cost = new Label(new Coord(0, 15), this, "Cost: 0");
@@ -115,10 +115,8 @@ public class Landwindow2 extends Window{
 		this.bs = new Button(new Coord(60, 90), Integer.valueOf(80), this, "Extend South");
 		this.bw = new Button(new Coord(0, 65), Integer.valueOf(80), this, "Extend West");
 		new Label(new Coord(0, 120), this, "Assign permissions to memorized people:");
-		this.group = new BuddyWnd.GroupSelector(new Coord(0, 135), this, 0)
-		{
-			protected void changed(int paramAnonymousInt)
-			{
+		this.group = new BuddyWnd.GroupSelector(new Coord(0, 135), this, 0) {
+			protected void changed(int paramAnonymousInt) {
 				super.changed(paramAnonymousInt);
 				Landwindow2.this.updflags();
 			}
@@ -131,82 +129,72 @@ public class Landwindow2 extends Window{
 		this.dst = new Button(new Coord(160, 190), Integer.valueOf(60), this, "Declaim");
 		pack();
 	}
-	
-	public void destroy()
-	{
+
+	public void destroy() {
 		this.ui.mainview.disol(new int[] { 0, 1, 16 });
 		this.ol.destroy();
 		super.destroy();
 	}
-	
-	public void uimsg(String paramString, Object... paramVarArgs)
-	{
-		if (paramString == "upd")
-		{
-			Coord localCoord1 = (Coord)paramVarArgs[0];
-			Coord localCoord2 = (Coord)paramVarArgs[1];
+
+	public void uimsg(String paramString, Object... paramVarArgs) {
+		if (paramString == "upd") {
+			Coord localCoord1 = (Coord) paramVarArgs[0];
+			Coord localCoord2 = (Coord) paramVarArgs[1];
 			this.c1 = localCoord1;
 			this.c2 = localCoord2;
 			fmtarea();
 			updatecost();
-		}
-		else if (paramString == "shared")
-		{
-			int i = ((Integer)paramVarArgs[0]).intValue();
-			int j = ((Integer)paramVarArgs[1]).intValue();
+		} else if (paramString == "shared") {
+			int i = ((Integer) paramVarArgs[0]).intValue();
+			int j = ((Integer) paramVarArgs[1]).intValue();
 			this.bflags[i] = j;
 			if (i == this.group.group) {
 				updflags();
 			}
 		}
 	}
-	
-	public void wdgmsg(Widget paramWidget, String paramString, Object... paramVarArgs){
+
+	public void wdgmsg(Widget paramWidget, String paramString, Object... paramVarArgs) {
 		int multiplier = 1;
-		if(ui.modflags() == 1) multiplier = 10;
-		if(ui.modflags() == 2) multiplier = 50;
-		
-		if (paramWidget == this.bn)
-		{
+		if (ui.modflags() == 1)
+			multiplier = 10;
+		if (ui.modflags() == 2)
+			multiplier = 50;
+
+		if (paramWidget == this.bn) {
 			this.cc1 = this.cc1.add(0, -1 * multiplier);
 			this.ol.update(this.cc1, this.cc2);
 			updatecost();
 			return;
 		}
-		if (paramWidget == this.be)
-		{
+		if (paramWidget == this.be) {
 			this.cc2 = this.cc2.add(1 * multiplier, 0);
 			this.ol.update(this.cc1, this.cc2);
 			updatecost();
 			return;
 		}
-		if (paramWidget == this.bs)
-		{
+		if (paramWidget == this.bs) {
 			this.cc2 = this.cc2.add(0, 1 * multiplier);
 			this.ol.update(this.cc1, this.cc2);
 			updatecost();
 			return;
 		}
-		if (paramWidget == this.bw)
-		{
+		if (paramWidget == this.bw) {
 			this.cc1 = this.cc1.add(-1 * multiplier, 0);
 			this.ol.update(this.cc1, this.cc2);
 			updatecost();
 			return;
 		}
-		if (paramWidget == this.buy)
-		{
+		if (paramWidget == this.buy) {
 			wdgmsg("take", new Object[] { this.cc1, this.cc2 });
 			return;
 		}
-		if (paramWidget == this.reset)
-		{
+		if (paramWidget == this.reset) {
 			this.ol.update(this.cc1 = this.c1, this.cc2 = this.c2);
 			updatecost();
 			return;
 		}
-		if (paramWidget == this.dst)
-		{
+		if (paramWidget == this.dst) {
 			wdgmsg("declaim", new Object[0]);
 			return;
 		}

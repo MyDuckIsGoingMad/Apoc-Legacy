@@ -8,8 +8,7 @@ import java.util.List;
  *
  * @author mohadib
  */
-public interface QuitEvent extends IRCEvent
-{
+public interface QuitEvent extends IRCEvent {
 
     /**
      * returns the nick of who quit
@@ -31,7 +30,6 @@ public interface QuitEvent extends IRCEvent
      * @return the hostname of the quitted.
      */
     public String getHostName();
-
 
     /**
      * getQuitMessage get the quit message

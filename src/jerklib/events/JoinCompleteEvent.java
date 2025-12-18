@@ -7,8 +7,7 @@ import jerklib.Channel;
  *
  * @author mohadib
  */
-public interface JoinCompleteEvent extends IRCEvent
-{
+public interface JoinCompleteEvent extends IRCEvent {
 
     /**
      * getChannel() returns Channel object for event

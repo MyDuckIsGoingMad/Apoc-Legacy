@@ -4,15 +4,14 @@ import jerklib.Channel;
 
 import java.util.Date;
 
-
 /**
  * 
  * Event fired when topic is received
+ * 
  * @author mohadib
  * @see Channel
  */
-public interface TopicEvent extends IRCEvent
-{
+public interface TopicEvent extends IRCEvent {
     /**
      * Gets the topic
      *

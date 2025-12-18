@@ -6,8 +6,7 @@ package jerklib.events;
  *
  * @author mohadib
  */
-public interface NickInUseEvent extends IRCEvent
-{
+public interface NickInUseEvent extends IRCEvent {
 
     /**
      * returns nick that was in use

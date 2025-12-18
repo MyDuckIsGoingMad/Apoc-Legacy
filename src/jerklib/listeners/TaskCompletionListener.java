@@ -6,10 +6,9 @@ package jerklib.listeners;
  * @author mohadib
  *
  */
-public interface TaskCompletionListener
-{
+public interface TaskCompletionListener {
     /**
-     * Called when a task wishes to notify 
+     * Called when a task wishes to notify
      * 
      * @param result
      */

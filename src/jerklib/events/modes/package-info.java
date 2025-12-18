@@ -1,6 +1,6 @@
 /**
  * 
- * Package contains classes for ModeEvents 
+ * Package contains classes for ModeEvents
  * 
  */
 

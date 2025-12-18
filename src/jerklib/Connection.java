@@ -19,8 +19,7 @@ import java.util.logging.Logger;
  * @author mohadib
  *
  */
-class Connection
-{
+class Connection {
 	private Logger log = Logger.getLogger(this.getClass().getName());
 
 	/* ConnectionManager for this Connection */
@@ -43,17 +42,16 @@ class Connection
 
 	/* actual hostname connected to */
 	private String actualHostName;
-	
+
 	/* Session Connection belongs to */
 	private final Session session;
 
 	/**
 	 * @param manager
 	 * @param socChannel - socket channel to read from
-	 * @param session - Session this Connection belongs to
+	 * @param session    - Session this Connection belongs to
 	 */
-	Connection(ConnectionManager manager, SocketChannel socChannel, Session session)
-	{
+	Connection(ConnectionManager manager, SocketChannel socChannel, Session session) {
 		this.manager = manager;
 		this.socChannel = socChannel;
 		this.session = session;
@@ -64,17 +62,16 @@ class Connection
 	 * 
 	 * @return the Profile
 	 */
-	Profile getProfile()
-	{
+	Profile getProfile() {
 		return session.getRequestedConnection().getProfile();
 	}
 
 	/**
 	 * Sets the actual host name of this Connection.
+	 * 
 	 * @param name
 	 */
-	void setHostName(String name)
-	{
+	void setHostName(String name) {
 		actualHostName = name;
 	}
 
@@ -83,8 +80,7 @@ class Connection
 	 * 
 	 * @return hostname
 	 */
-	String getHostName()
-	{
+	String getHostName() {
 		return actualHostName;
 	}
 
@@ -93,8 +89,7 @@ class Connection
 	 * 
 	 * @param request
 	 */
-	void addWriteRequest(WriteRequest request)
-	{
+	void addWriteRequest(WriteRequest request) {
 		writeRequests.add(request);
 	}
 
@@ -104,22 +99,19 @@ class Connection
 	 * @return true if fincon is successfull
 	 * @throws IOException
 	 */
-	boolean finishConnect() throws IOException
-	{
+	boolean finishConnect() throws IOException {
 		return socChannel.finishConnect();
 	}
-	
+
 	/**
-	 * Reads from connection and creates default IRCEvents that 
+	 * Reads from connection and creates default IRCEvents that
 	 * are added to the ConnectionManager for relaying
 	 * 
 	 * @return bytes read
 	 */
-	int read()
-	{
+	int read() {
 
-		if (!socChannel.isConnected())
-		{
+		if (!socChannel.isConnected()) {
 			log.severe("Read call while sochan.isConnected() == false");
 			return -1;
 		}
@@ -128,30 +120,27 @@ class Connection
 
 		int numRead = 0;
 
-		try
-		{
+		try {
 			numRead = socChannel.read(readBuffer);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			session.disconnected();
 		}
 
-		if (numRead == -1)
-		{
+		if (numRead == -1) {
 			session.disconnected();
 		}
 
-		if (session.getState() == State.DISCONNECTED || numRead <= 0) { return 0; }
+		if (session.getState() == State.DISCONNECTED || numRead <= 0) {
+			return 0;
+		}
 
 		readBuffer.flip();
 
 		String tmpStr = new String(readBuffer.array(), 0, numRead);
 
 		// read did not contain a \r\n
-		if (tmpStr.indexOf("\r\n") == -1)
-		{
+		if (tmpStr.indexOf("\r\n") == -1) {
 			// append whole thing to buffer and set fragment flag
 			stringBuff.append(tmpStr);
 			gotFragment = true;
@@ -161,8 +150,7 @@ class Connection
 
 		// this read had a \r\n in it
 
-		if (gotFragment)
-		{
+		if (gotFragment) {
 			// prepend fragment to front of current message
 			tmpStr = stringBuff.toString() + tmpStr;
 			stringBuff.delete(0, stringBuff.length());
@@ -171,23 +159,19 @@ class Connection
 
 		String[] strSplit = tmpStr.split("\r\n");
 
-		for (int i = 0; i < (strSplit.length - 1); i++)
-		{
+		for (int i = 0; i < (strSplit.length - 1); i++) {
 			manager.addToEventQueue(createDefaultIRCEvent(strSplit[i]));
 		}
 
 		String last = strSplit[strSplit.length - 1];
 
-		if (!tmpStr.endsWith("\r\n"))
-		{
+		if (!tmpStr.endsWith("\r\n")) {
 			// since string did not end with \r\n we need to
 			// append the last element in strSplit to a stringbuffer
 			// for next read and set flag to indicate we have a fragment waiting
 			stringBuff.append(last);
 			gotFragment = true;
-		}
-		else
-		{
+		} else {
 			manager.addToEventQueue(createDefaultIRCEvent(last));
 		}
 
@@ -199,34 +183,25 @@ class Connection
 	 * 
 	 * @return number bytes written
 	 */
-	int doWrites()
-	{
+	int doWrites() {
 		int amount = 0;
 
 		List<WriteRequest> tmpReqs = new ArrayList<WriteRequest>();
-		synchronized (writeRequests)
-		{
+		synchronized (writeRequests) {
 			tmpReqs.addAll(writeRequests);
 			writeRequests.clear();
 		}
 
-		for (WriteRequest request : tmpReqs)
-		{
+		for (WriteRequest request : tmpReqs) {
 			String data;
 
-			if (request.getType() == WriteRequest.Type.CHANNEL_MSG)
-			{
+			if (request.getType() == WriteRequest.Type.CHANNEL_MSG) {
 				data = "PRIVMSG " + request.getChannel().getName() + " :" + request.getMessage() + "\r\n";
-			}
-			else if (request.getType() == WriteRequest.Type.PRIVATE_MSG)
-			{
+			} else if (request.getType() == WriteRequest.Type.PRIVATE_MSG) {
 				data = "PRIVMSG " + request.getNick() + " :" + request.getMessage() + "\r\n";
-			}
-			else
-			{
+			} else {
 				data = request.getMessage();
-				if (!data.endsWith("\r\n"))
-				{
+				if (!data.endsWith("\r\n")) {
 					data += "\r\n";
 				}
 			}
@@ -236,17 +211,16 @@ class Connection
 			buff.put(dataArray);
 			buff.flip();
 
-			try
-			{
+			try {
 				amount += socChannel.write(buff);
-			}
-			catch (IOException e)
-			{
+			} catch (IOException e) {
 				e.printStackTrace();
 				session.disconnected();
 			}
 
-			if (session.getState() == State.DISCONNECTED) { return amount; }
+			if (session.getState() == State.DISCONNECTED) {
+				return amount;
+			}
 
 			fireWriteEvent(request);
 		}
@@ -257,8 +231,7 @@ class Connection
 	/**
 	 * Send a ping
 	 */
-	void ping()
-	{
+	void ping() {
 		writeRequests.add(new WriteRequest("PING " + actualHostName + "\r\n", session));
 		session.pingSent();
 	}
@@ -268,8 +241,7 @@ class Connection
 	 * 
 	 * @param event , the Ping event
 	 */
-	void pong(IRCEvent event)
-	{
+	void pong(IRCEvent event) {
 		session.gotResponse();
 		String data = event.getRawEventData().substring(event.getRawEventData().lastIndexOf(":") + 1);
 		writeRequests.add(new WriteRequest("PONG " + data + "\r\n", session));
@@ -278,8 +250,7 @@ class Connection
 	/**
 	 * Alert connection a pong was received
 	 */
-	void gotPong()
-	{
+	void gotPong() {
 		session.gotResponse();
 	}
 
@@ -288,19 +259,16 @@ class Connection
 	 * 
 	 * @param quitMessage
 	 */
-	void quit(String quitMessage)
-	{
-		try
-		{
-			if (quitMessage == null) quitMessage = "";
+	void quit(String quitMessage) {
+		try {
+			if (quitMessage == null)
+				quitMessage = "";
 			WriteRequest request = new WriteRequest("QUIT :" + quitMessage + "\r\n", session);
 			writeRequests.add(request);
 			// clear out write queue
 			doWrites();
 			socChannel.close();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -310,37 +278,30 @@ class Connection
 	 * 
 	 * @param request
 	 */
-	void fireWriteEvent(WriteRequest request)
-	{
-		for (WriteRequestListener listener : manager.getWriteListeners())
-		{
+	void fireWriteEvent(WriteRequest request) {
+		for (WriteRequestListener listener : manager.getWriteListeners()) {
 			listener.receiveEvent(request);
 		}
 	}
-	
+
 	/**
 	 * Create a default irc event
 	 * 
 	 * @param rawData
 	 * @return
 	 */
-	private IRCEvent createDefaultIRCEvent(final String rawData)
-	{
-		return new IRCEvent()
-		{
+	private IRCEvent createDefaultIRCEvent(final String rawData) {
+		return new IRCEvent() {
 
-			public Session getSession()
-			{
+			public Session getSession() {
 				return session;
 			}
 
-			public String getRawEventData()
-			{
+			public String getRawEventData() {
 				return rawData;
 			}
 
-			public Type getType()
-			{
+			public Type getType() {
 				return IRCEvent.Type.DEFAULT;
 			}
 		};

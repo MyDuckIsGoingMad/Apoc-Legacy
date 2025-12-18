@@ -5,13 +5,13 @@ import jerklib.events.IRCEvent.Type;
 import jerklib.listeners.IRCEventListener;
 
 /**
- *Task is a job that can be ran by the Session when 
- *certain types of events are received. This class is
- *very much like IRCEventListener , but it can be
- *associated with Types of events. See Session's onEvent
- *methods for details.
+ * Task is a job that can be ran by the Session when
+ * certain types of events are received. This class is
+ * very much like IRCEventListener , but it can be
+ * associated with Types of events. See Session's onEvent
+ * methods for details.
  *
- *<a href="http://jerklib.wikia.com/wiki/Tasks">Task Tutorial</a>
+ * <a href="http://jerklib.wikia.com/wiki/Tasks">Task Tutorial</a>
  * 
  * @see Session#onEvent(Task)
  * @see Session#onEvent(jerklib.tasks.Task, jerklib.events.IRCEvent.Type...)
@@ -19,10 +19,10 @@ import jerklib.listeners.IRCEventListener;
  * @author mohadib
  *
  */
-public interface Task extends IRCEventListener
-{
+public interface Task extends IRCEventListener {
     /**
      * Gets the name of a task
+     * 
      * @return name of task
      */
     public String getName();

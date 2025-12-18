@@ -25,52 +25,59 @@ import haven.Coord;
 import haven.Inventory;
 import haven.Item;
 
-public class AutoFeast extends Thread{
+public class AutoFeast extends Thread {
 	int m_type;
 	HavenUtil m_util;
-	
-	public AutoFeast(HavenUtil util, int type){
+
+	public AutoFeast(HavenUtil util, int type) {
 		m_util = util;
 		m_type = type;
 	}
-	
-	void autoFeast(){
-		if(m_util.stop) return;
+
+	void autoFeast() {
+		if (m_util.stop)
+			return;
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		ArrayList<Item> sortedFoodList = new ArrayList<Item>();
-		
+
 		Inventory tableInv = m_util.getInventory("Table");
-		
-		if(tableInv == null) return;
-		if(!testTable(tableInv) ) return;
-		
+
+		if (tableInv == null)
+			return;
+		if (!testTable(tableInv))
+			return;
+
 		buttonClick("Feast");
 		itemList = m_util.getItemsFromInv(tableInv);
-		
+
 		sortedFoodList = sortItems(itemList);
-		for(Item i : sortedFoodList){
-			if(!findItem(i, tableInv) ) continue;
-			i.wdgmsg("take", new Object[]{Coord.z});
-			
-			while(findItem(i, tableInv) && !m_util.stop) m_util.wait(100);
-			if(m_util.stop || m_util.getHunger() > 980) return;
+		for (Item i : sortedFoodList) {
+			if (!findItem(i, tableInv))
+				continue;
+			i.wdgmsg("take", new Object[] { Coord.z });
+
+			while (findItem(i, tableInv) && !m_util.stop)
+				m_util.wait(100);
+			if (m_util.stop || m_util.getHunger() > 980)
+				return;
 		}
-		
+
 		autoFeast();
 	}
-	
-	boolean testTable(Inventory tableInv){
+
+	boolean testTable(Inventory tableInv) {
 		return m_util.itemCount(tableInv) > 0;
 	}
-	
-	boolean findItem(Item i, Inventory tableInv){
-		for(Item j : m_util.getItemsFromInv(tableInv) ){
-			if(j == i) return true;
+
+	boolean findItem(Item i, Inventory tableInv) {
+		for (Item j : m_util.getItemsFromInv(tableInv)) {
+			if (j == i)
+				return true;
 		}
 		return false;
 	}
-	
-	void buttonClick(String windowName){
+
+	void buttonClick(String windowName) {
 		m_util.clickButton(windowName);
 		m_util.wait(50);
 		m_util.clickButton(windowName);
@@ -78,35 +85,35 @@ public class AutoFeast extends Thread{
 		m_util.clickButton(windowName);
 		m_util.wait(50);
 	}
-	
-	ArrayList<Item> sortItems(ArrayList<Item> itemList){
+
+	ArrayList<Item> sortItems(ArrayList<Item> itemList) {
 		ArrayList<Item> sortedList = new ArrayList<Item>();
-		
-		while(itemList.size() > 0 && !m_util.stop){
+
+		while (itemList.size() > 0 && !m_util.stop) {
 			Item sorting = null;
-			
-			for(Item i : itemList){
-				if(sorting == null){
+
+			for (Item i : itemList) {
+				if (sorting == null) {
 					sorting = i;
 				}
-				if(sorting.c.x > i.c.x){
+				if (sorting.c.x > i.c.x) {
 					sorting = i;
 				}
-				if(sorting.c.y > i.c.y && sorting.c.x == i.c.x){
+				if (sorting.c.y > i.c.y && sorting.c.x == i.c.x) {
 					sorting = i;
 				}
 			}
-			
+
 			sortedList.add(sorting);
 			itemList.remove(sorting);
 		}
-		
+
 		return sortedList;
 	}
-	
-	public void run(){
+
+	public void run() {
 		autoFeast();
 		m_util.running(false);
-		//m_util.feastRunning = false;
+		// m_util.feastRunning = false;
 	}
 }

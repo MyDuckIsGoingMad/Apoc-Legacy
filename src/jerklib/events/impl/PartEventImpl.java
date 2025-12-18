@@ -10,16 +10,15 @@ import jerklib.events.PartEvent;
  * @author mohadib
  *
  */
-public class PartEventImpl implements PartEvent
-{
+public class PartEventImpl implements PartEvent {
 
 	private final Type type = IRCEvent.Type.PART;
 	private final String rawEventData, channelName, who, partMessage, userName, hostName;
 	private final Session session;
 	private final Channel channel;
 
-	public PartEventImpl(String rawEventData, Session session, String who, String user, String host, String channelName, Channel channel, String partMessage)
-	{
+	public PartEventImpl(String rawEventData, Session session, String who, String user, String host, String channelName,
+			Channel channel, String partMessage) {
 		this.rawEventData = rawEventData;
 		this.session = session;
 		this.channelName = channelName;
@@ -30,83 +29,93 @@ public class PartEventImpl implements PartEvent
 		this.partMessage = partMessage;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.PartEvent#getWho()
 	 */
-	public final String getWho()
-	{
+	public final String getWho() {
 		return who;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.PartEvent#getHostName()
 	 */
-	public String getHostName()
-	{
+	public String getHostName() {
 		return hostName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.PartEvent#getUserName()
 	 */
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.PartEvent#getChannelName()
 	 */
-	public final String getChannelName()
-	{
+	public final String getChannelName() {
 		return channelName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.PartEvent#getChannel()
 	 */
-	public final Channel getChannel()
-	{
+	public final Channel getChannel() {
 		return channel;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public final Type getType()
-	{
+	public final Type getType() {
 		return type;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public final String getRawEventData()
-	{
+	public final String getRawEventData() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public final Session getSession()
-	{
+	public final Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.PartEvent#getPartMessage()
 	 */
-	public final String getPartMessage()
-	{
+	public final String getPartMessage() {
 		return this.partMessage;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString()
-	{
+	public String toString() {
 		return rawEventData;
 	}
 

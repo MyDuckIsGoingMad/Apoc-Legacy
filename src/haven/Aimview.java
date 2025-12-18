@@ -29,50 +29,49 @@ package haven;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class Aimview extends Widget{
+public class Aimview extends Widget {
 	static final Resource.Image bg;
-    static final Resource.Image fg;
-    public int val;
+	static final Resource.Image fg;
+	public int val;
 	public static int idCounter = 0;
 	public int id = 0;
-	
-	static{
+
+	static {
 		Resource.Image image = null;
 		Resource.Image image1 = null;
 		Resource res = Resource.load("ui/aim", 5);
 		res.loadwait();
-		for(Resource.Image img : res.layers(Resource.imgc)) {
-			if(img.id == 0)
+		for (Resource.Image img : res.layers(Resource.imgc)) {
+			if (img.id == 0)
 				image = img;
-			else if(img.id == 1)
+			else if (img.id == 1)
 				image1 = img;
 		}
 		bg = image;
 		fg = image1;
 		Widget.addtype("ui/aim", new WidgetFactory() {
 			public Widget create(Coord c, Widget parent, Object[] args) {
-				return(new Aimview(c, parent));
+				return (new Aimview(c, parent));
 			}
 		});
 	}
-	
-	public Aimview(Coord coord, Widget parent){
+
+	public Aimview(Coord coord, Widget parent) {
 		super(coord.add(bg.sz.div(2).inv()), bg.sz, parent);
 		idCounter++;
 		id = idCounter;
-        val = 0;
+		val = 0;
 	}
 
-	public void draw(GOut gout)
-	{
+	public void draw(GOut gout) {
 		gout.image(bg.tex(), bg.o);
 		int i = ((10000 - val) * fg.sz.y) / 10000;
 		gout.image(fg.tex(), fg.o, fg.o.add(new Coord(0, i)), fg.sz.add(0, -i));
 	}
-	
-    public void uimsg(String s, Object aobj[]){
-        if(s == "aim"){
-            val = ((Integer)aobj[0]).intValue();
+
+	public void uimsg(String s, Object aobj[]) {
+		if (s == "aim") {
+			val = ((Integer) aobj[0]).intValue();
 		}
 	}
 }

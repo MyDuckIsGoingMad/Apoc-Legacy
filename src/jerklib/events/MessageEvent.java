@@ -5,10 +5,9 @@ import jerklib.Channel;
 /**
  * Base interface for all PRIVMSGs
  *
- *@author mohadib
+ * @author mohadib
  */
-public interface MessageEvent extends IRCEvent
-{
+public interface MessageEvent extends IRCEvent {
 
     /**
      * returns IRCChannel object the PrivMsg occured in
@@ -16,7 +15,6 @@ public interface MessageEvent extends IRCEvent
      * @return the Channel object
      */
     public Channel getChannel();
-
 
     /**
      * returns the nick of the person who created the PrivMsgIRCEvent
@@ -33,7 +31,6 @@ public interface MessageEvent extends IRCEvent
      */
     public String getUserName();
 
-
     /**
      * getHostName() returns a string that represents the host
      * of the creator of this event
@@ -42,13 +39,11 @@ public interface MessageEvent extends IRCEvent
      */
     public String getHostName();
 
-
     /**
      * getMessage() returns the message part of the event
      *
      * @return the message
      */
     public String getMessage();
-
 
 }

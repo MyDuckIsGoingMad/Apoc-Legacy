@@ -6,7 +6,8 @@ package dolda.xiphutil;
  * <code>java.io.IOException</code> so that it fits snugly within
  * Java's normal IO pipelines.
  *
- * <p>Instances throws by the classes in this package will always be
+ * <p>
+ * Instances throws by the classes in this package will always be
  * constructed from the more specific classes {@link OggException} or
  * {@link VorbisException}.
  *
@@ -14,6 +15,6 @@ package dolda.xiphutil;
  */
 public class FormatException extends java.io.IOException {
     public FormatException(String msg) {
-	super(msg);
+        super(msg);
     }
 }

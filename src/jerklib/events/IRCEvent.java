@@ -3,7 +3,6 @@ package jerklib.events;
 
 import jerklib.Session;
 
-
 /**
  * The base interface for all JerkLib events.
  * <p/>
@@ -13,14 +12,12 @@ import jerklib.Session;
  * @author mohadib
  */
 
-public interface IRCEvent
-{
+public interface IRCEvent {
 
     /**
      * Type enum is used to determine type. It is returned from getType()
      */
-    public enum Type
-    {
+    public enum Type {
         /**
          * Topic event - channel topic event
          */
@@ -101,7 +98,7 @@ public interface IRCEvent
         ERROR,
         CTCP_EVENT,
         CONNECTION_LOST,
-        
+
         /**
          * a DCC Event.
          */
@@ -117,7 +114,6 @@ public interface IRCEvent
      */
     public Type getType();
 
-
     /**
      * Returns the raw IRC data that makes up this event
      *
@@ -125,13 +121,11 @@ public interface IRCEvent
      */
     public String getRawEventData();
 
-
     /**
      * Gets session for connection
      *
      * @return Session
      */
     public Session getSession();
-
 
 }

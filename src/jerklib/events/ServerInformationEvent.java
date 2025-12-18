@@ -8,8 +8,7 @@ import jerklib.ServerInformation;
  * @author mohadib
  *
  */
-public interface ServerInformationEvent extends IRCEvent
-{
+public interface ServerInformationEvent extends IRCEvent {
     /**
      * Gets the server information object
      * 

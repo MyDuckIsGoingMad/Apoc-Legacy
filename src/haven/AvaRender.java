@@ -36,43 +36,43 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
 public class AvaRender extends TexRT {
-    List<Indir<Resource>> layers;
-    List<Resource.Image> images;
-    boolean loading;
-    public static final Coord sz = new Coord(212, 249);
-    
-    public AvaRender(List<Indir<Resource>> layers) {
-	super(sz);
-	setlay(layers);
-    }
-    
-    public void setlay(List<Indir<Resource>> layers) {
-        Collections.sort(layers);
-        this.layers = layers;
-        loading = true;
-    }
+	List<Indir<Resource>> layers;
+	List<Resource.Image> images;
+	boolean loading;
+	public static final Coord sz = new Coord(212, 249);
 
-    public boolean subrend(GOut g) {
-	if(!loading)
-	    return(false);
-
-	List<Resource.Image> images = new ArrayList<Resource.Image>();
-	loading = false;
-	for(Indir<Resource> r : layers) {
-	    if(r.get() == null)
-		loading = true;
-	    else
-		images.addAll(r.get().layers(imgc));
+	public AvaRender(List<Indir<Resource>> layers) {
+		super(sz);
+		setlay(layers);
 	}
-	Collections.sort(images);
-	if(images.equals(this.images))
-	    return(false);
-	this.images = images;
 
-	g.gl.glClearColor(255, 255, 255, 0);
-	g.gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
-	for(Resource.Image i : images)
-	    g.image(i.tex(), i.o);
-        return(true);
-    }
+	public void setlay(List<Indir<Resource>> layers) {
+		Collections.sort(layers);
+		this.layers = layers;
+		loading = true;
+	}
+
+	public boolean subrend(GOut g) {
+		if (!loading)
+			return (false);
+
+		List<Resource.Image> images = new ArrayList<Resource.Image>();
+		loading = false;
+		for (Indir<Resource> r : layers) {
+			if (r.get() == null)
+				loading = true;
+			else
+				images.addAll(r.get().layers(imgc));
+		}
+		Collections.sort(images);
+		if (images.equals(this.images))
+			return (false);
+		this.images = images;
+
+		g.gl.glClearColor(255, 255, 255, 0);
+		g.gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
+		for (Resource.Image i : images)
+			g.image(i.tex(), i.o);
+		return (true);
+	}
 }

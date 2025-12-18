@@ -23,204 +23,207 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.ArrayList;
 
-public class ItemSorter{
-	
+public class ItemSorter {
+
 	LinkedList<ItemRef> m_refList;
-	
-	public ItemSorter(){
+
+	public ItemSorter() {
 		m_refList = new LinkedList<ItemRef>();
 	}
-	
-	public void add(int container, int itemQ){
+
+	public void add(int container, int itemQ) {
 		boolean added = false;
 		ListIterator<ItemRef> li = m_refList.listIterator(0);
-		
+
 		ItemRef ir = new ItemRef(container, itemQ);
-		
-		while(li.hasNext() && !added){
-			if(li.next().itemQ < itemQ){
+
+		while (li.hasNext() && !added) {
+			if (li.next().itemQ < itemQ) {
 				li.previous();
 				li.add(ir);
 				added = true;
 			}
 		}
-		if(!added){
+		if (!added) {
 			m_refList.add(ir);
 		}
 	}
-	
-	public ArrayList<ItemRef> getQualityList(int start, int end){
+
+	public ArrayList<ItemRef> getQualityList(int start, int end) {
 		ArrayList<ItemRef> topQList = new ArrayList<ItemRef>();
-		
-		if(start < 0) start = 0;
-		if(m_refList.size() < end)
+
+		if (start < 0)
+			start = 0;
+		if (m_refList.size() < end)
 			end = m_refList.size();
-		if(m_refList.size() <= start)
+		if (m_refList.size() <= start)
 			return topQList;
-		
-		for(int i = start; i < end; i++){
-			if(m_refList.get(i).itemQ >= 0)
-				topQList.add(m_refList.get(i) );
+
+		for (int i = start; i < end; i++) {
+			if (m_refList.get(i).itemQ >= 0)
+				topQList.add(m_refList.get(i));
 		}
-		
+
 		return topQList;
 	}
-	
-	int getSmallestContainerNum(){
+
+	int getSmallestContainerNum() {
 		int containerSmall = 1000000;
-		
-		for(ItemRef ir : m_refList){
-			if(containerSmall > ir.container)
+
+		for (ItemRef ir : m_refList) {
+			if (containerSmall > ir.container)
 				containerSmall = ir.container;
 		}
 		return containerSmall;
 	}
-	
-	int getLargestContainerNum(){
+
+	int getLargestContainerNum() {
 		int containerLarge = 0;
-		
-		for(ItemRef ir : m_refList){
-			if(containerLarge < ir.container)
+
+		for (ItemRef ir : m_refList) {
+			if (containerLarge < ir.container)
 				containerLarge = ir.container;
 		}
 		return containerLarge;
 	}
-	
-	public ArrayList<Integer> sortContainers(int batch, int batchSize, int batchSizeShrunk){
+
+	public ArrayList<Integer> sortContainers(int batch, int batchSize, int batchSizeShrunk) {
 		ArrayList<ItemRef> QList = new ArrayList<ItemRef>();
 		ArrayList<Integer> sortedContainerCount = new ArrayList<Integer>();
-		
+
 		int start = batch * batchSize;
-		int end = start + ( batchSize - batchSizeShrunk);
-		
+		int end = start + (batchSize - batchSizeShrunk);
+
 		QList = getQualityList(start, end);
-		
+
 		int small = getSmallestContainerNum();
 		int large = getLargestContainerNum();
-		
-		for(int cont = small; cont <= large; cont++){
+
+		for (int cont = small; cont <= large; cont++) {
 			int itemCount = 0;
-			for(ItemRef ir : QList){
-				if(cont == ir.container)
+			for (ItemRef ir : QList) {
+				if (cont == ir.container)
 					itemCount++;
 			}
-			
+
 			sortedContainerCount.add(itemCount);
 		}
-		
+
 		return sortedContainerCount;
 	}
-	
-	public int sortContainersV2(int container, int batch, int batchSize, int batchSizeShrunk){
+
+	public int sortContainersV2(int container, int batch, int batchSize, int batchSizeShrunk) {
 		ArrayList<ItemRef> QList = new ArrayList<ItemRef>();
-		
+
 		int start = batch * batchSize;
-		int end = start + ( batchSize - batchSizeShrunk);
-		
+		int end = start + (batchSize - batchSizeShrunk);
+
 		QList = getQualityList(start, end);
-		
+
 		int itemCount = 0;
-		for(ItemRef ir : QList){
-			if(container == ir.container)
+		for (ItemRef ir : QList) {
+			if (container == ir.container)
 				itemCount++;
 		}
-		
+
 		return itemCount;
 	}
-	
-	public int getContainerSortedCount(int container, int sortSize, int skipTo, boolean highestQuality){
+
+	public int getContainerSortedCount(int container, int sortSize, int skipTo, boolean highestQuality) {
 		ArrayList<ItemRef> QList = new ArrayList<ItemRef>();
 		int start;
 		int end;
-		if(highestQuality){
+		if (highestQuality) {
 			start = skipTo;
 			end = start + sortSize;
-		}else{
+		} else {
 			end = m_refList.size() - skipTo;
 			start = end - sortSize;
 		}
-		
-		//System.out.println("start "+start);
-		//System.out.println("end "+end);
-		
+
+		// System.out.println("start "+start);
+		// System.out.println("end "+end);
+
 		QList = getQualityList(start, end);
-		
+
 		int itemCount = 0;
-		for(ItemRef ir : QList){
-			if(container == ir.container)
+		for (ItemRef ir : QList) {
+			if (container == ir.container)
 				itemCount++;
 		}
-		
+
 		return itemCount;
 	}
-	
-	public void extracted(int container, int extractionCount, boolean highQ){
-		while(extractionCount > 0){
+
+	public void extracted(int container, int extractionCount, boolean highQ) {
+		while (extractionCount > 0) {
 			ItemRef i = null;
-			
-			for(ItemRef ir : m_refList){
-				if(container == ir.container){
-					if(i == null){
+
+			for (ItemRef ir : m_refList) {
+				if (container == ir.container) {
+					if (i == null) {
 						i = ir;
-					}else if(highQ && ir.itemQ > i.itemQ){
+					} else if (highQ && ir.itemQ > i.itemQ) {
 						i = ir;
-					}else if(!highQ && ir.itemQ < i.itemQ){
+					} else if (!highQ && ir.itemQ < i.itemQ) {
 						i = ir;
 					}
 				}
 			}
-			
-			if(i != null) m_refList.remove(i);
+
+			if (i != null)
+				m_refList.remove(i);
 			extractionCount--;
 		}
 	}
-	
-	public int getContainerCount(int container){
+
+	public int getContainerCount(int container) {
 		int itemCount = 0;
-		
-		for(ItemRef ir : m_refList){
-			if(container == ir.container)
+
+		for (ItemRef ir : m_refList) {
+			if (container == ir.container)
 				itemCount++;
 		}
-		
+
 		return itemCount;
 	}
-	
-	public static ItemSorter sort(ItemSorter list, int sortSize, boolean highQ){
+
+	public static ItemSorter sort(ItemSorter list, int sortSize, boolean highQ) {
 		ItemSorter is = new ItemSorter();
-		
-		for(int i = 0; highQ && i < sortSize && i < list.size(); i++){
+
+		for (int i = 0; highQ && i < sortSize && i < list.size(); i++) {
 			ItemRef ir = list.get(i);
 			is.add(ir.container, ir.itemQ);
 		}
-		
-		for(int i = 0; !highQ && i < sortSize && i < list.size(); i++){
-			ItemRef ir = list.get(list.size() -1 - i);
+
+		for (int i = 0; !highQ && i < sortSize && i < list.size(); i++) {
+			ItemRef ir = list.get(list.size() - 1 - i);
 			is.add(ir.container, ir.itemQ);
 		}
-		
+
 		return is;
 	}
-	
-	public void clear(){
+
+	public void clear() {
 		m_refList.clear();
 	}
-	
-	public ItemRef get(int i){
+
+	public ItemRef get(int i) {
 		return m_refList.get(i);
 	}
-	
-	public int size(){
+
+	public int size() {
 		return m_refList.size();
 	}
-	
-	public class ItemRef{ //ItemSorter.ItemRef ir = new ItemSorter.ItemRef(item, container);
+
+	public class ItemRef { // ItemSorter.ItemRef ir = new ItemSorter.ItemRef(item, container);
 		public int itemQ;
 		public int container;
-		
-		public ItemRef(int c, int q){
-			container = c; itemQ = q; 
+
+		public ItemRef(int c, int q) {
+			container = c;
+			itemQ = q;
 		}
 	}
-	
+
 }

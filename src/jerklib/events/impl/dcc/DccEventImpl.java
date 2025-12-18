@@ -4,24 +4,20 @@ import jerklib.Channel;
 import jerklib.Session;
 import jerklib.events.dcc.DccEvent;
 
-class DccEventImpl implements DccEvent
-{
-	private String ctcpString , hostName , message , nick , userName , rawEventData;
+class DccEventImpl implements DccEvent {
+	private String ctcpString, hostName, message, nick, userName, rawEventData;
 	private Channel channel;
 	private Session session;
 
-	protected DccEventImpl
-	(
-		String ctcpString, 
-		String hostName, 
-		String message,
-		String nick, 
-		String userName, 
-		String rawEventData, 
-		Channel channel,
-		Session session
-	) 
-	{
+	protected DccEventImpl(
+			String ctcpString,
+			String hostName,
+			String message,
+			String nick,
+			String userName,
+			String rawEventData,
+			Channel channel,
+			Session session) {
 		super();
 		this.ctcpString = ctcpString;
 		this.hostName = hostName;
@@ -33,54 +29,43 @@ class DccEventImpl implements DccEvent
 		this.session = session;
 	}
 
-	
-	public DccType getDccType()
-	{
+	public DccType getDccType() {
 		return DccType.UNKNOWN;
 	}
 
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return this.rawEventData;
 	}
 
-	public Session getSession()
-	{
+	public Session getSession() {
 		return this.session;
 	}
 
-	public Type getType()
-	{
+	public Type getType() {
 		return Type.DCC_EVENT;
 	}
 
-	public String getCtcpString()
-	{
+	public String getCtcpString() {
 		return this.ctcpString;
 	}
 
-	public Channel getChannel()
-	{
+	public Channel getChannel() {
 		return this.channel;
 	}
 
-	public String getHostName()
-	{
+	public String getHostName() {
 		return this.hostName;
 	}
 
-	public String getMessage()
-	{
+	public String getMessage() {
 		return this.message;
 	}
 
-	public String getNick()
-	{
+	public String getNick() {
 		return this.nick;
 	}
 
-	public String getUserName()
-	{
+	public String getUserName() {
 		return this.userName;
 	}
 

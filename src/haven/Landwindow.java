@@ -30,7 +30,7 @@ import haven.MCache.Overlay;
 import haven.MapView.Grabber;
 import haven.MapView.GrabberException;
 
-public class Landwindow extends Window implements MapView.Grabber{
+public class Landwindow extends Window implements MapView.Grabber {
 	Label text;
 	Label text2;
 	boolean dm = false;
@@ -39,26 +39,27 @@ public class Landwindow extends Window implements MapView.Grabber{
 	Coord c2;
 	MCache.Overlay ol;
 	MCache map;
-	private static final String fmt = "Selected area: (%d x %d) = %d m" + (char)(0xB2);
-	
-	static{
+	private static final String fmt = "Selected area: (%d x %d) = %d m" + (char) (0xB2);
+
+	static {
 		Widget.addtype("ui/land", new WidgetFactory() {
-			public Widget create(Coord c, Widget parent, Object[] args){
+			public Widget create(Coord c, Widget parent, Object[] args) {
 				return new Landwindow(c, parent);
 			}
 		});
 	}
-	
-	public Landwindow(Coord c, Widget parent){
+
+	public Landwindow(Coord c, Widget parent) {
 		super(c, new Coord(200, 30), parent, "Land management");
 		this.map = this.ui.sess.glob.map;
 		this.ui.mainview.enol(new int[] { 0, 1, 16 });
 		this.ui.mainview.grab(this);
-		this.text = new Label(Coord.z, this, String.format("Selected area: (%d x %d) = %d m" + (char)(0xB2), new Object[] { Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0) }));
-		this.text2 = new Label(Coord.z.add(0,20), this, "");
+		this.text = new Label(Coord.z, this, String.format("Selected area: (%d x %d) = %d m" + (char) (0xB2),
+				new Object[] { Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0) }));
+		this.text2 = new Label(Coord.z.add(0, 20), this, "");
 	}
-	
-	public void destroy(){
+
+	public void destroy() {
 		this.ui.mainview.disol(new int[] { 0, 1, 16 });
 		this.ui.mainview.release(this);
 		if (this.ol != null) {
@@ -66,8 +67,8 @@ public class Landwindow extends Window implements MapView.Grabber{
 		}
 		super.destroy();
 	}
-	
-	public void mmousedown(Coord mc, int button){
+
+	public void mmousedown(Coord mc, int button) {
 		if (button != 1) {
 			throw new MapView.GrabberException();
 		}
@@ -80,41 +81,41 @@ public class Landwindow extends Window implements MapView.Grabber{
 		this.dm = true;
 		this.ui.grabmouse(this.ui.mainview);
 	}
-	
-	public void mmouseup(Coord mc, int button){
+
+	public void mmouseup(Coord mc, int button) {
 		this.dm = false;
 		this.ui.grabmouse(null);
 		if (button != 1) {
 			throw new MapView.GrabberException();
 		}
 	}
-	
-	public void mmousemove(Coord mc){
-		if(!this.dm){
+
+	public void mmousemove(Coord mc) {
+		if (!this.dm) {
 			Gob mouseGob = ui.mainview.gobAtMouse;
 			String mouseGobName = "";
 			int mouseGobAmount = 0;
-			if(mouseGob != null && this.c1 != null && this.c2 != null){
+			if (mouseGob != null && this.c1 != null && this.c2 != null) {
 				mouseGobName = mouseGob.resname();
-				mouseGobAmount = ui.m_util.getObjects(mouseGobName, this.c1.mul(11), this.c2.mul(11) ).size();
-				this.text2.settext(String.format("%s in area: %d", mouseGobName, mouseGobAmount ));
-			}else{
+				mouseGobAmount = ui.m_util.getObjects(mouseGobName, this.c1.mul(11), this.c2.mul(11)).size();
+				this.text2.settext(String.format("%s in area: %d", mouseGobName, mouseGobAmount));
+			} else {
 				this.text2.settext("");
 			}
-			
+
 			return;
 		}
 		Coord c1 = mc.div(MCache.tilesz);
 		Coord c2 = new Coord(0, 0);
 		Coord c3 = new Coord(0, 0);
-		if (c1.x < this.sc.x){
+		if (c1.x < this.sc.x) {
 			c2.x = c1.x;
 			c3.x = this.sc.x;
-		}else{
+		} else {
 			c2.x = this.sc.x;
 			c3.x = c1.x;
 		}
-		if (c1.y < this.sc.y){
+		if (c1.y < this.sc.y) {
 			c2.y = c1.y;
 			c3.y = this.sc.y;
 		} else {
@@ -124,16 +125,17 @@ public class Landwindow extends Window implements MapView.Grabber{
 		this.ol.update(c2, c3);
 		this.c1 = c2;
 		this.c2 = c3;
-		
+
 		c1.x = (c3.x - c2.x + 1);
 		c1.y = (c3.y - c2.y + 1);
 		int i = c1.x * c1.y;
-		
-		this.text.settext(String.format("Selected area: (%d x %d) = %d m" + (char)(0xB2), new Object[] { Integer.valueOf(c1.x), Integer.valueOf(c1.y), Integer.valueOf(i) }));
+
+		this.text.settext(String.format("Selected area: (%d x %d) = %d m" + (char) (0xB2),
+				new Object[] { Integer.valueOf(c1.x), Integer.valueOf(c1.y), Integer.valueOf(i) }));
 	}
-	
-	public void uimsg(String msg, Object... args){
-		if (msg == "reset"){
+
+	public void uimsg(String msg, Object... args) {
+		if (msg == "reset") {
 			this.ol.destroy();
 			this.ol = null;
 			this.c1 = (this.c2 = null);

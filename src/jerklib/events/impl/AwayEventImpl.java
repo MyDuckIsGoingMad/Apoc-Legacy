@@ -4,8 +4,7 @@ import jerklib.Session;
 import jerklib.events.AwayEvent;
 import jerklib.events.IRCEvent;
 
-public class AwayEventImpl implements AwayEvent
-{
+public class AwayEventImpl implements AwayEvent {
 
     private final boolean isAway, isYou;
     private final String rawEventData, awayMessage, nick;
@@ -13,8 +12,8 @@ public class AwayEventImpl implements AwayEvent
     private Type type = IRCEvent.Type.AWAY_EVENT;
     private EventType eventType;
 
-    public AwayEventImpl(String awayMessage, EventType eventType, boolean away, boolean you, String nick, String rawEventData, Session session)
-    {
+    public AwayEventImpl(String awayMessage, EventType eventType, boolean away, boolean you, String nick,
+            String rawEventData, Session session) {
         this.awayMessage = awayMessage;
         this.eventType = eventType;
         isAway = away;
@@ -24,8 +23,8 @@ public class AwayEventImpl implements AwayEvent
         this.session = session;
     }
 
-    public AwayEventImpl(Session session, EventType eventType, boolean away, boolean you, String nick, String rawEventData)
-    {
+    public AwayEventImpl(Session session, EventType eventType, boolean away, boolean you, String nick,
+            String rawEventData) {
         this.awayMessage = "";
         this.session = session;
         this.eventType = eventType;
@@ -35,67 +34,75 @@ public class AwayEventImpl implements AwayEvent
         this.rawEventData = rawEventData;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.AwayEvent#getAwayMessage()
      */
-    public String getAwayMessage()
-    {
+    public String getAwayMessage() {
         return awayMessage;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.AwayEvent#isAway()
      */
-    public boolean isAway()
-    {
+    public boolean isAway() {
         return isAway;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.AwayEvent#isYou()
      */
-    public boolean isYou()
-    {
+    public boolean isYou() {
         return isYou;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.AwayEvent#getNick()
      */
-    public String getNick()
-    {
+    public String getNick() {
         return nick;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.IRCEvent#getRawEventData()
      */
-    public String getRawEventData()
-    {
+    public String getRawEventData() {
         return rawEventData;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.IRCEvent#getSession()
      */
-    public Session getSession()
-    {
+    public Session getSession() {
         return session;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.IRCEvent#getType()
      */
-    public Type getType()
-    {
+    public Type getType() {
         return type;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.AwayEvent#getEventType()
      */
-    public EventType getEventType()
-    {
+    public EventType getEventType() {
         return eventType;
     }
 

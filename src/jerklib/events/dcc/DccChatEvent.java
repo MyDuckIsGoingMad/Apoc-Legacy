@@ -7,8 +7,7 @@ import java.net.InetAddress;
  * 
  * @author Andres N. Kievsky
  */
-public interface DccChatEvent extends DccEvent
-{
+public interface DccChatEvent extends DccEvent {
 	// Usually "chat" or "wboard".
 	String getProtocol();
 

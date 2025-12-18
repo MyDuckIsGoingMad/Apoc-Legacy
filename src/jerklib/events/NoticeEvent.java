@@ -7,8 +7,7 @@ import jerklib.Channel;
  *
  * @author mohadib
  */
-public interface NoticeEvent extends IRCEvent
-{
+public interface NoticeEvent extends IRCEvent {
 
     /**
      * returns notice message

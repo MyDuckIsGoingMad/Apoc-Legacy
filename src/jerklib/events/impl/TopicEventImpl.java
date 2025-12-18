@@ -11,8 +11,7 @@ import java.util.Date;
  * @see TopicEvent
  *
  */
-public class TopicEventImpl implements TopicEvent
-{
+public class TopicEventImpl implements TopicEvent {
 
 	private String setBy, data, hostname;
 	private Date setWhen;
@@ -20,117 +19,125 @@ public class TopicEventImpl implements TopicEvent
 	private Channel channel;
 	private StringBuffer buff = new StringBuffer();
 
-	public TopicEventImpl(String rawEventData, Session session, Channel channel, String topic)
-	{
+	public TopicEventImpl(String rawEventData, Session session, Channel channel, String topic) {
 		this.data = rawEventData;
 		this.session = session;
 		this.channel = channel;
 		buff.append(topic);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.TopicEvent#getTopic()
 	 */
-	public String getTopic()
-	{
+	public String getTopic() {
 		return buff.toString();
 	}
 
 	/**
 	 * @return hostname
 	 */
-	public String getHostName()
-	{
+	public String getHostName() {
 		return hostname;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return data;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public Type getType()
-	{
+	public Type getType() {
 		return Type.TOPIC;
 	}
 
 	/**
 	 * @param setWhen
 	 */
-	public void setSetWhen(String setWhen)
-	{
+	public void setSetWhen(String setWhen) {
 		this.setWhen = new Date(1000L * Long.parseLong(setWhen));
 	}
 
 	/**
 	 * @param setBy
 	 */
-	public void setSetBy(String setBy)
-	{
+	public void setSetBy(String setBy) {
 		this.setBy = setBy;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.TopicEvent#getSetBy()
 	 */
-	public String getSetBy()
-	{
+	public String getSetBy() {
 		return setBy;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.TopicEvent#getSetWhen()
 	 */
-	public Date getSetWhen()
-	{
+	public Date getSetWhen() {
 		return setWhen;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.TopicEvent#getChannel()
 	 */
-	public Channel getChannel()
-	{
+	public Channel getChannel() {
 		return channel;
 	}
 
 	/**
 	 * @param topic
 	 */
-	public void appendToTopic(String topic)
-	{
+	public void appendToTopic(String topic) {
 		buff.append(topic);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
-	public int hashCode()
-	{
+	public int hashCode() {
 		return channel.hashCode();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public boolean equals(Object o)
-	{
-		if (o == this) { return true; }
-		if (o instanceof TopicEventImpl && o.hashCode() == hashCode()) { return ((TopicEvent) o).getChannel().equals(getChannel()); }
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (o instanceof TopicEventImpl && o.hashCode() == hashCode()) {
+			return ((TopicEvent) o).getChannel().equals(getChannel());
+		}
 		return false;
 	}
 

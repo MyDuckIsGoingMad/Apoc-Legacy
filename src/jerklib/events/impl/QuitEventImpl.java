@@ -12,16 +12,15 @@ import java.util.List;
  * @see QuitEvent
  *
  */
-public class QuitEventImpl implements QuitEvent
-{
+public class QuitEventImpl implements QuitEvent {
 
 	private final Type type = IRCEvent.Type.QUIT;
 	private final String rawEventData, who, msg, userName, hostName;
 	private final Session session;
 	private final List<Channel> chanList;
 
-	public QuitEventImpl(String rawEventData, Session session, String who, String userName, String hostName, String msg, List<Channel> chanList)
-	{
+	public QuitEventImpl(String rawEventData, Session session, String who, String userName, String hostName, String msg,
+			List<Channel> chanList) {
 		this.rawEventData = rawEventData;
 		this.who = who;
 		this.userName = userName;
@@ -31,75 +30,84 @@ public class QuitEventImpl implements QuitEvent
 		this.chanList = chanList;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.QuitEvent#getHostName()
 	 */
-	public String getHostName()
-	{
+	public String getHostName() {
 		return hostName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.QuitEvent#getUserName()
 	 */
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.QuitEvent#getNick()
 	 */
-	public final String getNick()
-	{
+	public final String getNick() {
 		return who;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public final Type getType()
-	{
+	public final Type getType() {
 		return type;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public final String getRawEventData()
-	{
+	public final String getRawEventData() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public final Session getSession()
-	{
+	public final Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.QuitEvent#getQuitMessage()
 	 */
-	public final String getQuitMessage()
-	{
+	public final String getQuitMessage() {
 		return msg;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.QuitEvent#getChannelList()
 	 */
-	public final List<Channel> getChannelList()
-	{
+	public final List<Channel> getChannelList() {
 		return chanList;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString()
-	{
+	public String toString() {
 		return rawEventData;
 	}
 

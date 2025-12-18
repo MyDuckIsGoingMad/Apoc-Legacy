@@ -26,60 +26,57 @@
 
 package haven;
 
-public class DowseFx extends FreeSprite{
+public class DowseFx extends FreeSprite {
 	double a;
 	static final int ms = 4000;
 	static final int r = 100;
 	int a1;
 	int a2;
-	
+
 	public static final Factory fact = new Factory() {
-	    public Sprite create(Owner owner, Resource res, Message sdt) {
-			if(owner instanceof Gob){
-				return(new DowseFx(owner, res, sdt));
+		public Sprite create(Owner owner, Resource res, Message sdt) {
+			if (owner instanceof Gob) {
+				return (new DowseFx(owner, res, sdt));
 			}
-			return(null);
-	    }
+			return (null);
+		}
 	};
-	
-	public DowseFx(haven.Sprite.Owner owner, Resource res, Message msg){
+
+	public DowseFx(haven.Sprite.Owner owner, Resource res, Message msg) {
 		super(owner, res, -15, 0);
 		a = 0.0D;
 		a2 = (msg.uint8() * 360) / 200;
 		a1 = (msg.uint8() * 360) / 200;
-		if(a2 > 380) a2 -= 460;
+		if (a2 > 380)
+			a2 -= 460;
 		a2 = -45 - a2;
 		a1 = -45 - a1;
-		
+
 		int d = Math.max(Math.abs(a1 - a2) % 360, 5);
 		int a0 = a1 + (d / 2) + 45;
-		
-		if(Config.showDirection)
-			new TrackingWnd((Gob)owner, 0, (720 - a0)%360, d, a1, a2, msg);
+
+		if (Config.showDirection)
+			new TrackingWnd((Gob) owner, 0, (720 - a0) % 360, d, a1, a2, msg);
 	}
 
-	public void draw(GOut g, Coord c){
-		if(a < 0.25D)
-		{
+	public void draw(GOut g, Coord c) {
+		if (a < 0.25D) {
 			g.chcolor(255, 0, 0, 128);
-			g.fellipse(c, new Coord((int)((a / 0.25D) * 100D), (int)(((a / 0.25D) * 100D) / 2D)));
-		} else
-		if(a < 0.75D)
-		{
-			g.chcolor(255, 0, 0, (int)(((0.75D - a) / 0.5D) * 128D));
-			g.fellipse(c, new Coord((int)((a / 0.25D) * 100D), (int)(((a / 0.25D) * 100D) / 2D)));
+			g.fellipse(c, new Coord((int) ((a / 0.25D) * 100D), (int) (((a / 0.25D) * 100D) / 2D)));
+		} else if (a < 0.75D) {
+			g.chcolor(255, 0, 0, (int) (((0.75D - a) / 0.5D) * 128D));
+			g.fellipse(c, new Coord((int) ((a / 0.25D) * 100D), (int) (((a / 0.25D) * 100D) / 2D)));
 			g.chcolor(255, 0, 0, 128);
 			g.fellipse(c, new Coord(100, 50), a1, a2);
-		} else
-		{
-			g.chcolor(255, 0, 0, (int)(((1.0D - a) / 0.25D) * 128D));
+		} else {
+			g.chcolor(255, 0, 0, (int) (((1.0D - a) / 0.25D) * 128D));
 			g.fellipse(c, new Coord(100, 50), a1, a2);
 		}
 		g.chcolor();
 	}
 
-	public boolean tick(int paramInt){
-		a += (double)paramInt / 2000D;
+	public boolean tick(int paramInt) {
+		a += (double) paramInt / 2000D;
 		return a >= 1.0D;
 	}
 }

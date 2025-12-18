@@ -3,14 +3,12 @@ package jerklib.listeners;
 
 import jerklib.WriteRequest;
 
-
 /**
  * WriteRequestListener - Listener to be notified of all writes
  *
  * @author mohadib
  */
-public interface WriteRequestListener
-{
+public interface WriteRequestListener {
 
     /**
      * receiveEvent() - method will be called anytime a write is requestd.

@@ -9,25 +9,21 @@ import jerklib.events.CtcpEvent;
  * @see CtcpEvent
  *
  */
-public class CtcpEventImpl implements CtcpEvent
-{
+public class CtcpEventImpl implements CtcpEvent {
 
 	private String ctcpString, hostName, message, nick, userName, rawEventData;
 	private Channel channel;
 	private Session session;
 
-	public CtcpEventImpl
-	(
-		String ctcpString, 
-		String hostName, 
-		String message, 
-		String nick, 
-		String userName, 
-		String rawEventData, 
-		Channel channel, 
-		Session session
-	)
-	{
+	public CtcpEventImpl(
+			String ctcpString,
+			String hostName,
+			String message,
+			String nick,
+			String userName,
+			String rawEventData,
+			Channel channel,
+			Session session) {
 		super();
 		this.ctcpString = ctcpString;
 		this.hostName = hostName;
@@ -39,75 +35,84 @@ public class CtcpEventImpl implements CtcpEvent
 		this.session = session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.CtcpEvent#getCtcpString()
 	 */
-	public String getCtcpString()
-	{
+	public String getCtcpString() {
 		return ctcpString;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MessageEvent#getChannel()
 	 */
-	public Channel getChannel()
-	{
+	public Channel getChannel() {
 		return channel;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MessageEvent#getHostName()
 	 */
-	public String getHostName()
-	{
+	public String getHostName() {
 		return hostName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MessageEvent#getMessage()
 	 */
-	public String getMessage()
-	{
+	public String getMessage() {
 		return message;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MessageEvent#getNick()
 	 */
-	public String getNick()
-	{
+	public String getNick() {
 		return nick;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MessageEvent#getUserName()
 	 */
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public Type getType()
-	{
+	public Type getType() {
 		return Type.CTCP_EVENT;
 	}
 

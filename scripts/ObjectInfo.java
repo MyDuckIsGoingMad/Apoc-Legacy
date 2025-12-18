@@ -24,74 +24,74 @@ import haven.Gob.Overlay;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ObjectInfo extends Thread{
+public class ObjectInfo extends Thread {
 	public String scriptName = "Info";
-	
+
 	HavenUtil m_util;
 	int m_option;
 	String m_modify;
-	
-	public void ApocScript(HavenUtil util, int option, String modify){
+
+	public void ApocScript(HavenUtil util, int option, String modify) {
 		m_util = util;
 		m_option = option;
 		m_modify = modify;
 	}
-	
-	public ArrayList<Overlay> GetOverlays(Gob g){
+
+	public ArrayList<Overlay> GetOverlays(Gob g) {
 		ArrayList<Overlay> list = new ArrayList<Overlay>();
-		for(Iterator<Overlay> i = g.ols.iterator(); i.hasNext();) {
+		for (Iterator<Overlay> i = g.ols.iterator(); i.hasNext();) {
 			Overlay ol = i.next();
 			list.add(ol);
 		}
-		
+
 		return list;
 	}
-	
-	public String GetType(Gob g){
-		Drawable d = (Drawable)g.getattr(Drawable.class);
-		ResDrawable dw = (ResDrawable)g.getattr(ResDrawable.class);
-		
-		if ((dw != null) && (d != null)){
+
+	public String GetType(Gob g) {
+		Drawable d = (Drawable) g.getattr(Drawable.class);
+		ResDrawable dw = (ResDrawable) g.getattr(ResDrawable.class);
+
+		if ((dw != null) && (d != null)) {
 			return dw.sdt.toString();
 		}
-		
+
 		return "";
 	}
-	
-	public void run(){
-		if(m_util.m_ui.mainview.gobAtMouse != null){
+
+	public void run() {
+		if (m_util.m_ui.mainview.gobAtMouse != null) {
 			Gob gob = m_util.m_ui.mainview.gobAtMouse;
 			Resource.Neg neg = gob.getneg();
 			System.out.println("==================");
-			System.out.println("Name      "+ gob.resname());
-			System.out.println("Coord     "+ gob.getr());
-			System.out.println("Size bs   "+ neg.bs);
-			System.out.println("Offset bc "+ neg.bc);
-			System.out.println("Gob SC "+ gob.sc);
-			System.out.println("ID "+ gob.id);
+			System.out.println("Name      " + gob.resname());
+			System.out.println("Coord     " + gob.getr());
+			System.out.println("Size bs   " + neg.bs);
+			System.out.println("Offset bc " + neg.bc);
+			System.out.println("Gob SC " + gob.sc);
+			System.out.println("ID " + gob.id);
 			System.out.println("Attr: " + gob.attr);
-			System.out.println("Indir: " + gob.getres().indir() );
-			
-			for(String name : gob.resnames() )
-			System.out.println("names: "+ name );
-			
-			System.out.println("blob 0: "+ gob.GetBlob(0) );
-			System.out.println("type: "+ GetType(gob) );
+			System.out.println("Indir: " + gob.getres().indir());
+
+			for (String name : gob.resnames())
+				System.out.println("names: " + name);
+
+			System.out.println("blob 0: " + gob.GetBlob(0));
+			System.out.println("type: " + GetType(gob));
 			ArrayList<Gob.Overlay> ol = GetOverlays(gob);
-			System.out.println("ol size: "+ol.size() );
-			
-			if(ol.size() > 0){
+			System.out.println("ol size: " + ol.size());
+
+			if (ol.size() > 0) {
 				Gob.Overlay o = ol.get(0);
 				System.out.println(Utils.int16d(o.sdt.blob, 2));
 			}
-		}else{
-			System.out.println("Vmet indirect: "+m_util.getVmeterAmount(255, false) );
-			System.out.println("Vmet direct: "+m_util.getVmeterAmount(255, true) );
-			System.out.println("Tile ID: "+m_util.getTileID(m_util.m_ui.mainview.mousepos.div(11)));
-			System.out.println("Tile OL: "+m_util.getTileOL(m_util.m_ui.mainview.mousepos.div(11)));
+		} else {
+			System.out.println("Vmet indirect: " + m_util.getVmeterAmount(255, false));
+			System.out.println("Vmet direct: " + m_util.getVmeterAmount(255, true));
+			System.out.println("Tile ID: " + m_util.getTileID(m_util.m_ui.mainview.mousepos.div(11)));
+			System.out.println("Tile OL: " + m_util.getTileOL(m_util.m_ui.mainview.mousepos.div(11)));
 		}
 		System.out.println();
-		
+
 		m_util.running(false);
 	}
 }

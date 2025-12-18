@@ -10,26 +10,22 @@ import jerklib.events.MessageEvent;
  * @see MessageEvent
  * 
  */
-public class MessageEventImpl implements MessageEvent
-{
+public class MessageEventImpl implements MessageEvent {
 
 	private final String nick, userName, hostName, message, rawEventData;
 	private final Channel channel;
 	private final Type type;
 	private final Session session;
 
-	public MessageEventImpl
-	(
-		Channel channel, 
-		String hostName, 
-		String message, 
-		String nick, 
-		String rawEventData, 
-		Session session, 
-		IRCEvent.Type type, 
-		String userName
-	)
-	{
+	public MessageEventImpl(
+			Channel channel,
+			String hostName,
+			String message,
+			String nick,
+			String rawEventData,
+			Session session,
+			IRCEvent.Type type,
+			String userName) {
 		this.channel = channel;
 		this.hostName = hostName;
 		this.message = message;
@@ -40,67 +36,75 @@ public class MessageEventImpl implements MessageEvent
 		this.userName = userName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MessageEvent#getChannel()
 	 */
-	public Channel getChannel()
-	{
+	public Channel getChannel() {
 		return channel;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MessageEvent#getHostName()
 	 */
-	public String getHostName()
-	{
+	public String getHostName() {
 		return hostName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MessageEvent#getMessage()
 	 */
-	public String getMessage()
-	{
+	public String getMessage() {
 		return message;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MessageEvent#getNick()
 	 */
-	public String getNick()
-	{
+	public String getNick() {
 		return nick;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public Type getType()
-	{
+	public Type getType() {
 		return type;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MessageEvent#getUserName()
 	 */
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
 }

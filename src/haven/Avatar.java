@@ -30,15 +30,16 @@ import java.util.List;
 
 public class Avatar extends GAttrib {
     AvaRender rend = null;
-        
+
     public Avatar(Gob gob) {
-	super(gob);
+        super(gob);
     }
-	
+
     void setlayers(List<Indir<Resource>> layers) {
-	if(rend == null)
-	    rend = new AvaRender(layers);
-	else
-	    rend.setlay(layers);
+        if (rend == null)
+            rend = new AvaRender(layers);
+        else
+            rend.setlay(layers);
+
     }
 }

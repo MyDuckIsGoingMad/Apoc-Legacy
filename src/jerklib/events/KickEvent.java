@@ -4,11 +4,11 @@ import jerklib.Channel;
 
 /**
  * Event fired when someone is kicked from a channel
+ * 
  * @author mohadib
  * @see Channel#kick(String, String)
  */
-public interface KickEvent extends IRCEvent
-{
+public interface KickEvent extends IRCEvent {
     /**
      * Gets the nick of the user who
      * did the kicking
@@ -18,7 +18,8 @@ public interface KickEvent extends IRCEvent
     public String byWho();
 
     /**
-     * Get the username from the hostmask of the kicker (the person doing the kicking)
+     * Get the username from the hostmask of the kicker (the person doing the
+     * kicking)
      *
      * @return the username
      */
@@ -44,7 +45,6 @@ public interface KickEvent extends IRCEvent
      * @return who was kicked
      */
     public String getWho();
-
 
     /**
      * Gets the channel object someone was kicked from

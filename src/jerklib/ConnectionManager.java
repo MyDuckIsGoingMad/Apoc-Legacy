@@ -33,17 +33,17 @@ import java.util.Collection;
  * This class is used to control/store Sessions/Connections.
  * Request new connections with this class.
  * 
- * @author mohadib 
+ * @author mohadib
  * 
  */
-public class ConnectionManager
-{
+public class ConnectionManager {
 	/* maps to index sessions by name and socketchannel */
 	final Map<String, Session> sessionMap = Collections.synchronizedMap(new HashMap<String, Session>());
 	final Map<SocketChannel, Session> socChanMap = Collections.synchronizedMap(new HashMap<SocketChannel, Session>());
 
 	/* event listener lists */
-	private final List<WriteRequestListener> writeListeners = Collections.synchronizedList(new ArrayList<WriteRequestListener>(1));
+	private final List<WriteRequestListener> writeListeners = Collections
+			.synchronizedList(new ArrayList<WriteRequestListener>(1));
 
 	/* event queues */
 	private final List<IRCEvent> eventQueue = new ArrayList<IRCEvent>();
@@ -74,16 +74,12 @@ public class ConnectionManager
 	 * @param defaultProfile default user profile
 	 * @see Profile
 	 */
-	public ConnectionManager(Profile defaultProfile)
-	{
+	public ConnectionManager(Profile defaultProfile) {
 		this.defaultProfile = defaultProfile;
 
-		try
-		{
+		try {
 			selector = Selector.open();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -92,11 +88,10 @@ public class ConnectionManager
 
 	/**
 	 * This is for testing purposes only.
-	 * Do not use unless testing. 
+	 * Do not use unless testing.
 	 * 
 	 */
-	ConnectionManager()
-	{
+	ConnectionManager() {
 	}
 
 	/**
@@ -104,8 +99,7 @@ public class ConnectionManager
 	 * 
 	 * @return Session list
 	 */
-	public List<Session> getSessions()
-	{
+	public List<Session> getSessions() {
 		return Collections.unmodifiableList(new ArrayList<Session>(sessionMap.values()));
 	}
 
@@ -115,8 +109,7 @@ public class ConnectionManager
 	 * @param name session name - the hostname of the server this session is for
 	 * @return Session or null if no Session with name exists
 	 */
-	public Session getSession(String name)
-	{
+	public Session getSession(String name) {
 		return sessionMap.get(name);
 	}
 
@@ -125,8 +118,7 @@ public class ConnectionManager
 	 * 
 	 * @param listener to be notified
 	 */
-	public void addWriteRequestListener(WriteRequestListener listener)
-	{
+	public void addWriteRequestListener(WriteRequestListener listener) {
 		writeListeners.add(listener);
 	}
 
@@ -135,8 +127,7 @@ public class ConnectionManager
 	 * 
 	 * @return listeners
 	 */
-	public List<WriteRequestListener> getWriteListeners()
-	{
+	public List<WriteRequestListener> getWriteListeners() {
 		return Collections.unmodifiableList(writeListeners);
 	}
 
@@ -146,8 +137,7 @@ public class ConnectionManager
 	 * @param hostName DNS name or IP of host to connect to
 	 * @return the {@link Session} for this connection
 	 */
-	public Session requestConnection(String hostName)
-	{
+	public Session requestConnection(String hostName) {
 		return requestConnection(hostName, 6667);
 	}
 
@@ -155,11 +145,10 @@ public class ConnectionManager
 	 * request a new connection to a host
 	 * 
 	 * @param hostName DNS name or IP of host to connect to
-	 * @param port port to use for connection
+	 * @param port     port to use for connection
 	 * @return the {@link Session} for this connection
 	 */
-	public Session requestConnection(String hostName, int port)
-	{
+	public Session requestConnection(String hostName, int port) {
 		return requestConnection(hostName, port, defaultProfile.clone());
 	}
 
@@ -167,20 +156,19 @@ public class ConnectionManager
 	 * request a new connection to a host
 	 * 
 	 * @param hostName DNS name or IP of host to connect to
-	 * @param port port to use for connection
-	 * @param profile profile to use for this connection
+	 * @param port     port to use for connection
+	 * @param profile  profile to use for this connection
 	 * @return the {@link Session} for this connection
 	 */
-	public Session requestConnection(String hostName, int port, Profile profile)
-	{
+	public Session requestConnection(String hostName, int port, Profile profile) {
 		RequestedConnection rCon = new RequestedConnection(hostName, port, profile);
 
-		Session session = new Session(rCon , this);
+		Session session = new Session(rCon, this);
 		session.setInternalParser(internalEventParser);
 		sessionMap.put(hostName, session);
-		
+
 		new IdentServer(defaultProfile.getName());
-		
+
 		return session;
 	}
 
@@ -189,15 +177,13 @@ public class ConnectionManager
 	 * 
 	 * @param quitMsg quit message
 	 */
-	public synchronized void quit(String quitMsg)
-	{
+	public synchronized void quit(String quitMsg) {
 
 		loopTimer.cancel();
 
 		dispatchTimer.cancel();
 
-		for (Session session : new ArrayList<Session>(sessionMap.values()))
-		{
+		for (Session session : new ArrayList<Session>(sessionMap.values())) {
 			session.close(quitMsg);
 		}
 
@@ -205,12 +191,9 @@ public class ConnectionManager
 
 		socChanMap.clear();
 
-		try
-		{
+		try {
 			selector.close();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -219,8 +202,7 @@ public class ConnectionManager
 	/**
 	 * Closes all Sessions and exits library
 	 */
-	public synchronized void quit()
-	{
+	public synchronized void quit() {
 		quit("");
 	}
 
@@ -229,8 +211,7 @@ public class ConnectionManager
 	 * 
 	 * @return default profile
 	 */
-	public Profile getDefaultProfile()
-	{
+	public Profile getDefaultProfile() {
 		return defaultProfile;
 	}
 
@@ -238,10 +219,9 @@ public class ConnectionManager
 	 * sets the default profile to use for new connections
 	 * 
 	 * @param profile
-	 *          default profile to use for connections
+	 *                default profile to use for connections
 	 */
-	public void setDefaultProfile(Profile profile)
-	{
+	public void setDefaultProfile(Profile profile) {
 		this.defaultProfile = profile;
 	}
 
@@ -250,51 +230,46 @@ public class ConnectionManager
 	 * 
 	 * @param handler
 	 */
-	public void setDefaultInternalEventHandler(IRCEventListener handler)
-	{
+	public void setDefaultInternalEventHandler(IRCEventListener handler) {
 		internalEventHandler = handler;
 	}
-	
+
 	/**
 	 * Gets the InternalEventHandler to use for this Session.
+	 * 
 	 * @return default Event Handler
 	 */
-	public IRCEventListener getDefaultEventHandler()
-	{
+	public IRCEventListener getDefaultEventHandler() {
 		return internalEventHandler;
 	}
-	
+
 	/**
 	 * Set the InternalEventParser used for this Session.
 	 * 
 	 * @param parser
 	 */
-	public void setDefaultInternalEventParser(InternalEventParser parser)
-	{
+	public void setDefaultInternalEventParser(InternalEventParser parser) {
 		internalEventParser = parser;
 	}
 
 	/**
 	 * Get the InternalEventParser used for this Session.
+	 * 
 	 * @return InternalEventParser for Session
 	 */
-	public InternalEventParser getDefaultInternalEventParser()
-	{
+	public InternalEventParser getDefaultInternalEventParser() {
 		return internalEventParser;
 	}
-	
+
 	/**
 	 * Remove a session
 	 * 
 	 * @param session
 	 */
-	void removeSession(Session session)
-	{
+	void removeSession(Session session) {
 		sessionMap.remove(session.getRequestedConnection().getHostName());
-		for (Iterator<Session> it = socChanMap.values().iterator(); it.hasNext();)
-		{
-			if (it.next().equals(session))
-			{
+		for (Iterator<Session> it = socChanMap.values().iterator(); it.hasNext();) {
+			if (it.next().equals(session)) {
 				it.remove();
 				return;
 			}
@@ -306,8 +281,7 @@ public class ConnectionManager
 	 * 
 	 * @param event
 	 */
-	void addToEventQueue(IRCEvent event)
-	{
+	void addToEventQueue(IRCEvent event) {
 		eventQueue.add(event);
 	}
 
@@ -316,17 +290,14 @@ public class ConnectionManager
 	 * 
 	 * @param event
 	 */
-	void addToRelayList(IRCEvent event)
-	{
-		if (event == null)
-		{
+	void addToRelayList(IRCEvent event) {
+		if (event == null) {
 			new Exception().printStackTrace();
 			quit("Null Pointers ?? In my Code??! :(");
 			return;
 		}
 
-		synchronized (relayQueue)
-		{
+		synchronized (relayQueue) {
 			relayQueue.add(event);
 		}
 	}
@@ -335,25 +306,20 @@ public class ConnectionManager
 	 * Starts a Thread for IO/Parsing/Checking-Making Connections
 	 * Start another Thread for relaying events
 	 */
-	void startMainLoop()
-	{
+	void startMainLoop() {
 		dispatchTimer = new Timer();
 
 		loopTimer = new Timer();
 
-		TimerTask dispatchTask = new TimerTask()
-		{
-			public void run()
-			{
+		TimerTask dispatchTask = new TimerTask() {
+			public void run() {
 				relayEvents();
 				notifyWriteListeners();
 			}
 		};
 
-		TimerTask loopTask = new TimerTask()
-		{
-			public void run()
-			{
+		TimerTask loopTask = new TimerTask() {
+			public void run() {
 				makeConnections();
 				doNetworkIO();
 				parseEvents();
@@ -371,77 +337,57 @@ public class ConnectionManager
 	 * they can be done without blocking.
 	 * 
 	 */
-	void doNetworkIO()
-	{
-		try
-		{
-			if (selector.selectNow() > 0)
-			{
+	void doNetworkIO() {
+		try {
+			if (selector.selectNow() > 0) {
 				Iterator<SelectionKey> it = selector.selectedKeys().iterator();
-				while (it.hasNext())
-				{
+				while (it.hasNext()) {
 					SelectionKey key = it.next();
 					Session session = socChanMap.get(key.channel());
 					it.remove();
 
-					try
-					{
-						if (!key.isValid())
-						{
+					try {
+						if (!key.isValid()) {
 							continue;
 						}
 
-						if (key.isReadable())
-						{
+						if (key.isReadable()) {
 							socChanMap.get(key.channel()).getConnection().read();
 						}
-						if (key.isWritable())
-						{
+						if (key.isWritable()) {
 							socChanMap.get(key.channel()).getConnection().doWrites();
 						}
-						if (key.isConnectable())
-						{
+						if (key.isConnectable()) {
 							finishConnection(key);
 						}
-					}
-					catch (CancelledKeyException ke) 
-					{
+					} catch (CancelledKeyException ke) {
 						session.disconnected();
 					}
 				}
 			}
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
 	 * Attempts to finish a connection
+	 * 
 	 * @param key
 	 */
-	void finishConnection(SelectionKey key)
-	{
+	void finishConnection(SelectionKey key) {
 		SocketChannel chan = (SocketChannel) key.channel();
 		Session session = socChanMap.get(chan);
 
-		if (chan.isConnectionPending())
-		{
-			try
-			{
-				if (session.getConnection().finishConnect())
-				{
+		if (chan.isConnectionPending()) {
+			try {
+				if (session.getConnection().finishConnect()) {
 					session.halfConnected();
 					session.login();
-				}
-				else
-				{
+				} else {
 					session.connecting();
 				}
-			}
-			catch (IOException e)
-			{
+			} catch (IOException e) {
 				session.markForRemoval();
 				key.cancel();
 				e.printStackTrace();
@@ -452,21 +398,15 @@ public class ConnectionManager
 	/**
 	 * Check livelyness of server connections
 	 */
-	void checkServerConnections()
-	{
-		synchronized (sessionMap)
-		{
-			for (Iterator<Session> it = sessionMap.values().iterator(); it.hasNext();)
-			{
+	void checkServerConnections() {
+		synchronized (sessionMap) {
+			for (Iterator<Session> it = sessionMap.values().iterator(); it.hasNext();) {
 				Session session = it.next();
 				State state = session.getState();
 
-				if (state == State.MARKED_FOR_REMOVAL)
-				{
+				if (state == State.MARKED_FOR_REMOVAL) {
 					it.remove();
-				}
-				else if (state == State.NEED_TO_PING)
-				{
+				} else if (state == State.NEED_TO_PING) {
 					session.getConnection().ping();
 				}
 			}
@@ -476,38 +416,33 @@ public class ConnectionManager
 	/**
 	 * Parse Events
 	 */
-	void parseEvents()
-	{
-		synchronized (eventQueue)
-		{
-			if (eventQueue.isEmpty()) { return; }
-			for (IRCEvent event : eventQueue)
-			{
+	void parseEvents() {
+		synchronized (eventQueue) {
+			if (eventQueue.isEmpty()) {
+				return;
+			}
+			for (IRCEvent event : eventQueue) {
 				IRCEvent newEvent = event.getSession().getInternalEventParser().receiveEvent(event);
 				internalEventHandler.receiveEvent(newEvent);
 			}
 			eventQueue.clear();
 		}
 	}
-	
+
 	/**
 	 * Remove Cancelled Tasks for a Session
+	 * 
 	 * @param session
 	 * @return remanding valid tasks
 	 */
-	Map<Type, List<Task>> removeCanceled(Session session)
-	{
+	Map<Type, List<Task>> removeCanceled(Session session) {
 		Map<Type, List<Task>> tasks = session.getTasks();
-		synchronized (tasks)
-		{
-			for (Iterator<List<Task>> it = tasks.values().iterator(); it.hasNext();)
-			{
+		synchronized (tasks) {
+			for (Iterator<List<Task>> it = tasks.values().iterator(); it.hasNext();) {
 				List<Task> thisTasks = it.next();
-				for (Iterator<Task> x = thisTasks.iterator(); x.hasNext();)
-				{
+				for (Iterator<Task> x = thisTasks.iterator(); x.hasNext();) {
 					Task rmTask = x.next();
-					if (rmTask.isCanceled())
-					{
+					if (rmTask.isCanceled()) {
 						x.remove();
 					}
 				}
@@ -519,59 +454,48 @@ public class ConnectionManager
 	/**
 	 * Relay events to Listeners/Tasks
 	 */
-	void relayEvents()
-	{
+	void relayEvents() {
 		List<IRCEvent> events = new ArrayList<IRCEvent>();
 		List<IRCEventListener> templisteners = new ArrayList<IRCEventListener>();
 		Map<Type, List<Task>> tempTasks = new HashMap<Type, List<Task>>();
 
-		synchronized (relayQueue)
-		{
+		synchronized (relayQueue) {
 			events.addAll(relayQueue);
 			relayQueue.clear();
 		}
 
-		for (IRCEvent event : events)
-		{
+		for (IRCEvent event : events) {
 			Session s = event.getSession();
 
 			// if session is null , this means the session has been removed or
 			// quit() in Session has been called , but not before a few
 			// events could queue up for that session. So we should continue
 			// to the next event
-			if (s == null)
-			{
+			if (s == null) {
 				continue;
 			}
 
 			Collection<IRCEventListener> listeners = s.getIRCEventListeners();
-			synchronized (listeners)
-			{
+			synchronized (listeners) {
 				templisteners.addAll(listeners);
 			}
 
 			tempTasks.putAll(removeCanceled(s));
 
 			List<Task> typeTasks = tempTasks.get(event.getType());
-			if (typeTasks != null)
-			{
+			if (typeTasks != null) {
 				templisteners.addAll(typeTasks);
 			}
 
 			List<Task> nullTasks = tempTasks.get(null);
-			if (nullTasks != null)
-			{
+			if (nullTasks != null) {
 				templisteners.addAll(nullTasks);
 			}
 
-			for (IRCEventListener listener : templisteners)
-			{
-				try
-				{
+			for (IRCEventListener listener : templisteners) {
+				try {
 					listener.receiveEvent(event);
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					System.err.println("jerklib:Cought Client Exception");
 					e.printStackTrace();
 				}
@@ -585,27 +509,24 @@ public class ConnectionManager
 	/**
 	 * Relay write requests to listeners
 	 */
-	void notifyWriteListeners()
-	{
+	void notifyWriteListeners() {
 		List<WriteRequestListener> list = new ArrayList<WriteRequestListener>();
 		List<WriteRequest> wRequests = new ArrayList<WriteRequest>();
 
-		synchronized (requestForWriteListenerEventQueue)
-		{
-			if (requestForWriteListenerEventQueue.isEmpty()) { return; }
+		synchronized (requestForWriteListenerEventQueue) {
+			if (requestForWriteListenerEventQueue.isEmpty()) {
+				return;
+			}
 			wRequests.addAll(requestForWriteListenerEventQueue);
 			requestForWriteListenerEventQueue.clear();
 		}
 
-		synchronized (writeListeners)
-		{
+		synchronized (writeListeners) {
 			list.addAll(writeListeners);
 		}
 
-		for (WriteRequestListener listener : list)
-		{
-			for (WriteRequest request : wRequests)
-			{
+		for (WriteRequestListener listener : list) {
+			for (WriteRequest request : wRequests) {
 				listener.receiveEvent(request);
 			}
 		}
@@ -614,42 +535,32 @@ public class ConnectionManager
 	/**
 	 * Make COnnections
 	 */
-	void makeConnections()
-	{
-		synchronized (sessionMap)
-		{
-			for (Iterator<Session> it = sessionMap.values().iterator(); it.hasNext();)
-			{
+	void makeConnections() {
+		synchronized (sessionMap) {
+			for (Iterator<Session> it = sessionMap.values().iterator(); it.hasNext();) {
 				Session session = it.next();
 				State state = session.getState();
 
-				if (state == State.NEED_TO_RECONNECT)
-				{
+				if (state == State.NEED_TO_RECONNECT) {
 					session.disconnected();
 				}
 
-				if (state == State.DISCONNECTED)
-				{
+				if (state == State.DISCONNECTED) {
 					long last = session.getLastRetry();
 					long current = System.currentTimeMillis();
-					if (last > 0 && current - last < 10000)
-					{
+					if (last > 0 && current - last < 10000) {
 						continue;
 					}
 
-					try
-					{
+					try {
 						session.retried();
 						connect(session);
-					}
-					catch (UnresolvedAddressException e)
-					{
-						ErrorEvent error = new UnresolvedHostnameErrorEventImpl(session, e.getMessage(), session.getRequestedConnection().getHostName(), e);
+					} catch (UnresolvedAddressException e) {
+						ErrorEvent error = new UnresolvedHostnameErrorEventImpl(session, e.getMessage(),
+								session.getRequestedConnection().getHostName(), e);
 						addToRelayList(error);
 						session.markForRemoval();
-					}
-					catch (IOException e)
-					{
+					} catch (IOException e) {
 						e.printStackTrace();
 						session.disconnected();
 					}
@@ -664,13 +575,13 @@ public class ConnectionManager
 	 * @param session
 	 * @throws IOException
 	 */
-	void connect(Session session) throws IOException
-	{
+	void connect(Session session) throws IOException {
 		SocketChannel sChannel = SocketChannel.open();
 
 		sChannel.configureBlocking(false);
 
-		sChannel.connect(new InetSocketAddress(session.getRequestedConnection().getHostName(), session.getRequestedConnection().getPort()));
+		sChannel.connect(new InetSocketAddress(session.getRequestedConnection().getHostName(),
+				session.getRequestedConnection().getPort()));
 
 		sChannel.register(selector, sChannel.validOps());
 

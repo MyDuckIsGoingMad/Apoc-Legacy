@@ -7,16 +7,14 @@ import jerklib.EventToken;
 import jerklib.events.IRCEvent;
 import jerklib.events.impl.WhoEventImpl;
 
-public class WhoParser implements CommandParser
-{
-	public IRCEvent createEvent(EventToken token, IRCEvent event)
-	{
+public class WhoParser implements CommandParser {
+	public IRCEvent createEvent(EventToken token, IRCEvent event) {
 		String data = token.data();
-		Pattern p = Pattern.compile("^:.+?\\s+352\\s+.+?\\s+(.+?)\\s+(.+?)\\s+(.+?)\\s+(.+?)\\s+(.+?)\\s+(.+?):(\\d+)\\s+(.+)$");
+		Pattern p = Pattern
+				.compile("^:.+?\\s+352\\s+.+?\\s+(.+?)\\s+(.+?)\\s+(.+?)\\s+(.+?)\\s+(.+?)\\s+(.+?):(\\d+)\\s+(.+)$");
 		Matcher m = p.matcher(data);
-		if (m.matches())
-		{
-			
+		if (m.matches()) {
+
 			boolean away = m.group(6).charAt(0) == 'G';
 			return new WhoEventImpl(m.group(1), // channel
 					Integer.parseInt(m.group(7)), // hop count

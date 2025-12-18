@@ -27,8 +27,7 @@ import java.util.Map;
  * @author mohadib
  * 
  */
-public class Channel
-{
+public class Channel {
 	/* channel name */
 	private String name;
 	private Session session;
@@ -39,42 +38,36 @@ public class Channel
 	/**
 	 * This should only be used internally and for testing
 	 * 
-	 * @param name - Name of Channel
+	 * @param name    - Name of Channel
 	 * @param session - Session Channel belongs to
 	 */
-	public Channel(String name, Session session)
-	{
+	public Channel(String name, Session session) {
 		/* create a map that will match exact and key to lowercase */
-		userMap = new HashMap<String, List<ModeAdjustment>>()
-		{
-			public List<ModeAdjustment> get(Object key)
-			{
+		userMap = new HashMap<String, List<ModeAdjustment>>() {
+			public List<ModeAdjustment> get(Object key) {
 				List<ModeAdjustment> rList = super.get(key);
-				if(key != null && rList == null)
-				{
+				if (key != null && rList == null) {
 					rList = super.get(key.toString().toLowerCase());
 				}
 				return rList;
 			}
-			
-			public List<ModeAdjustment> remove(Object key)
-			{
-				List<ModeAdjustment> rList =  super.remove(key);
-				if(key != null && rList == null)
-				{
+
+			public List<ModeAdjustment> remove(Object key) {
+				List<ModeAdjustment> rList = super.remove(key);
+				if (key != null && rList == null) {
 					rList = super.remove(key.toString().toLowerCase());
 				}
 				return rList;
 			}
-			
-			public boolean containsKey(Object key)
-			{
-				boolean b =  super.containsKey(key);
-				if(!b) b = super.containsKey(key.toString().toLowerCase());
+
+			public boolean containsKey(Object key) {
+				boolean b = super.containsKey(key);
+				if (!b)
+					b = super.containsKey(key.toString().toLowerCase());
 				return b;
 			}
 		};
-		
+
 		this.name = name;
 		this.session = session;
 	}
@@ -94,23 +87,19 @@ public class Channel
 	 * be tracked. Example: i is tracked
 	 * 
 	 * @param modes -
-	 *          list of ModeAdjustments
+	 *              list of ModeAdjustments
 	 */
-	void updateModes(List<ModeAdjustment> modes)
-	{
+	void updateModes(List<ModeAdjustment> modes) {
 		ServerInformation info = session.getServerInformation();
 		List<String> nickModes = new ArrayList<String>(info.getNickPrefixMap().values());
 
-		for (ModeAdjustment mode : modes)
-		{
-			if (nickModes.contains(String.valueOf(mode.getMode())) && userMap.containsKey(mode.getArgument()))
-			{
+		for (ModeAdjustment mode : modes) {
+			if (nickModes.contains(String.valueOf(mode.getMode())) && userMap.containsKey(mode.getArgument())) {
 				updateMode(mode, userMap.get(mode.getArgument()));
 			}
 			/* filter out channel modes that apply to users that are not in prefix map */
 			/* like +b - this behviour might not be desired , time will tell */
-			else if (mode.getMode() != 'q' && mode.getMode() != 'b')
-			{
+			else if (mode.getMode() != 'q' && mode.getMode() != 'b') {
 				updateMode(mode, channelModes);
 			}
 		}
@@ -131,25 +120,20 @@ public class Channel
 	 * 
 	 * @param mode
 	 */
-	private void updateMode(ModeAdjustment mode, List<ModeAdjustment> modes)
-	{
+	private void updateMode(ModeAdjustment mode, List<ModeAdjustment> modes) {
 		int index = indexOfMode(mode.getMode(), modes);
 
-		if (mode.getAction() == Action.MINUS)
-		{
-			if (index != -1)
-			{
+		if (mode.getAction() == Action.MINUS) {
+			if (index != -1) {
 				ModeAdjustment ma = modes.remove(index);
-				if (ma.getAction() == Action.MINUS) modes.add(ma);
-			}
-			else
-			{
+				if (ma.getAction() == Action.MINUS)
+					modes.add(ma);
+			} else {
 				modes.add(mode);
 			}
-		}
-		else
-		{
-			if (index != -1) modes.remove(index);
+		} else {
+			if (index != -1)
+				modes.remove(index);
 			modes.add(mode);
 		}
 	}
@@ -158,17 +142,16 @@ public class Channel
 	 * Finds index of a mode in a List of ModeAdjustments
 	 * 
 	 * @param mode
-	 *          mode to find
+	 *              mode to find
 	 * @param modes
-	 *          list to search
+	 *              list to search
 	 * @return index or -1 if not found
 	 */
-	private int indexOfMode(char mode, List<ModeAdjustment> modes)
-	{
-		for (int i = 0; i < modes.size(); i++)
-		{
+	private int indexOfMode(char mode, List<ModeAdjustment> modes) {
+		for (int i = 0; i < modes.size(); i++) {
 			ModeAdjustment ma = modes.get(i);
-			if (ma.getMode() == mode) return i;
+			if (ma.getMode() == mode)
+				return i;
 		}
 		return -1;
 	}
@@ -180,14 +163,10 @@ public class Channel
 	 * @param nick
 	 * @return list of ModeAdjustments for user
 	 */
-	public List<ModeAdjustment> getUsersModes(String nick)
-	{
-		if (userMap.containsKey(nick))
-		{
+	public List<ModeAdjustment> getUsersModes(String nick) {
+		if (userMap.containsKey(nick)) {
 			return new ArrayList<ModeAdjustment>(userMap.get(nick));
-		}
-		else
-		{
+		} else {
 			return new ArrayList<ModeAdjustment>();
 		}
 	}
@@ -199,19 +178,17 @@ public class Channel
 	 * 
 	 * So searching for -v would almost always return an empty list.
 	 * 
-	 * @param action 
+	 * @param action
 	 * @param mode
 	 * @return List of nicks with mode/action set
 	 */
-	public List<String> getNicksForMode(Action action , char mode)
-	{
+	public List<String> getNicksForMode(Action action, char mode) {
 		List<String> nicks = new ArrayList<String>();
-		for (String nick : getNicks())
-		{
+		for (String nick : getNicks()) {
 			List<ModeAdjustment> modes = userMap.get(nick);
-			for (ModeAdjustment ma : modes)
-			{
-				if (ma.getMode() == mode && ma.getAction() == action) nicks.add(nick);
+			for (ModeAdjustment ma : modes) {
+				if (ma.getMode() == mode && ma.getAction() == action)
+					nicks.add(nick);
 			}
 		}
 		return nicks;
@@ -224,8 +201,7 @@ public class Channel
 	 * 
 	 * @return List of ModeAdjustments for the Channel
 	 */
-	public List<ModeAdjustment> getChannelModes()
-	{
+	public List<ModeAdjustment> getChannelModes() {
 		return new ArrayList<ModeAdjustment>(channelModes);
 	}
 
@@ -237,8 +213,7 @@ public class Channel
 	 * 
 	 * @param mode to set.
 	 */
-	public void mode(String mode)
-	{
+	public void mode(String mode) {
 		session.mode(name, mode);
 	}
 
@@ -247,18 +222,17 @@ public class Channel
 	 * 
 	 * @return topic for channel
 	 */
-	public String getTopic()
-	{
+	public String getTopic() {
 		return topicEvent != null ? topicEvent.getTopic() : "";
 	}
-	
+
 	/**
-	 * Gets the nick of who set the topic or an empty string if the topic is not set.
+	 * Gets the nick of who set the topic or an empty string if the topic is not
+	 * set.
 	 * 
 	 * @return nick of topic setter
 	 */
-	public String getTopicSetter()
-	{
+	public String getTopicSetter() {
 		return topicEvent != null ? topicEvent.getSetBy() : "";
 	}
 
@@ -267,9 +241,8 @@ public class Channel
 	 * 
 	 * @return date topic was set or null if not set
 	 */
-	public Date getTopicSetTime()
-	{
-		return topicEvent == null? null:topicEvent.getSetWhen();
+	public Date getTopicSetTime() {
+		return topicEvent == null ? null : topicEvent.getSetWhen();
 	}
 
 	/**
@@ -277,8 +250,7 @@ public class Channel
 	 * 
 	 * @param topic to use.
 	 */
-	public void setTopic(String topic)
-	{
+	public void setTopic(String topic) {
 		write(new WriteRequest("TOPIC " + name + " :" + topic, session));
 	}
 
@@ -287,8 +259,7 @@ public class Channel
 	 * 
 	 * @param topicEvent
 	 */
-	public void setTopicEvent(TopicEvent topicEvent)
-	{
+	public void setTopicEvent(TopicEvent topicEvent) {
 		this.topicEvent = topicEvent;
 	}
 
@@ -297,8 +268,7 @@ public class Channel
 	 * 
 	 * @return name of Channel
 	 */
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -307,8 +277,7 @@ public class Channel
 	 * 
 	 * @param message - what to say
 	 */
-	public void say(String message)
-	{
+	public void say(String message) {
 		session.sayChannel(this, message);
 	}
 
@@ -317,36 +286,30 @@ public class Channel
 	 * 
 	 * @param message - notice messgae
 	 */
-	public void notice(String message)
-	{
+	public void notice(String message) {
 		session.notice(getName(), message);
 	}
-	
+
 	/**
 	 * This method is for internal use only
 	 * 
 	 * @param nick to add
 	 */
-	public void addNick(String nick)
-	{
-		if (!userMap.containsKey(nick))
-		{
+	public void addNick(String nick) {
+		if (!userMap.containsKey(nick)) {
 
 			ServerInformation info = session.getServerInformation();
 			Map<String, String> nickPrefixMap = info.getNickPrefixMap();
 			List<ModeAdjustment> modes = new ArrayList<ModeAdjustment>();
-			for (String prefix : nickPrefixMap.keySet())
-			{
-				if (nick.startsWith(prefix))
-				{
+			for (String prefix : nickPrefixMap.keySet()) {
+				if (nick.startsWith(prefix)) {
 					modes.add(new ModeAdjustment(Action.PLUS, nickPrefixMap.get(prefix).charAt(0), ""));
 				}
 			}
 
 			// TODO can a nick come in as voiced and oped? +@dib ?
 			// if so substring nick with modes.size();
-			if (!modes.isEmpty())
-			{
+			if (!modes.isEmpty()) {
 				nick = nick.substring(1);
 			}
 			userMap.put(nick, modes);
@@ -359,8 +322,7 @@ public class Channel
 	 * @param nick
 	 * @return true if nick was removed else false
 	 */
-	boolean removeNick(String nick)
-	{
+	boolean removeNick(String nick) {
 		return userMap.remove(nick) != null;
 	}
 
@@ -370,8 +332,7 @@ public class Channel
 	 * @param oldNick
 	 * @param newNick
 	 */
-	void nickChanged(String oldNick, String newNick)
-	{
+	void nickChanged(String oldNick, String newNick) {
 		List<ModeAdjustment> modes = userMap.remove(oldNick);
 		userMap.put(newNick, modes);
 	}
@@ -383,32 +344,29 @@ public class Channel
 	 * 
 	 * @return List of nicks
 	 */
-	public List<String> getNicks()
-	{
-		return new ArrayList<String>(userMap.keySet())
-		{
-			public int indexOf(Object o)
-			{
-				if (o != null)
-				{
-					for (int i = 0; i < size(); i++)
-					{
-						if (get(i).equalsIgnoreCase(o.toString())) { return i; }
+	public List<String> getNicks() {
+		return new ArrayList<String>(userMap.keySet()) {
+			public int indexOf(Object o) {
+				if (o != null) {
+					for (int i = 0; i < size(); i++) {
+						if (get(i).equalsIgnoreCase(o.toString())) {
+							return i;
+						}
 					}
 				}
 				return -1;
 			}
 		};
 	}
-	
+
 	/**
 	 * Part the channel
 	 * 
 	 * @param partMsg
 	 */
-	public void part(String partMsg)
-	{
-		if(partMsg == null || partMsg.length() == 0) partMsg = "Leaving";
+	public void part(String partMsg) {
+		if (partMsg == null || partMsg.length() == 0)
+			partMsg = "Leaving";
 		write(new WriteRequest("PART " + getName() + " :" + partMsg, session));
 	}
 
@@ -417,114 +375,122 @@ public class Channel
 	 * 
 	 * @param text action text
 	 */
-	public void action(String text)
-	{
+	public void action(String text) {
 		write(new WriteRequest("\001ACTION " + text + "\001", this, session));
 	}
 
 	/**
-	 *Send a names query to the server 
+	 * Send a names query to the server
 	 */
-	public void names()
-	{
+	public void names() {
 		write(new WriteRequest("NAMES " + getName(), this, session));
 	}
-	
-	/** 
+
+	/**
 	 * Devoice a user
+	 * 
 	 * @param userName
 	 */
-	public void deVoice(String userName)
-	{
+	public void deVoice(String userName) {
 		write(new WriteRequest("MODE " + getName() + " -v " + userName, session));
 	}
 
 	/**
 	 * Voice a user
+	 * 
 	 * @param userName
 	 */
-	public void voice(String userName)
-	{
+	public void voice(String userName) {
 		write(new WriteRequest("MODE " + getName() + " +v " + userName, session));
 	}
 
 	/**
 	 * Op a user
+	 * 
 	 * @param userName
 	 */
-	public void op(String userName)
-	{
+	public void op(String userName) {
 		write(new WriteRequest("MODE " + getName() + " +o " + userName, session));
 	}
 
 	/**
 	 * DeOp a user
+	 * 
 	 * @param userName
 	 */
-	public void deop(String userName)
-	{
+	public void deop(String userName) {
 		write(new WriteRequest("MODE " + getName() + " -o " + userName, session));
 	}
 
 	/**
 	 * Kick a user
+	 * 
 	 * @param userName
 	 * @param reason
 	 */
-	public void kick(String userName, String reason)
-	{
-		if(reason == null || reason.length() == 0) reason = session.getNick();
+	public void kick(String userName, String reason) {
+		if (reason == null || reason.length() == 0)
+			reason = session.getNick();
 		write(new WriteRequest("KICK " + getName() + " " + userName + " :" + reason, session));
 	}
-	
-	
+
 	/**
 	 * Helper method for writing
+	 * 
 	 * @param req
 	 */
-	private void write(WriteRequest req)
-	{
+	private void write(WriteRequest req) {
 		session.getConnection().addWriteRequest(req);
 	}
-	
+
 	/**
 	 * Return the Session this Channel belongs to
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public boolean equals(Object o)
-	{
-		if (this == o) { return true; }
-		if (!(o instanceof Channel)) { return false; }
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Channel)) {
+			return false;
+		}
 		Channel channel = (Channel) o;
-		if (!session.getConnectedHostName().equals(channel.getSession().getConnectedHostName())) { return false; }
-		if (!name.equals(channel.getName())) { return false; }
+		if (!session.getConnectedHostName().equals(channel.getSession().getConnectedHostName())) {
+			return false;
+		}
+		if (!name.equals(channel.getName())) {
+			return false;
+		}
 
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
-	public int hashCode()
-	{
+	public int hashCode() {
 		int result;
 		result = (name != null ? name.hashCode() : 0);
 		result = 31 * result + session.getConnectedHostName().hashCode();
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString()
-	{
+	public String toString() {
 		return "[Channel: name=" + name + "]";
 	}
 }

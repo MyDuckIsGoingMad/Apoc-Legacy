@@ -11,13 +11,13 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.BooleanControl;
 import javax.sound.sampled.DataLine;
 
-public class Sound{
+public class Sound {
 	Clip m_clip;
-    
-	//private AudioClip m_clip;
+
+	// private AudioClip m_clip;
 	public static HashSet<Integer> soundSet = new HashSet<Integer>();
 	public static HashSet<Integer> deathSet = new HashSet<Integer>();
-	
+
 	public static final Sound white = new Sound("custom_wav/whiteFound.wav");
 	public static final Sound red = new Sound("custom_wav/redFound.wav");
 	public static final Sound troll = new Sound("custom_wav/trollFound.wav");
@@ -30,96 +30,114 @@ public class Sound{
 	public static final Sound ram = new Sound("custom_wav/ramFound.wav");
 	public static final Sound moon = new Sound("custom_wav/moonSound.wav");
 	public static final Sound timer = new Sound("custom_wav/timerSound.wav");
-	
-	public static void soundGobList(Gob g){
-		if(!soundCheck(g.id)) return;
-		
+
+	public static void soundGobList(Gob g) {
+		if (!soundCheck(g.id))
+			return;
+
 		String resname = g.resname();
-		
-		if(resname == ""){
+
+		if (resname == "") {
 			soundSet.remove(g.id);
 		}
-		
-		if(g.isHuman() && !isplayerid(g, g.id) ){
+
+		if (g.isHuman() && !isplayerid(g, g.id)) {
 			KinInfo kin = g.getattr(KinInfo.class);
-			if(kin == null){
+			if (kin == null) {
 				safePlay("white");
 				if (Config.autoAggro)
-				    new addons.AutoAggro(UI.instance.m_util).start();
-			}else if(kin.group == 2){
+					new addons.AutoAggro(UI.instance.m_util).start();
+			} else if (kin.group == 2) {
 				safePlay("red");
 				if (Config.autoAggro)
-				    new addons.AutoAggro(UI.instance.m_util).start();
+					new addons.AutoAggro(UI.instance.m_util).start();
 			}
-		}else if(resname.endsWith("troll/s") ){
+		} else if (resname.endsWith("troll/s")) {
 			safePlay("troll");
-		}else if(resname.endsWith("bear/s") ){
+		} else if (resname.endsWith("bear/s")) {
 			safePlay("bear");
-		}else if(resname.startsWith("gfx/kritter/bram") ){
+		} else if (resname.startsWith("gfx/kritter/bram")) {
 			safePlay("ram");
-		}else if(resname.endsWith("chimingbluebell") ){
+		} else if (resname.endsWith("chimingbluebell")) {
 			safePlay("bell");
-		}else if(resname.endsWith("flotsam") ){
+		} else if (resname.endsWith("flotsam")) {
 			safePlay("flotsam");
 		}
 	}
-	
-	public static boolean isplayerid(Gob g, int id){
-		/*if((UI.instance != null)
-			&& (UI.instance.mainview != null)
-			&& (UI.instance.mainview.playergob == id)){
-			return true;
-		}*/
-		try{
+
+	public static boolean isplayerid(Gob g, int id) {
+		/*
+		 * if((UI.instance != null)
+		 * && (UI.instance.mainview != null)
+		 * && (UI.instance.mainview.playergob == id)){
+		 * return true;
+		 * }
+		 */
+		try {
 			return g.glob.sess.ui.mainview.playergob == id;
-		}catch(Exception e){}
+		} catch (Exception e) {
+		}
 		return false;
-    }
-	
-	public static boolean soundCheck(int id){
-		if(!soundSet.contains(id) ){
+	}
+
+	public static boolean soundCheck(int id) {
+		if (!soundSet.contains(id)) {
 			soundSet.add(id);
 			return true;
 		}
 		return false;
 	}
-	
-	public static boolean deathCheck(int id){
-		if(!deathSet.contains(id) ){
+
+	public static boolean deathCheck(int id) {
+		if (!deathSet.contains(id)) {
 			deathSet.add(id);
 			return true;
 		}
 		return false;
 	}
-	
-	public static void safePlay(String str){
-		if(!Config.confSounds.get(str)) return;
-		
+
+	public static void safePlay(String str) {
+		if (!Config.confSounds.get(str))
+			return;
+
 		playSound(str);
 	}
-	
-	public static void playSound(String str){
-		if(str == "white") Sound.white.play();
-		if(str == "red") Sound.red.play();
-		if(str == "troll") Sound.troll.play();
-		if(str == "bell") Sound.bell.play();
-		if(str == "flotsam") Sound.flotsam.play();
-		if(str == "bear") Sound.bear.play();
-		if(str == "pearl") Sound.pearl.play();
-		if(str == "aggro") Sound.aggro.play();
-		if(str == "death") Sound.death.play();
-		if(str == "ram") Sound.ram.play();
-		if(str == "timer") Sound.timer.play();
+
+	public static void playSound(String str) {
+		if (str == "white")
+			Sound.white.play();
+		if (str == "red")
+			Sound.red.play();
+		if (str == "troll")
+			Sound.troll.play();
+		if (str == "bell")
+			Sound.bell.play();
+		if (str == "flotsam")
+			Sound.flotsam.play();
+		if (str == "bear")
+			Sound.bear.play();
+		if (str == "pearl")
+			Sound.pearl.play();
+		if (str == "aggro")
+			Sound.aggro.play();
+		if (str == "death")
+			Sound.death.play();
+		if (str == "ram")
+			Sound.ram.play();
+		if (str == "timer")
+			Sound.timer.play();
 	}
-	
-	public Sound(String fileName){
-		/*try{
-			URL url = new URL("file:"+fileName);
-			m_clip = Applet.newAudioClip(url);
-			//System.out.println(fileName);
-		}catch(Exception e){
-			System.out.println("Clip loading error.");
-		}*/
+
+	public Sound(String fileName) {
+		/*
+		 * try{
+		 * URL url = new URL("file:"+fileName);
+		 * m_clip = Applet.newAudioClip(url);
+		 * //System.out.println(fileName);
+		 * }catch(Exception e){
+		 * System.out.println("Clip loading error.");
+		 * }
+		 */
 		try {
 			File file = new File(fileName);
 			if (file.exists()) {
@@ -128,33 +146,35 @@ public class Sound{
 				m_clip.open(ais);
 			} else {
 				m_clip = null;
-				//throw new RuntimeException("Sound: file not found: " + fileName);
+				// throw new RuntimeException("Sound: file not found: " + fileName);
 			}
-		}catch(Exception e){}
+		} catch (Exception e) {
+		}
 	}
-	
-	void volume(){
+
+	void volume() {
 		FloatControl gainControl = (FloatControl) m_clip.getControl(FloatControl.Type.MASTER_GAIN);
-		double gain = (double)Config.alertVol / 100;
+		double gain = (double) Config.alertVol / 100;
 		float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
-		
+
 		gainControl.setValue(dB);
 	}
-	
-	public void play(){
-		try{
-			new Thread(){
-				public void run(){
-					//m_clip.setVolume((double)(Config.sfxvol / 100));
-					//m_clip.play();
-					if(m_clip == null) return;
+
+	public void play() {
+		try {
+			new Thread() {
+				public void run() {
+					// m_clip.setVolume((double)(Config.sfxvol / 100));
+					// m_clip.play();
+					if (m_clip == null)
+						return;
 					volume();
 					m_clip.setFramePosition(0);
 					m_clip.loop(0);
 					m_clip.start();
 				}
 			}.start();
-		}catch(Exception ec){
+		} catch (Exception ec) {
 			System.out.println("Play error.");
 		}
 	}

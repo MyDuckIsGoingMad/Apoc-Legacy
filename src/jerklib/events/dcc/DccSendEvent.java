@@ -7,8 +7,7 @@ import java.net.InetAddress;
  * 
  * @author Andres N. Kievsky
  */
-public interface DccSendEvent extends DccEvent
-{
+public interface DccSendEvent extends DccEvent {
 	String getFilename();
 
 	InetAddress getIp();

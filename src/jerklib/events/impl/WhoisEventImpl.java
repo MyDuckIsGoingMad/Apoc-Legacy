@@ -11,8 +11,7 @@ import java.util.List;
  * @see WhoisEvent
  *
  */
-public class WhoisEventImpl implements WhoisEvent
-{
+public class WhoisEventImpl implements WhoisEvent {
 	private final Type type = Type.WHOIS_EVENT;
 	private final String host, user, realName, nick;
 	private final Session session;
@@ -22,8 +21,8 @@ public class WhoisEventImpl implements WhoisEvent
 	private long secondsIdle;
 	private int signOnTime;
 
-	public WhoisEventImpl(String nick, String realName, String user, String host, String rawEventData, Session session)
-	{
+	public WhoisEventImpl(String nick, String realName, String user, String host, String rawEventData,
+			Session session) {
 		this.nick = nick;
 		this.realName = realName;
 		this.user = user;
@@ -32,163 +31,171 @@ public class WhoisEventImpl implements WhoisEvent
 		this.rawEventData = rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#getChannelNames()
 	 */
-	public List<String> getChannelNames()
-	{
+	public List<String> getChannelNames() {
 		return channelNames;
 	}
 
 	/**
 	 * @param chanNames
 	 */
-	public void setChannelNamesList(List<String> chanNames)
-	{
+	public void setChannelNamesList(List<String> chanNames) {
 		channelNames = chanNames;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#getHost()
 	 */
-	public String getHost()
-	{
+	public String getHost() {
 		return host;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#getUser()
 	 */
-	public String getUser()
-	{
+	public String getUser() {
 		return user;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#getRealName()
 	 */
-	public String getRealName()
-	{
+	public String getRealName() {
 		return realName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#getNick()
 	 */
-	public String getNick()
-	{
+	public String getNick() {
 		return nick;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#isAnOperator()
 	 */
-	public boolean isAnOperator()
-	{
+	public boolean isAnOperator() {
 		return isOp;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#isIdle()
 	 */
-	public boolean isIdle()
-	{
+	public boolean isIdle() {
 		return secondsIdle > 0;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#secondsIdle()
 	 */
-	public long secondsIdle()
-	{
+	public long secondsIdle() {
 		return secondsIdle;
 	}
 
 	/**
 	 * @param secondsIdle
 	 */
-	public void setSecondsIdle(int secondsIdle)
-	{
+	public void setSecondsIdle(int secondsIdle) {
 		this.secondsIdle = secondsIdle();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#signOnTime()
 	 */
-	public Date signOnTime()
-	{
+	public Date signOnTime() {
 		return new Date(1000L * signOnTime);
 	}
 
 	/**
 	 * @param signOnTime
 	 */
-	public void setSignOnTime(int signOnTime)
-	{
+	public void setSignOnTime(int signOnTime) {
 		this.signOnTime = signOnTime;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#whoisServer()
 	 */
-	public String whoisServer()
-	{
+	public String whoisServer() {
 		return whoisServer;
 	}
 
 	/**
 	 * @param whoisServer
 	 */
-	public void setWhoisServer(String whoisServer)
-	{
+	public void setWhoisServer(String whoisServer) {
 		this.whoisServer = whoisServer;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhoisEvent#whoisServerInfo()
 	 */
-	public String whoisServerInfo()
-	{
+	public String whoisServerInfo() {
 		return whoisServerInfo;
 	}
 
 	/**
 	 * @param whoisServerInfo
 	 */
-	public void setWhoisServerInfo(String whoisServerInfo)
-	{
+	public void setWhoisServerInfo(String whoisServerInfo) {
 		this.whoisServerInfo = whoisServerInfo;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return rawEventData;
 	}
 
 	/**
 	 * @param rawEventData
 	 */
-	public void appendRawEventData(String rawEventData)
-	{
+	public void appendRawEventData(String rawEventData) {
 		this.rawEventData += "\r\n" + rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public Type getType()
-	{
+	public Type getType() {
 		return type;
 	}
 

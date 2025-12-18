@@ -28,141 +28,155 @@ import java.util.List;
 import java.net.URI;
 import java.awt.Desktop;
 
-public class BlueLightning extends Thread{
+public class BlueLightning extends Thread {
 	HavenUtil m_util;
-	
-	public BlueLightning(HavenUtil util){
+
+	public BlueLightning(HavenUtil util) {
 		m_util = util;
 	}
-	
-	Task findCurrentTask(){
-		if(m_util.m_ui.fight == null || m_util.m_ui.fight.current == null) return null;
-		if(System.currentTimeMillis() < m_util.m_ui.fight.atkc) return null;
-		
+
+	Task findCurrentTask() {
+		if (m_util.m_ui.fight == null || m_util.m_ui.fight.current == null)
+			return null;
+		if (System.currentTimeMillis() < m_util.m_ui.fight.atkc)
+			return null;
+
 		Gob target = m_util.findObjectByID(m_util.m_ui.fight.current.gobid);
-		if(m_util.getPlayerCoord().dist(target.getr()) > 295) return null;
-		
-		if(m_util.m_ui.fight.batk != null){
-			if(m_util.m_ui.fight.batk.get().name.endsWith("thunder") ) return null;
+		if (m_util.getPlayerCoord().dist(target.getr()) > 295)
+			return null;
+
+		if (m_util.m_ui.fight.batk != null) {
+			if (m_util.m_ui.fight.batk.get().name.endsWith("thunder"))
+				return null;
 			return new Task(m_util.m_ui.fight.batk.get().name);
 		}
-		if(m_util.m_ui.fight.iatk != null) return new Task(m_util.m_ui.fight.iatk.get().name, 3);
-		
+		if (m_util.m_ui.fight.iatk != null)
+			return new Task(m_util.m_ui.fight.iatk.get().name, 3);
+
 		Gob player = m_util.getPlayerGob();
-		
+
 		Moving moveType = player.getattr(Moving.class);
-		if(moveType == null) return new Task();
-		if(moveType instanceof Following || moveType instanceof Homing) return null;
-		
-		if(moveType instanceof LinMove) return new Task( ((LinMove)moveType).t );
-		
+		if (moveType == null)
+			return new Task();
+		if (moveType instanceof Following || moveType instanceof Homing)
+			return null;
+
+		if (moveType instanceof LinMove)
+			return new Task(((LinMove) moveType).t);
+
 		return null;
 	}
-	
-	void clickWorldObject(int button, Gob object){
-		m_util.m_ui.mainview.wdgmsg("click", new Coord(200,150), object.getr(), button, 0, object.id, object.getr());
+
+	void clickWorldObject(int button, Gob object) {
+		m_util.m_ui.mainview.wdgmsg("click", new Coord(200, 150), object.getr(), button, 0, object.id, object.getr());
 	}
-	
-	public void sendAction(String str1, String str2){
-		String[] action = {str1, str2};
-		m_util.m_ui.mnu.wdgmsg("act", (Object[])action);
+
+	public void sendAction(String str1, String str2) {
+		String[] action = { str1, str2 };
+		m_util.m_ui.mnu.wdgmsg("act", (Object[]) action);
 	}
-	
-	void thunderTarget(Task task){
+
+	void thunderTarget(Task task) {
 		sendAction("atk", "thunder");
-		if(task.type != 2){
+		if (task.type != 2) {
 			Gob target = m_util.findObjectByID(m_util.m_ui.fight.current.gobid);
-			if(target != null) clickWorldObject(1, target);
+			if (target != null)
+				clickWorldObject(1, target);
 		}
 	}
-	
-	String getAttack(Task t){
-		/*return "knockteeth"; // khto
-		return "baseaxe"; // chop
-		return "cleave";
-		return "pow"; // punch
-		return "sting";
-		return "strangle";
-		return "valstr"; // vallor
-		
-		return "berserk"; // charge
-		return "dash";
-		return "feignflight";
-		return "feignflight";
-		return "flex";
-		return "butterfly";
-		return "jump";
-		return "advpush"; // push advantage
-		return "seize"; // seize the day
-		return "slide";
-		return "throwsand";
-		
-		return "roar"; // battle cry
-		return "fcons"; // consume the flames
-		return "bloodshot"; // eye
-		return "fflame"; // fan of the flames
-		return "skuld"; // invocation of skuld
-		return "paingain"; // no pain
-		return "oppknock";
-		return "sidestep";
-		return "sternorder";
-		return "bee"; // sting like a bee
-		return "toarms";*/
-		
+
+	String getAttack(Task t) {
+		/*
+		 * return "knockteeth"; // khto
+		 * return "baseaxe"; // chop
+		 * return "cleave";
+		 * return "pow"; // punch
+		 * return "sting";
+		 * return "strangle";
+		 * return "valstr"; // vallor
+		 * 
+		 * return "berserk"; // charge
+		 * return "dash";
+		 * return "feignflight";
+		 * return "feignflight";
+		 * return "flex";
+		 * return "butterfly";
+		 * return "jump";
+		 * return "advpush"; // push advantage
+		 * return "seize"; // seize the day
+		 * return "slide";
+		 * return "throwsand";
+		 * 
+		 * return "roar"; // battle cry
+		 * return "fcons"; // consume the flames
+		 * return "bloodshot"; // eye
+		 * return "fflame"; // fan of the flames
+		 * return "skuld"; // invocation of skuld
+		 * return "paingain"; // no pain
+		 * return "oppknock";
+		 * return "sidestep";
+		 * return "sternorder";
+		 * return "bee"; // sting like a bee
+		 * return "toarms";
+		 */
+
 		int index = 0;
 		int add = 0;
 		String s = t.job;
-		while(index != -1){
+		while (index != -1) {
 			s = s.substring(index + add);
 			add = 1;
 			index = s.indexOf('/');
 		}
 		return s;
 	}
-	
-	void continueLastTask(Task task){
+
+	void continueLastTask(Task task) {
 		m_util.clickWorld(3, m_util.getPlayerCoord());
-		if(task.type == 1){
+		if (task.type == 1) {
 			m_util.clickWorld(1, task.to);
-		}else if(task.type == 2 || task.type == 3){
+		} else if (task.type == 2 || task.type == 3) {
 			String attackType = getAttack(task);
 			sendAction("atk", attackType);
-			if(m_util.m_ui.mnu != null) m_util.m_ui.mnu.moveOn = true;
+			if (m_util.m_ui.mnu != null)
+				m_util.m_ui.mnu.moveOn = true;
 		}
 	}
-	
-	void blueThunder(){
+
+	void blueThunder() {
 		Task task = findCurrentTask();
-		
-		if(task == null) return;
-		
+
+		if (task == null)
+			return;
+
 		thunderTarget(task);
-		
+
 		continueLastTask(task);
 	}
-	 
-	public void run(){
+
+	public void run() {
 		blueThunder();
 	}
-	
-	private class Task{
+
+	private class Task {
 		Coord to;
 		String job;
 		int type;
-		
-		public Task(){}
-		
-		public Task(Coord c){
+
+		public Task() {
+		}
+
+		public Task(Coord c) {
 			type = 1;
 			to = c;
 		}
-		
-		public Task(String s){
+
+		public Task(String s) {
 			type = 2;
 			job = s;
 		}
-		
-		public Task(String s, int i){
+
+		public Task(String s, int i) {
 			type = 3;
 			job = s;
 		}

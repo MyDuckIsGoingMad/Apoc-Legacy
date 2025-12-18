@@ -5,6 +5,5 @@ package jerklib.events.dcc;
  * 
  * @author Andres N. Kievsky
  */
-public interface DccUnknownEvent extends DccEvent
-{
+public interface DccUnknownEvent extends DccEvent {
 }

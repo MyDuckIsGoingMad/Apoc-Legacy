@@ -9,23 +9,19 @@ import jerklib.events.NickChangeEvent;
  * @see NickChangeEvent
  *
  */
-public class NickChangeEventImpl implements NickChangeEvent
-{
+public class NickChangeEventImpl implements NickChangeEvent {
 
 	private final Type type = IRCEvent.Type.NICK_CHANGE;
 	private final String rawEventData, oldNick, newNick, hostName, userName;
 	private final Session session;
 
-	public NickChangeEventImpl
-	(
-		String rawEventData, 
-		Session session, 
-		String oldNick, 
-		String newNick, 
-		String hostName, 
-		String userName
-	)
-	{
+	public NickChangeEventImpl(
+			String rawEventData,
+			Session session,
+			String oldNick,
+			String newNick,
+			String hostName,
+			String userName) {
 		this.rawEventData = rawEventData;
 		this.session = session;
 		this.oldNick = oldNick;
@@ -34,67 +30,75 @@ public class NickChangeEventImpl implements NickChangeEvent
 		this.userName = userName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.NickChangeEvent#getOldNick()
 	 */
-	public final String getOldNick()
-	{
+	public final String getOldNick() {
 		return oldNick;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.NickChangeEvent#getNewNick()
 	 */
-	public final String getNewNick()
-	{
+	public final String getNewNick() {
 		return newNick;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public final Type getType()
-	{
+	public final Type getType() {
 		return type;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public final String getRawEventData()
-	{
+	public final String getRawEventData() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public final Session getSession()
-	{
+	public final Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.NickChangeEvent#getHostName()
 	 */
-	public String getHostName()
-	{
+	public String getHostName() {
 		return hostName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.NickChangeEvent#getUserName()
 	 */
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString()
-	{
+	public String toString() {
 		return rawEventData;
 	}
 }

@@ -6,8 +6,7 @@ package jerklib.events;
  * 
  * @author Mohadib
  */
-public interface NumericErrorEvent extends ErrorEvent
-{
+public interface NumericErrorEvent extends ErrorEvent {
     /**
      * gets error message
      *

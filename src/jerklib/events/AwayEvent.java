@@ -9,22 +9,21 @@ package jerklib.events;
  * <li>User of lib returns from away.</li>
  * </ul>
  * You can determine under which circumstance the event was fired by looking at
- * the {@link EventType}.</p>
+ * the {@link EventType}.
+ * </p>
  *
  * @author <a href="mailto:rob@mybawx.org">Robert O'Connor<a/>
  */
-public interface AwayEvent extends IRCEvent
-{
-
+public interface AwayEvent extends IRCEvent {
 
     /**
      * An enum to determine the type of event that was fired.
-     * <br>WENT_AWAY is when user of lib goes away.<br>
+     * <br>
+     * WENT_AWAY is when user of lib goes away.<br>
      * RETURNED_FROM_AWAY is when user of lib returns from away state.<br>
      * USER_IS_AWAY is when some other user goes away<br>
      */
-    public static enum EventType
-    {
+    public static enum EventType {
         WENT_AWAY,
         RETURNED_FROM_AWAY,
         USER_IS_AWAY
@@ -45,9 +44,9 @@ public interface AwayEvent extends IRCEvent
      */
     public boolean isAway();
 
-
     /**
-     * Returns the away message or an empty String if it was user of lib who caused the event to fire.
+     * Returns the away message or an empty String if it was user of lib who caused
+     * the event to fire.
      *
      * @return the away message
      */
@@ -66,6 +65,5 @@ public interface AwayEvent extends IRCEvent
      * @return the nick of the user who caused the event to fire.
      */
     public String getNick();
-
 
 }

@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * 
  * Event fired when nick list event comes from server
+ * 
  * @author mohadib
- *         
+ * 
  */
-public interface NickListEvent extends IRCEvent
-{
+public interface NickListEvent extends IRCEvent {
 
     /**
      * Gets the channel the nick list came from
@@ -20,7 +20,6 @@ public interface NickListEvent extends IRCEvent
      * @see Channel
      */
     public Channel getChannel();
-
 
     /**
      * Gets the nick list for the Channel

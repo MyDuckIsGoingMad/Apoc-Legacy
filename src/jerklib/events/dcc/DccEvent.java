@@ -8,15 +8,13 @@ import jerklib.events.IRCEvent;
  * 
  * @author Andres N. Kievsky
  */
-public interface DccEvent extends IRCEvent, CtcpEvent
-{
+public interface DccEvent extends IRCEvent, CtcpEvent {
 
 	/**
 	 * Type enum is used to determine type. It is returned from getDccType()
 	 */
 
-	public enum DccType
-	{
+	public enum DccType {
 		/**
 		 * Request to start a DCC SEND. The sender starts with: DCC SEND filename ip
 		 * port (and optionally file size)

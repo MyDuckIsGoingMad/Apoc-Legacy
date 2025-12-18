@@ -7,37 +7,37 @@ import jerklib.events.ConnectionLostEvent;
  * @author mohadib
  * @see ConnectionLostEvent
  */
-public class ConnectionLostEventImpl implements ConnectionLostEvent
-{
+public class ConnectionLostEventImpl implements ConnectionLostEvent {
 	private Session session;
-	
-	
-	public ConnectionLostEventImpl(Session session)
-	{
+
+	public ConnectionLostEventImpl(Session session) {
 		this.session = session;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return "";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public Type getType()
-	{
+	public Type getType() {
 		return Type.CONNECTION_LOST;
 	}
 

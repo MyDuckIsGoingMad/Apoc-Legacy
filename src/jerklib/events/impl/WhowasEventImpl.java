@@ -8,22 +8,18 @@ import jerklib.events.WhowasEvent;
  * @see WhowasEvent
  *
  */
-public class WhowasEventImpl implements WhowasEvent
-{
+public class WhowasEventImpl implements WhowasEvent {
 	private final Type type = Type.WHOWAS_EVENT;
 	private final String hostName, userName, nick, realName, rawEventData;
 	private final Session session;
 
-	public WhowasEventImpl
-	(
-		String hostName, 
-		String userName, 
-		String nick, 
-		String realName, 
-		String rawEventData, 
-		Session session
-	)
-	{
+	public WhowasEventImpl(
+			String hostName,
+			String userName,
+			String nick,
+			String realName,
+			String rawEventData,
+			Session session) {
 		this.hostName = hostName;
 		this.userName = userName;
 		this.nick = nick;
@@ -32,59 +28,66 @@ public class WhowasEventImpl implements WhowasEvent
 		this.session = session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhowasEvent#getHostName()
 	 */
-	public String getHostName()
-	{
+	public String getHostName() {
 		return hostName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhowasEvent#getNick()
 	 */
-	public String getNick()
-	{
+	public String getNick() {
 		return nick;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhowasEvent#getRealName()
 	 */
-	public String getRealName()
-	{
+	public String getRealName() {
 		return realName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.WhowasEvent#getUserName()
 	 */
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public Type getType()
-	{
+	public Type getType() {
 		return type;
 	}
 

@@ -9,66 +9,70 @@ import jerklib.events.MotdEvent;
  * @see MotdEvent
  *
  */
-public class MotdEventImpl implements MotdEvent
-{
+public class MotdEventImpl implements MotdEvent {
 
 	private final String rawEventData, motdLine, hostName;
 	private final Type type = IRCEvent.Type.MOTD;
 	private Session session;
 
-	public MotdEventImpl(String rawEventData, Session session, String motdLine, String hostName)
-	{
+	public MotdEventImpl(String rawEventData, Session session, String motdLine, String hostName) {
 		this.rawEventData = rawEventData;
 		this.session = session;
 		this.motdLine = motdLine;
 		this.hostName = hostName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MotdEvent#getMotdLine()
 	 */
-	public String getMotdLine()
-	{
+	public String getMotdLine() {
 		return motdLine;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public Type getType()
-	{
+	public Type getType() {
 		return type;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString()
-	{
+	public String toString() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.MotdEvent#getHostName()
 	 */
-	public String getHostName()
-	{
+	public String getHostName() {
 		return hostName;
 	}
 }

@@ -8,8 +8,7 @@ import jerklib.events.IRCEvent;
  *
  * @author mohadib
  */
-public interface IRCEventListener
-{
+public interface IRCEventListener {
 
     /**
      * recieveEvent() - receive IRCEvents

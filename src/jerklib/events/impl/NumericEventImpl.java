@@ -8,14 +8,12 @@ import jerklib.events.NumericErrorEvent;
  * @see NumericErrorEvent
  *
  */
-public class NumericEventImpl implements NumericErrorEvent
-{
+public class NumericEventImpl implements NumericErrorEvent {
 	private final String errMsg, rawEventData;
 	private final Session session;
 	private final int numeric;
 
-	public NumericEventImpl(String errMsg, String rawEventData, int numeric, Session session)
-	{
+	public NumericEventImpl(String errMsg, String rawEventData, int numeric, Session session) {
 		super();
 		this.errMsg = errMsg;
 		this.rawEventData = rawEventData;
@@ -23,51 +21,57 @@ public class NumericEventImpl implements NumericErrorEvent
 		this.numeric = numeric;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.NumericErrorEvent#getErrorMsg()
 	 */
-	public String getErrorMsg()
-	{
+	public String getErrorMsg() {
 		return errMsg;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.NumericErrorEvent#getNumeric()
 	 */
-	public int getNumeric()
-	{
+	public int getNumeric() {
 		return numeric;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.ErrorEvent#getErrorType()
 	 */
-	public ErrorType getErrorType()
-	{
+	public ErrorType getErrorType() {
 		return ErrorType.NUMERIC_ERROR;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public Type getType()
-	{
+	public Type getType() {
 		return Type.ERROR;
 	}
 

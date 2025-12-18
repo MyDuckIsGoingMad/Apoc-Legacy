@@ -6,10 +6,10 @@ package jerklib.events;
  * @author mohadib
  *
  */
-public interface CtcpEvent extends MessageEvent
-{
+public interface CtcpEvent extends MessageEvent {
     /**
      * Returns the CTCP query
+     * 
      * @return ctcp query
      */
     String getCtcpString();

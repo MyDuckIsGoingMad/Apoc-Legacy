@@ -2,14 +2,13 @@ package jerklib.events;
 
 import jerklib.Channel;
 
-
 /**
- * JoinIRCEvent is the event that will be dispatched when someone joins a channel
+ * JoinIRCEvent is the event that will be dispatched when someone joins a
+ * channel
  *
  * @author mohadib
  */
-public interface JoinEvent extends IRCEvent
-{
+public interface JoinEvent extends IRCEvent {
 
     /**
      * returns the nick of who joined the channel
@@ -17,7 +16,6 @@ public interface JoinEvent extends IRCEvent
      * @return Nick of who joined channel
      */
     public String getNick();
-
 
     /**
      * return the username in the user's hostmask

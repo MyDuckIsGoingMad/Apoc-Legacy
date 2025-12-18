@@ -20,63 +20,66 @@ package addons;
 
 import haven.*;
 
-public class MainScript{
-	public static void flaskScript(){
+public class MainScript {
+	public static void flaskScript() {
 		HavenUtil util = UI.instance.m_util;
-		if(!util.runFlaskRunning){
+		if (!util.runFlaskRunning) {
 			RunFlaskScript rfs = new RunFlaskScript(util);
-			
-			if(rfs != null){
+
+			if (rfs != null) {
 				util.runFlaskRunning = true;
 				rfs.start();
 			}
-			
+
 		}
 	}
-	
-	public static void multiTool(){
+
+	public static void multiTool() {
 		int modify = UI.instance.modflags();
 		Gob object = UI.instance.mainview.gobAtMouse;
-		if(object == null) return;
+		if (object == null)
+			return;
 		int type = ObjectType(object);
-		
-		if(type == 0){
+
+		if (type == 0) {
 			int range = 1;
-			if(modify == 4) range = 1000;
-			
+			if (modify == 4)
+				range = 1000;
+
 			cleanupItems(range, object);
-		}else if(type == 1){
-			if(modify == 1)
+		} else if (type == 1) {
+			if (modify == 1)
 				object.animalTag = false;
-			else if(modify == 4)
+			else if (modify == 4)
 				object.animalTag = true;
 		}
 	}
-	
-	private static int ObjectType(Gob object){
+
+	private static int ObjectType(Gob object) {
 		String name = object.resname();
-		
-		if(name.contains("/items/"))
+
+		if (name.contains("/items/"))
 			return 0;
-		if(name.equals("gfx/kritter/hen/cdv") || name.equals("gfx/kritter/hen/cock-dead") || name.equals("gfx/kritter/hare/cdv"))
+		if (name.equals("gfx/kritter/hen/cdv") || name.equals("gfx/kritter/hen/cock-dead")
+				|| name.equals("gfx/kritter/hare/cdv"))
 			return 0;
-		if(name.equals("gfx/kritter/sheep/s") || name.equals("gfx/kritter/pig/s") || name.equals("gfx/kritter/cow/s"))
+		if (name.equals("gfx/kritter/sheep/s") || name.equals("gfx/kritter/pig/s") || name.equals("gfx/kritter/cow/s"))
 			return 1;
-		
+
 		return -1;
 	}
-	
-	public static void cleanupItems(int areaSize, Gob object){
+
+	public static void cleanupItems(int areaSize, Gob object) {
 		HavenUtil util = UI.instance.m_util;
-		
-		if(!util.running && object != null){
+
+		if (!util.running && object != null) {
 			Coord pickupCoord = UI.instance.mainview.mousepos;
-			Coord c1 = pickupCoord.add(-11*areaSize,-11*areaSize);
-			Coord c2 = pickupCoord.sub(-11*areaSize,-11*areaSize);
-			
-			CleanupScript cs = new CleanupScript(util, c1, c2, object, new Coord(0,0) );
-			
-			if(cs != null){
+			Coord c1 = pickupCoord.add(-11 * areaSize, -11 * areaSize);
+			Coord c2 = pickupCoord.sub(-11 * areaSize, -11 * areaSize);
+
+			CleanupScript cs = new CleanupScript(util, c1, c2, object, new Coord(0, 0));
+
+			if (cs != null) {
 				util.running = true;
 				util.stop = false;
 				util.update();
@@ -84,14 +87,14 @@ public class MainScript{
 			}
 		}
 	}
-	
-	public static void autoLand(){
+
+	public static void autoLand() {
 		HavenUtil util = UI.instance.m_util;
-		
-		if(!util.running){
+
+		if (!util.running) {
 			AutoLandscape al = new AutoLandscape(util, util.m_pos1, util.m_pos2, util.m_Type);
-			
-			if(al != null){
+
+			if (al != null) {
 				util.running = true;
 				util.stop = false;
 				util.update();
@@ -99,14 +102,14 @@ public class MainScript{
 			}
 		}
 	}
-	
-	public static void autoFeast(){
+
+	public static void autoFeast() {
 		HavenUtil util = UI.instance.m_util;
-		
-		if(!util.running){
+
+		if (!util.running) {
 			AutoFeast af = new AutoFeast(util, util.m_Type);
-			
-			if(af != null){
+
+			if (af != null) {
 				util.running = true;
 				util.stop = false;
 				util.update();
@@ -114,14 +117,14 @@ public class MainScript{
 			}
 		}
 	}
-	
-	public static void seedbagScript(boolean transfer){
+
+	public static void seedbagScript(boolean transfer) {
 		HavenUtil util = UI.instance.m_util;
-		
-		if(!util.running){
+
+		if (!util.running) {
 			SeedbagScript sbs = new SeedbagScript(util, transfer);
-			
-			if(sbs != null){
+
+			if (sbs != null) {
 				util.running = true;
 				util.stop = false;
 				util.update();

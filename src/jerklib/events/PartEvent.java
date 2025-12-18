@@ -7,9 +7,7 @@ import jerklib.Channel;
  *
  * @author mohadib
  */
-public interface PartEvent extends IRCEvent
-{
-
+public interface PartEvent extends IRCEvent {
 
     /**
      * returns the nick of who parted
@@ -32,14 +30,12 @@ public interface PartEvent extends IRCEvent
      */
     public String getHostName();
 
-
     /**
      * returns the name of the channel parted
      *
      * @return name of channel parted
      */
     public String getChannelName();
-
 
     /**
      * returns IRCChannel object for channel parted
@@ -48,7 +44,6 @@ public interface PartEvent extends IRCEvent
      * @see Channel
      */
     public Channel getChannel();
-
 
     /**
      * returns part message if there is one

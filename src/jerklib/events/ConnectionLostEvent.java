@@ -6,7 +6,6 @@ package jerklib.events;
  * @author mohadib
  *
  */
-public interface ConnectionLostEvent extends IRCEvent
-{
-	
+public interface ConnectionLostEvent extends IRCEvent {
+
 }

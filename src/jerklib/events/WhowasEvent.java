@@ -2,10 +2,10 @@ package jerklib.events;
 
 /**
  * Event fired when whowas data received
+ * 
  * @author mohadib
  */
-public interface WhowasEvent extends IRCEvent
-{
+public interface WhowasEvent extends IRCEvent {
 
     /**
      * get nick who was event is about
@@ -13,7 +13,6 @@ public interface WhowasEvent extends IRCEvent
      * @return nick who was event is about
      */
     String getNick();
-
 
     /**
      * get username

@@ -3,10 +3,10 @@ package jerklib.events;
 /**
  * 
  * Event fired for server version information
+ * 
  * @author mohadib
  */
-public interface ServerVersionEvent extends IRCEvent
-{
+public interface ServerVersionEvent extends IRCEvent {
     /**
      * Gets the version string the server sent
      *

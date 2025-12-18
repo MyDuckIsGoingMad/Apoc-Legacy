@@ -3,14 +3,12 @@ package jerklib.events;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * Fired when whois event recieved
  * 
  * @author mohadib
  */
-public interface WhoisEvent extends IRCEvent
-{
+public interface WhoisEvent extends IRCEvent {
     /**
      * Gets the nick the whois event is about
      *

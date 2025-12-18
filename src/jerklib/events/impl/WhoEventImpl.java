@@ -10,8 +10,7 @@ import jerklib.events.WhoEvent;
  * @author <a href="mailto:robby.oconnor@gmail.com">Robert O'Connor</a>
  * @see WhoEvent
  */
-public class WhoEventImpl implements WhoEvent
-{
+public class WhoEventImpl implements WhoEvent {
     private final String nick, userName, realName, hostName, channel, rawEventData;
     private final String serverName;
     private final boolean isAway;
@@ -22,9 +21,7 @@ public class WhoEventImpl implements WhoEvent
     public WhoEventImpl(
             String channel, int hopCount, String hostName,
             boolean away, String nick, String rawEventData,
-            String realName, String serverName, Session session, String userName
-    )
-    {
+            String realName, String serverName, Session session, String userName) {
         this.channel = channel;
         this.hopCount = hopCount;
         this.hostName = hostName;
@@ -42,8 +39,7 @@ public class WhoEventImpl implements WhoEvent
      *
      * @return the nick of the user.
      */
-    public String getNick()
-    {
+    public String getNick() {
         return nick;
     }
 
@@ -52,8 +48,7 @@ public class WhoEventImpl implements WhoEvent
      *
      * @return the username
      */
-    public String getUserName()
-    {
+    public String getUserName() {
         return userName;
     }
 
@@ -62,8 +57,7 @@ public class WhoEventImpl implements WhoEvent
      *
      * @return the hostname
      */
-    public String getHostName()
-    {
+    public String getHostName() {
         return hostName;
     }
 
@@ -72,8 +66,7 @@ public class WhoEventImpl implements WhoEvent
      *
      * @return the real name
      */
-    public String getRealName()
-    {
+    public String getRealName() {
         return realName;
     }
 
@@ -82,8 +75,7 @@ public class WhoEventImpl implements WhoEvent
      *
      * @return the channel or an empty String
      */
-    public String getChannel()
-    {
+    public String getChannel() {
         return channel.equals("*") ? "" : channel;
     }
 
@@ -92,8 +84,7 @@ public class WhoEventImpl implements WhoEvent
      *
      * @return whether or not the user is away.
      */
-    public boolean isAway()
-    {
+    public boolean isAway() {
         return isAway;
     }
 
@@ -104,8 +95,7 @@ public class WhoEventImpl implements WhoEvent
      *
      * @return Type of event
      */
-    public Type getType()
-    {
+    public Type getType() {
         return type;
     }
 
@@ -114,16 +104,16 @@ public class WhoEventImpl implements WhoEvent
      *
      * @return Raw IRC event text.
      */
-    public String getRawEventData()
-    {
+    public String getRawEventData() {
         return rawEventData;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.WhoEvent#getHopCount()
      */
-    public int getHopCount()
-    {
+    public int getHopCount() {
         return hopCount;
     }
 
@@ -132,16 +122,16 @@ public class WhoEventImpl implements WhoEvent
      *
      * @return Session
      */
-    public Session getSession()
-    {
+    public Session getSession() {
         return session;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see jerklib.events.WhoEvent#getServerName()
      */
-    public String getServerName()
-    {
+    public String getServerName() {
         return serverName;
     }
 }

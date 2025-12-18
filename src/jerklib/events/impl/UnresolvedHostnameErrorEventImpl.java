@@ -10,71 +10,73 @@ import java.nio.channels.UnresolvedAddressException;
  * @see UnresolvedHostnameErrorEvent
  *
  */
-public class UnresolvedHostnameErrorEventImpl implements UnresolvedHostnameErrorEvent
-{
+public class UnresolvedHostnameErrorEventImpl implements UnresolvedHostnameErrorEvent {
 	private Session session;
 	private String rawEventData, hostName;
 	private UnresolvedAddressException exception;
 
-	public UnresolvedHostnameErrorEventImpl
-	(
-		Session session, 
-		String rawEventData, 
-		String hostName, 
-		UnresolvedAddressException exception
-	)
-	{
+	public UnresolvedHostnameErrorEventImpl(
+			Session session,
+			String rawEventData,
+			String hostName,
+			UnresolvedAddressException exception) {
 		this.session = session;
 		this.rawEventData = rawEventData;
 		this.hostName = hostName;
 		this.exception = exception;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.UnresolvedHostnameErrorEvent#getException()
 	 */
-	public UnresolvedAddressException getException()
-	{
+	public UnresolvedAddressException getException() {
 		return exception;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.UnresolvedHostnameErrorEvent#getHostName()
 	 */
-	public String getHostName()
-	{
+	public String getHostName() {
 		return hostName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.ErrorEvent#getErrorType()
 	 */
-	public ErrorType getErrorType()
-	{
+	public ErrorType getErrorType() {
 		return ErrorType.UNRESOLVED_HOSTNAME;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getRawEventData()
 	 */
-	public String getRawEventData()
-	{
+	public String getRawEventData() {
 		return rawEventData;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getSession()
 	 */
-	public Session getSession()
-	{
+	public Session getSession() {
 		return session;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see jerklib.events.IRCEvent#getType()
 	 */
-	public Type getType()
-	{
+	public Type getType() {
 		return Type.ERROR;
 	}
 

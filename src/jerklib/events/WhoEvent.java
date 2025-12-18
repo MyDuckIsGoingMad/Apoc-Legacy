@@ -5,8 +5,7 @@ package jerklib.events;
  *
  * @author <a href="mailto:robby.oconnor@gmail.com">Robert O'Connor</a>
  */
-public interface WhoEvent extends IRCEvent
-{
+public interface WhoEvent extends IRCEvent {
     /**
      * Get the nick of the user
      *
@@ -62,6 +61,5 @@ public interface WhoEvent extends IRCEvent
      * @return whether or not the user is away.
      */
     public boolean isAway();
-
 
 }
