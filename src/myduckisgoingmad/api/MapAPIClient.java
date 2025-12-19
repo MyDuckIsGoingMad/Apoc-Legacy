@@ -19,35 +19,51 @@ public class MapAPIClient {
         this.apiBase = apiBase.endsWith("/") ? apiBase.substring(0, apiBase.length() - 1) : apiBase;
     }
 
-    public Location createClaim(double x, double y, ClaimType type) throws Exception {
-        Location location = new Location(x, y);
-        location.claim = new Claim(type);
-        JSONObject requestJson = createLocationDTO(location);
+    public Location createClaim(double x, double y, ClaimType type) throws MapAPIException {
+        try {
+            Location location = new Location(x, y);
+            location.claim = new Claim(type);
+            JSONObject requestJson = createLocationDTO(location);
 
-        return postRequest("/api/locations", requestJson);
+            return postRequest("/api/locations", requestJson);
+        } catch (Exception e) {
+            throw new MapAPIException("Failed to create claim", e);
+        }
     }
 
-    public Location createPOI(double x, double y, String category) throws Exception {
-        Location location = new Location(x, y);
-        location.poi = new PointOfInterest(category);
-        JSONObject requestJson = createLocationDTO(location);
+    public Location createPOI(double x, double y, String category) throws MapAPIException {
+        try {
+            Location location = new Location(x, y);
+            location.poi = new PointOfInterest(category);
+            JSONObject requestJson = createLocationDTO(location);
 
-        return postRequest("/api/locations", requestJson);
+            return postRequest("/api/locations", requestJson);
+        } catch (Exception e) {
+            throw new MapAPIException("Failed to create POI", e);
+        }
     }
 
-    public Location createResource(double x, double y, String type, int q) throws Exception {
-        Location location = new Location(x, y);
-        Resource resource = new Resource(type, q);
-        location.resource = resource;
-        JSONObject requestJson = createLocationDTO(location);
+    public Location createResource(double x, double y, String type, int q) throws MapAPIException {
+        try {
+            Location location = new Location(x, y);
+            Resource resource = new Resource(type, q);
+            location.resource = resource;
+            JSONObject requestJson = createLocationDTO(location);
 
-        return postRequest("/api/locations", requestJson);
+            return postRequest("/api/locations", requestJson);
+        } catch (Exception e) {
+            throw new MapAPIException("Failed to create resource", e);
+        }
     }
 
-    public Location createLocation(Location location) throws Exception {
-        JSONObject requestJson = createLocationDTO(location);
+    public Location createLocation(Location location) throws MapAPIException {
+        try {
+            JSONObject requestJson = createLocationDTO(location);
 
-        return postRequest("/api/locations", requestJson);
+            return postRequest("/api/locations", requestJson);
+        } catch (Exception e) {
+            throw new MapAPIException("Failed to create location", e);
+        }
     }
 
     private void setRequestHeaders(HttpURLConnection conn) {
