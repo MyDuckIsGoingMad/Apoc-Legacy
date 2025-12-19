@@ -5,10 +5,12 @@ import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import haven.geoloc.Geoloc;
 import haven.geoloc.GeolocException;
 import haven.geoloc.MapTileData;
+import jerklib.util.Pair;
 
 public class MinimapPanel extends Window {
 
@@ -223,32 +225,33 @@ public class MinimapPanel extends Window {
 					return;
 				}
 
-				final MapTileData geodata;
 				try {
-					geodata = findMapTileMatch(img);
+					Pair<Double, Double> playerGlobalCoords = Geoloc.getUserCoords(img);
+
+					String loc = String.format("X: %.2f    Y: %.2f", playerGlobalCoords.first,
+							playerGlobalCoords.second);
+					new Label(new Coord(0, 5), wnd, loc);
+
+					new Button(new Coord(105, 2), 130, wnd, "Open in Browser") {
+						public void click() {
+							Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+							if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+								try {
+									desktop.browse(new URI(
+											String.format(Locale.ROOT, "http://localhost:3000/?z=9&x=%.2f&y=%.2f",
+													playerGlobalCoords.first, playerGlobalCoords.second)));
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+						}
+					};
 				} catch (GeolocException e) {
 					new Label(new Coord(0, 5), wnd, e.getMessage());
 					wnd.justclose = true;
 					wnd.pack();
 					return;
 				}
-
-				String loc = String.format("X: %s    Y: %s", geodata.c1, geodata.c2);
-				new Label(new Coord(0, 5), wnd, loc);
-
-				new Button(new Coord(105, 2), 130, wnd, "Open in Browser") {
-					public void click() {
-						Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-						if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-							try {
-								desktop.browse(new URI(
-										String.format("http://localhost:3000/?z=9&x=%s&y=%s", geodata.c1, geodata.c2)));
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				};
 
 				wnd.justclose = true;
 				wnd.pack();
@@ -265,40 +268,6 @@ public class MinimapPanel extends Window {
 		pack();
 		this.c = new Coord(MainFrame.getInnerSize().x - this.sz.x, 7);
 		loadpos();
-	}
-
-	private MapTileData findMapTileMatch(BufferedImage img) throws GeolocException {
-		int THRESHOLD = 300;
-
-		img = Geoloc.preprocessMapTile(img);
-		MapTileData curMtd = Geoloc.getHash(img);
-
-		if (curMtd.weight == 0)
-			throw new GeolocException("Stand next to a river and try again!");
-
-		List<MapTileData> mtds = new ArrayList<MapTileData>();
-
-		for (int i = 0; i < THRESHOLD; i++) {
-			if (Config.geoLocs.containsKey((short) (curMtd.weight + i)))
-				mtds.addAll(Config.geoLocs.get((short) (curMtd.weight + i)));
-			if (Config.geoLocs.containsKey((short) (curMtd.weight - i)))
-				mtds.addAll(Config.geoLocs.get((short) (curMtd.weight - i)));
-		}
-
-		if (mtds.size() == 0)
-			throw new GeolocException("This location doesn't seem to have been mapped yet.");
-
-		MapTileData bestMatch = null;
-		int best = Integer.MAX_VALUE;
-		for (MapTileData mtd : mtds) {
-			int dist = Geoloc.hammingDistance(mtd.hash, curMtd.hash);
-			if (dist < best) {
-				best = dist;
-				bestMatch = mtd;
-			}
-		}
-
-		return bestMatch;
 	}
 
 	private void loadpos() {

@@ -60,6 +60,7 @@ import ender.GoogleTranslator;
 import ender.HLInfo;
 import ender.SkillAvailability;
 import ender.SkillAvailability.Combat;
+import haven.geoloc.Geoloc;
 import haven.geoloc.MapTileData;
 
 public class Config {
@@ -117,7 +118,6 @@ public class Config {
 	public static boolean showpath;
 	public static Map<String, Map<String, Float>> FEPMap = new HashMap<String, Map<String, Float>>();
 	public static Map<String, CurioInfo> curios = new HashMap<String, CurioInfo>();
-	public static Map<Short, List<MapTileData>> geoLocs = new HashMap<Short, List<MapTileData>>();
 	public static Map<String, SkillAvailability> skills;
 	public static Map<String, String> crafts = new HashMap<String, String>();
 	public static Map<String, String> beasts = new HashMap<String, String>();
@@ -256,7 +256,7 @@ public class Config {
 			loadCurios();
 			loadSkills();
 			loadCraft();
-			loadGeoloc();
+			Geoloc.loadGeoloc();
 			loadHighlight();
 			loadCurrentHighlight();
 			loadBeasts();
@@ -673,34 +673,6 @@ public class Config {
 		} catch (IOException e) {
 		}
 
-	}
-
-	private static void loadGeoloc() {
-		DataInputStream is = null;
-		try {
-			is = new DataInputStream(new FileInputStream("geoloc.dat"));
-
-			while (is.available() > 0) {
-				short weight = is.readShort();
-				long hash = is.readLong();
-				short c1 = is.readShort();
-				short c2 = is.readShort();
-
-				List<MapTileData> geodatas;
-				if (geoLocs.containsKey(weight)) {
-					geodatas = geoLocs.get(weight);
-				} else {
-					geodatas = new ArrayList<MapTileData>();
-					geoLocs.put(weight, geodatas);
-				}
-
-				geodatas.add(new MapTileData(weight, hash, c1, c2));
-			}
-
-			is.close();
-		} catch (Exception e) {
-			System.out.println("Failed to load geoloc.dat: " + e);
-		}
 	}
 
 	private static void usage(PrintStream out) {

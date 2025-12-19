@@ -11,10 +11,118 @@ import java.awt.image.ImageFilter;
 import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 import java.awt.image.WritableRaster;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import haven.Coord;
+import haven.Gob;
+import haven.MCache;
+import haven.UI;
+import jerklib.util.Pair;
 
 public class Geoloc {
 	private static final int IMG_W = 100;
 	private static final int IMG_H = 100;
+	public static Map<Short, List<MapTileData>> geoLocs = new HashMap<Short, List<MapTileData>>();
+	public static Coord lastFoundPlayerRC = null;
+	public static Double lastFoundTileXPrecise = null;
+	public static Double lastFoundTileYPrecise = null;
+
+	public static void loadGeoloc() {
+		DataInputStream is = null;
+		try {
+			is = new DataInputStream(new FileInputStream("geoloc.dat"));
+
+			while (is.available() > 0) {
+				short weight = is.readShort();
+				long hash = is.readLong();
+				short c1 = is.readShort();
+				short c2 = is.readShort();
+
+				List<MapTileData> geodatas;
+				if (geoLocs.containsKey(weight)) {
+					geodatas = geoLocs.get(weight);
+				} else {
+					geodatas = new ArrayList<MapTileData>();
+					geoLocs.put(weight, geodatas);
+				}
+
+				geodatas.add(new MapTileData(weight, hash, c1, c2));
+			}
+
+			is.close();
+		} catch (Exception e) {
+			System.out.println("Failed to load geoloc.dat: " + e);
+		}
+	}
+
+	public static MapTileData findMapTileMatch(BufferedImage img) throws GeolocException {
+		int THRESHOLD = 300;
+
+		img = Geoloc.preprocessMapTile(img);
+		MapTileData curMtd = Geoloc.getHash(img);
+
+		if (curMtd.weight == 0)
+			throw new GeolocException("Stand next to a river and try again!");
+
+		List<MapTileData> mtds = new ArrayList<MapTileData>();
+
+		for (int i = 0; i < THRESHOLD; i++) {
+			if (geoLocs.containsKey((short) (curMtd.weight + i)))
+				mtds.addAll(geoLocs.get((short) (curMtd.weight + i)));
+			if (geoLocs.containsKey((short) (curMtd.weight - i)))
+				mtds.addAll(geoLocs.get((short) (curMtd.weight - i)));
+		}
+
+		if (mtds.size() == 0)
+			throw new GeolocException("This location doesn't seem to have been mapped yet.");
+
+		MapTileData bestMatch = null;
+		int best = Integer.MAX_VALUE;
+		for (MapTileData mtd : mtds) {
+			int dist = Geoloc.hammingDistance(mtd.hash, curMtd.hash);
+			if (dist < best) {
+				best = dist;
+				bestMatch = mtd;
+			}
+		}
+
+		return bestMatch;
+	}
+
+	public static Pair<Double, Double> getUserCoords(BufferedImage img) throws GeolocException {
+		final Gob player = UI.instance.m_util.getPlayerGob();
+
+		if (player == null) {
+			return null;
+		}
+
+		final MapTileData geodata = Geoloc.findMapTileMatch(img);
+		final Coord playerPos = player.getc();
+
+		double tileX = geodata.c1;
+		double tileY = geodata.c2;
+
+		if (playerPos != null) {
+			Coord tilePos = playerPos.div(MCache.tilesz);
+			Coord withinGrid = tilePos.mod(MCache.cmaps);
+			Coord withinTile = playerPos.mod(MCache.tilesz);
+			double fracX = withinTile.x / (double) MCache.tilesz.x;
+			double fracY = withinTile.y / (double) MCache.tilesz.y;
+			tileX += (withinGrid.x + fracX) / 100.0;
+			tileY += (withinGrid.y + fracY) / 100.0;
+
+			lastFoundPlayerRC = playerPos;
+			lastFoundTileXPrecise = tileX;
+			lastFoundTileYPrecise = tileY;
+
+		}
+		return new Pair<Double, Double>(tileX, tileY);
+	}
 
 	public static BufferedImage preprocessMapTile(BufferedImage img) {
 		Image imgStripped = stripEverythingButBlue(img);
