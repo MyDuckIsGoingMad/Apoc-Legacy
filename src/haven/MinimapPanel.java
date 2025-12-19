@@ -215,7 +215,9 @@ public class MinimapPanel extends Window {
 
 				BufferedImage img;
 				try {
-					img = mm.getCurrentMapTile();
+					String mnm = mm.getCurrentMapTileHash();
+					img = mm.getCurrentMapTile(mnm);
+					Geoloc.storeCurrentTileHash(mnm);
 				} catch (Exception e) {
 					String error = "Something went wrong... Check console for any errors.";
 					new Label(new Coord(0, 5), wnd, error);

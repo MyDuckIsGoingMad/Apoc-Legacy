@@ -29,6 +29,7 @@ package haven;
 import static haven.MCache.cmaps;
 import static haven.MCache.tilesz;
 import haven.MCache.Grid;
+import haven.geoloc.Geoloc;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -64,8 +65,8 @@ public class MiniMap extends Widget {
 	static Loader loader;
 	Coord mappingStartPoint = null;
 	long mappingSession = 0;
-	Map<String, Coord> gridsHashes = new TreeMap<String, Coord>();
-	Map<Coord, String> coordHashes = new TreeMap<Coord, String>();
+	public Map<String, Coord> gridsHashes = new TreeMap<String, Coord>();
+	public Map<Coord, String> coordHashes = new TreeMap<Coord, String>();
 	Map<Coord, Tex> caveTex = new TreeMap<Coord, Tex>();
 	public static final Tex bg = Resource.loadtex("gfx/hud/mmap/ptex");
 	public static final Tex nomap = Resource.loadtex("gfx/hud/mmap/nomap");
@@ -95,40 +96,32 @@ public class MiniMap extends Widget {
 			c.addRequestProperty("User-Agent", "Haven/1.0");
 			InputStream s = c.getInputStream();
 			/*
-			 * I've commented this out, since it seems that the JNLP
-			 * PersistenceService (or at least Sun's implementation of
-			 * it) is SLOWER THAN SNAILS, so this caused more problems
-			 * than it solved.
+			 * I've commented this out, since it seems that the JNLP PersistenceService (or
+			 * at least Sun's implementation of it) is SLOWER THAN SNAILS, so this caused
+			 * more problems than it solved.
 			 *
-			 * if(ResCache.global != null) {
-			 * StreamTee tee = new StreamTee(s);
-			 * tee.setncwe();
-			 * tee.attach(ResCache.global.store("mm/" + nm));
-			 * s = tee;
-			 * }
+			 * if(ResCache.global != null) { StreamTee tee = new StreamTee(s);
+			 * tee.setncwe(); tee.attach(ResCache.global.store("mm/" + nm)); s = tee; }
 			 */
 			return (s);
 		}
 
 		private InputStream getcached(String nm) throws IOException {
 			/*
-			 * if(ResCache.global == null)
-			 * throw(new FileNotFoundException("No resource cache installed"));
+			 * if(ResCache.global == null) throw(new
+			 * FileNotFoundException("No resource cache installed"));
 			 * return(ResCache.global.fetch("mm/" + nm));
 			 */
 			if (mappingSession > 0) {
 				String fileName;
 				if (gridsHashes.containsKey(nm)) {
 					Coord coordinates = gridsHashes.get(nm);
-					fileName = "tile_" + coordinates.x + "_"
-							+ coordinates.y;
+					fileName = "tile_" + coordinates.x + "_" + coordinates.y;
 				} else {
 					fileName = nm;
 				}
 
-				File inputfile = new File("map/"
-						+ Utils.sessdate(mappingSession) + "/" + fileName
-						+ ".png");
+				File inputfile = new File("map/" + Utils.sessdate(mappingSession) + "/" + fileName + ".png");
 				if (!inputfile.exists())
 					throw (new FileNotFoundException("Minimap cache not found"));
 				return new FileInputStream(inputfile);
@@ -166,15 +159,13 @@ public class MiniMap extends Widget {
 								String fileName;
 								if (gridsHashes.containsKey(grid)) {
 									Coord coordinates = gridsHashes.get(grid);
-									fileName = "tile_" + coordinates.x + "_"
-											+ coordinates.y;
+									fileName = "tile_" + coordinates.x + "_" + coordinates.y;
 								} else {
 									fileName = grid;
 								}
 
-								File outputfile = new File("map/"
-										+ Utils.sessdate(mappingSession) + "/" + fileName
-										+ ".png");
+								File outputfile = new File(
+										"map/" + Utils.sessdate(mappingSession) + "/" + fileName + ".png");
 								ImageIO.write(img, "png", outputfile);
 							}
 						} finally {
@@ -232,6 +223,7 @@ public class MiniMap extends Widget {
 			mappingSession = newSession;
 			gridsHashes.clear();
 			coordHashes.clear();
+			Geoloc.clear();
 
 		} catch (IOException ex) {
 		}
@@ -285,7 +277,7 @@ public class MiniMap extends Widget {
 		}
 	}
 
-	public BufferedImage getCurrentMapTile() {
+	public String getCurrentMapTileHash() {
 		double scale = getScale();
 		Coord hsz = sz.div(scale);
 
@@ -309,14 +301,17 @@ public class MiniMap extends Widget {
 						grid = ui.sess.glob.map.grids.get(cg);
 					}
 					String mnm = (grid == null) ? coordHashes.get(cg) : grid.mnm;
-					;
-					Tex tex = getsimple(mnm);
-					return ((TexI) tex).back;
+					return mnm;
 				}
 			}
 		}
 
 		return null;
+	}
+
+	public BufferedImage getCurrentMapTile(String mnm) {
+		Tex tex = getsimple(mnm);
+		return ((TexI) tex).back;
 	}
 
 	public void draw(GOut og) {

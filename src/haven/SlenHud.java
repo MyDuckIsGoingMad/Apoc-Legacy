@@ -48,12 +48,8 @@ public class SlenHud extends ConsoleHost implements DTarget, DropTarget, Console
 	public static final Coord bc1 = new Coord(147, -8);
 	public static final Coord bc2 = new Coord(485, -8);
 	public static final Coord sz;
-	public static final Color urgcols[] = {
-			null,
-			new Color(0, 128, 255),
-			new Color(255, 128, 0),
-			new Color(255, 0, 0),
-	};
+	public static final Color urgcols[] = { null, new Color(0, 128, 255), new Color(255, 128, 0),
+			new Color(255, 0, 0), };
 	int woff = 0;
 	int dy;
 	List<HWindow> wnds = new ArrayList<HWindow>();
@@ -70,7 +66,7 @@ public class SlenHud extends ConsoleHost implements DTarget, DropTarget, Console
 	long errtime;
 	OptWnd optwnd = null;
 	static int dh;
-	MiniMap mini;
+	public MiniMap mini;
 	public String catchError = null;
 
 	static {
@@ -480,13 +476,8 @@ public class SlenHud extends ConsoleHost implements DTarget, DropTarget, Console
 
 	public boolean mousedown(Coord c, int button) {
 		/*
-		 * int slot = beltslot(c);
-		 * if(slot != -1) {
-		 * if (belt[currentBelt][slot] != null) {
-		 * wdgmsg("belt", slot, button, ui.modflags());
-		 * }
-		 * return(true);
-		 * }
+		 * int slot = beltslot(c); if(slot != -1) { if (belt[currentBelt][slot] != null)
+		 * { wdgmsg("belt", slot, button, ui.modflags()); } return(true); }
 		 */
 		return (super.mousedown(c, button));
 	}
@@ -536,22 +527,11 @@ public class SlenHud extends ConsoleHost implements DTarget, DropTarget, Console
 			entercmd();
 			return (true);
 			/*
-			 * } else if((ch >= '0') && (ch <= '9')) {
-			 * if (ev.isAltDown()) {
-			 * currentBelt = ch - '0';
-			 * for (int i = 0; i < 10; i++) {
-			 * if (belt[currentBelt][i] != null) {
-			 * wdgmsg("setbelt", i, belt[currentBelt][i].get().name);
-			 * } else {
-			 * wdgmsg("setbelt", i, 0);
-			 * }
-			 * }
-			 * } else {
-			 * int slot = (ch > '0' ? ch - '1' : 9);
-			 * if (belt[currentBelt][slot] != null) {
-			 * wdgmsg("belt", slot, 1, 0);
-			 * }
-			 * }
+			 * } else if((ch >= '0') && (ch <= '9')) { if (ev.isAltDown()) { currentBelt =
+			 * ch - '0'; for (int i = 0; i < 10; i++) { if (belt[currentBelt][i] != null) {
+			 * wdgmsg("setbelt", i, belt[currentBelt][i].get().name); } else {
+			 * wdgmsg("setbelt", i, 0); } } } else { int slot = (ch > '0' ? ch - '1' : 9);
+			 * if (belt[currentBelt][slot] != null) { wdgmsg("belt", slot, 1, 0); } }
 			 * return(true);
 			 */
 		} else if (ch == 15) {
@@ -566,11 +546,8 @@ public class SlenHud extends ConsoleHost implements DTarget, DropTarget, Console
 
 	public boolean drop(Coord cc, Coord ul) {
 		/*
-		 * int slot = beltslot(cc);
-		 * if(slot != -1) {
-		 * wdgmsg("setbelt", slot, 0);
-		 * return(true);
-		 * }
+		 * int slot = beltslot(cc); if(slot != -1) { wdgmsg("setbelt", slot, 0);
+		 * return(true); }
 		 */
 		return (false);
 	}
@@ -581,17 +558,10 @@ public class SlenHud extends ConsoleHost implements DTarget, DropTarget, Console
 
 	public boolean dropthing(Coord c, Object thing) {
 		/*
-		 * int slot = beltslot(c);
-		 * if(slot != -1) {
-		 * if(thing instanceof Resource) {
-		 * Resource res = (Resource)thing;
-		 * if(res.layer(Resource.action) != null) {
-		 * belt[currentBelt][slot] = res.indir();
-		 * wdgmsg("setbelt", slot, res.name);
-		 * return(true);
-		 * }
-		 * }
-		 * }
+		 * int slot = beltslot(c); if(slot != -1) { if(thing instanceof Resource) {
+		 * Resource res = (Resource)thing; if(res.layer(Resource.action) != null) {
+		 * belt[currentBelt][slot] = res.indir(); wdgmsg("setbelt", slot, res.name);
+		 * return(true); } } }
 		 */
 		return (false);
 	}

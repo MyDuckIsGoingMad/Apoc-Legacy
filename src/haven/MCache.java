@@ -126,7 +126,7 @@ public class MCache {
 		public int reqs = 0;
 		public Coord gc;
 		OCache oc = sess.glob.oc;
-		String mnm;
+		public String mnm;
 		BufferedImage img;
 		Tex tex;
 
