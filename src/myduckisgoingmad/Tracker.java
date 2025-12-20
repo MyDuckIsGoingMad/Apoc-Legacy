@@ -14,6 +14,9 @@ public class Tracker {
     boolean tracking = false;
     HavenUtil m_util;
     String username;
+    String lastTileHash = null;
+    Pair<Double, Double> lastPlayerCoord = null;
+    int trackCount = 0;
 
     private static class Holder {
         static final Tracker INSTANCE = new Tracker();
@@ -36,26 +39,61 @@ public class Tracker {
         try {
             Pair<Double, Double> coords = Geoloc.getPlayerCoords();
             client.checkout(username, coords.first, coords.second);
-            m_util.sendMessage(String.format("Checked out position: %.2f, %.2f", coords.first, coords.second));
+            m_util.sendMessage(String.format("[GPS] Check out position: %.2f, %.2f", coords.first, coords.second));
         } catch (MapAPIException e) {
             m_util.sendErrorMessage("Failed to checkout position");
-            System.err.println("Failed to checkout position: " + e.getMessage());
         } catch (GeolocException e) {
             m_util.sendErrorMessage("Failed to get player coordinates");
-            System.err.println("Failed to get player coordinates: " + e.getMessage());
         }
     }
 
     public void toggleTracking() {
         tracking = !tracking;
+        trackCount = 0;
+        lastTileHash = null;
+        lastPlayerCoord = null;
         if (tracking) {
-            m_util.sendMessage("Tracking enabled");
+            m_util.sendMessage("[GPS] Tracking enabled");
         } else {
-            m_util.sendMessage("Tracking disabled");
+            m_util.sendMessage("[GPS] Tracking disabled");
+        }
+    }
+
+    public void track() {
+        if (!tracking) {
+            return;
+        }
+
+        String currentTileHash = UI.instance.m_util.m_ui.slen.mini.getCurrentMapTileHash();
+
+        if (lastTileHash == null || !lastTileHash.equals(currentTileHash)) {
+            try {
+                Pair<Double, Double> coords = Geoloc.getPlayerCoords();
+                double dist = 0;
+                if (lastPlayerCoord != null) {
+                    dist = Math.sqrt(Math.pow(coords.first - lastPlayerCoord.first, 2)
+                            + Math.pow(coords.second - lastPlayerCoord.second, 2));
+                }
+
+                if (dist > 0 && dist < 0.5) {
+                    return;
+                }
+
+                m_util.sendMessage(String.format("Track position: %.2f, %.2f (moved %.4f units)", coords.first,
+                        coords.second, dist));
+                lastTileHash = currentTileHash;
+                lastPlayerCoord = coords;
+                client.checkout(username, coords.first, coords.second, true, trackCount == 0);
+                ++trackCount;
+            } catch (MapAPIException e) {
+                m_util.sendErrorMessage("Failed to checkout position");
+            } catch (GeolocException e) {
+                // m_util.sendErrorMessage("Failed to get player coordinates");
+            }
         }
     }
 
     public void prospect() {
-        m_util.sendMessage("Prospecting nearby checkouts...");
+        m_util.sendMessage("[GPS] Prospecting ...");
     }
 }

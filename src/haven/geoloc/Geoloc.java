@@ -97,8 +97,6 @@ public class Geoloc {
 			}
 		}
 
-		System.out.println("Total matches: " + mtds.size() + "; Best match has hamming distance: " + best);
-
 		return bestMatch;
 	}
 
@@ -120,7 +118,7 @@ public class Geoloc {
 
 		lastFoundTileHash = tileHash;
 		lastFoundTileGlobalCoord = new Coord(geodata.c1, geodata.c2);
-		System.out.println("Synchronized geodata coords to: " + lastFoundTileGlobalCoord);
+		UI.instance.m_util.sendMessage("Sync global position: " + lastFoundTileGlobalCoord);
 
 		return lastFoundTileGlobalCoord;
 	}

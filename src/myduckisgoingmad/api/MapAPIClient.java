@@ -20,9 +20,17 @@ public class MapAPIClient {
     }
 
     public Player checkout(String username, double x, double y) throws MapAPIException {
+        return checkout(username, x, y, null, null);
+    }
+
+    public Player checkout(String username, double x, double y, Boolean track, Boolean newSession)
+            throws MapAPIException {
         try {
             Player player = new Player(username, x, y);
             JSONObject requestJson = createPlayerDTO(player);
+
+            addNonNullField(requestJson, "track", track);
+            addNonNullField(requestJson, "newSession", newSession);
 
             return parsePlayer(postRequest("/players/checkout", requestJson));
         } catch (Exception e) {

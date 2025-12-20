@@ -600,28 +600,16 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 
 	/*
 	 * private static Camera makecam(Class<? extends Camera> ct, String... args)
-	 * throws ClassNotFoundException {
-	 * try {
-	 * try {
-	 * Constructor<? extends Camera> cons = ct.getConstructor(String [].class);
-	 * return(cons.newInstance(new Object[] {args}));
-	 * } catch(IllegalAccessException e) {
-	 * } catch(NoSuchMethodException e) {
-	 * }
-	 * try {
-	 * return(ct.newInstance());
-	 * } catch(IllegalAccessException e) {
-	 * }
-	 * } catch(InstantiationException e) {
-	 * throw(new Error(e));
-	 * } catch(InvocationTargetException e) {
-	 * if(e.getCause() instanceof RuntimeException)
-	 * throw((RuntimeException)e.getCause());
-	 * throw(new RuntimeException(e));
-	 * }
-	 * throw(new ClassNotFoundException("No valid constructor found for camera " +
-	 * ct.getName()));
-	 * }
+	 * throws ClassNotFoundException { try { try { Constructor<? extends Camera>
+	 * cons = ct.getConstructor(String [].class); return(cons.newInstance(new
+	 * Object[] {args})); } catch(IllegalAccessException e) { }
+	 * catch(NoSuchMethodException e) { } try { return(ct.newInstance()); }
+	 * catch(IllegalAccessException e) { } } catch(InstantiationException e) {
+	 * throw(new Error(e)); } catch(InvocationTargetException e) { if(e.getCause()
+	 * instanceof RuntimeException) throw((RuntimeException)e.getCause()); throw(new
+	 * RuntimeException(e)); } throw(new
+	 * ClassNotFoundException("No valid constructor found for camera " +
+	 * ct.getName())); }
 	 */
 
 	private Camera makecam(Class<? extends Camera> ct, String... args) throws ClassNotFoundException {
@@ -656,16 +644,10 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 	private Camera restorecam() {
 		/*
 		 * Class<? extends Camera> ct = camtypes.get(Utils.getpref("defcam", "border"));
-		 * if(ct == null)
-		 * return(new BorderCam());
-		 * String[] args = (String [])Utils.deserialize(Utils.getprefb("camargs",
-		 * null));
-		 * if(args == null) args = new String[0];
-		 * try {
-		 * return(makecam(ct, args));
-		 * } catch(ClassNotFoundException e) {
-		 * return(new BorderCam());
-		 * }
+		 * if(ct == null) return(new BorderCam()); String[] args = (String
+		 * [])Utils.deserialize(Utils.getprefb("camargs", null)); if(args == null) args
+		 * = new String[0]; try { return(makecam(ct, args)); }
+		 * catch(ClassNotFoundException e) { return(new BorderCam()); }
 		 */
 
 		String arg = "";
@@ -1375,9 +1357,8 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 
 	private void drawobjradius(GOut g, Gob gob) {
 		/*
-		 * synchronized (glob.oc) {
-		 * for (Gob gob : glob.oc) {
-		 * if(gob.sc == null){continue;}
+		 * synchronized (glob.oc) { for (Gob gob : glob.oc) { if(gob.sc ==
+		 * null){continue;}
 		 */
 		if (gob.sc == null || gob.id == playergob)
 			return;
@@ -1409,8 +1390,7 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 
 		Sound.soundGobList(gob);
 		/*
-		 * }
-		 * }
+		 * } }
 		 */
 		g.chcolor();
 	}
@@ -1731,10 +1711,7 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 
 			public void addpart(Sprite.Part p) {
 				p.effect = fx;
-				if ((p.ul.x >= sz.x) ||
-						(p.ul.y >= sz.y) ||
-						(p.lr.x < 0) ||
-						(p.lr.y < 0))
+				if ((p.ul.x >= sz.x) || (p.ul.y >= sz.y) || (p.lr.x < 0) || (p.lr.y < 0))
 					return;
 				sprites.add(p);
 				p.owner = cur;
@@ -1820,8 +1797,7 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 					Tex t = k.rendered();
 					Coord gc = k.gob.sc;
 					String name = k.gob.resname();
-					boolean isother = name.contains("hearth")
-							|| name.contains("skeleton");
+					boolean isother = name.contains("hearth") || name.contains("skeleton");
 					if (gc.isect(Coord.z, sz)) {
 						if (k.seen == 0)
 							k.seen = now;
@@ -1891,9 +1867,7 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 		if ((neg.bs.x > 0) && (neg.bs.y > 0)) {
 			Coord c1 = c.add(neg.bc);
 			Coord c2 = c1.add(neg.bs);
-			g.frect(m2s(c1).add(oc),
-					m2s(new Coord(c2.x, c1.y)).add(oc),
-					m2s(c2).add(oc),
+			g.frect(m2s(c1).add(oc), m2s(new Coord(c2.x, c1.y)).add(oc), m2s(c2).add(oc),
 					m2s(new Coord(c1.x, c2.y)).add(oc));
 		}
 	}
@@ -2021,15 +1995,11 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 		g.scale(getScale());
 		checkmappos();
 		/*
-		 * Coord requl = mc.add(-500, -500).div(tilesz).div(cmaps);
-		 * Coord reqbr = mc.add(500, 500).div(tilesz).div(cmaps);
-		 * Coord cgc = new Coord(0, 0);
-		 * for(cgc.y = requl.y; cgc.y <= reqbr.y; cgc.y++) {
-		 * for(cgc.x = requl.x; cgc.x <= reqbr.x; cgc.x++) {
-		 * if(map.grids.get(cgc) == null)
-		 * map.request(new Coord(cgc));
-		 * }
-		 * }
+		 * Coord requl = mc.add(-500, -500).div(tilesz).div(cmaps); Coord reqbr =
+		 * mc.add(500, 500).div(tilesz).div(cmaps); Coord cgc = new Coord(0, 0);
+		 * for(cgc.y = requl.y; cgc.y <= reqbr.y; cgc.y++) { for(cgc.x = requl.x; cgc.x
+		 * <= reqbr.x; cgc.x++) { if(map.grids.get(cgc) == null) map.request(new
+		 * Coord(cgc)); } }
 		 */
 		long now = System.currentTimeMillis();
 		if ((olftimer != 0) && (olftimer < now))
@@ -2170,9 +2140,7 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 
 		g.chcolor(0, 255, 0, 64);
 
-		g.frect(m2s(c1).add(oc),
-				m2s(new Coord(c2.x, c1.y)).add(oc),
-				m2s(c2).add(oc),
+		g.frect(m2s(c1).add(oc), m2s(new Coord(c2.x, c1.y)).add(oc), m2s(c2).add(oc),
 				m2s(new Coord(c1.x, c2.y)).add(oc));
 
 		g.chcolor();

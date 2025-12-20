@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import myduckisgoingmad.Tracker;
+
 public class OCache implements Iterable<Gob> {
 	/* XXX: Use weak refs */
 	private Collection<Collection<Gob>> local = new LinkedList<Collection<Gob>>();
@@ -153,9 +155,7 @@ public class OCache implements Iterable<Gob> {
 	}
 
 	public boolean isplayerid(int id) {
-		if ((glob.sess.ui != null)
-				&& (glob.sess.ui.mainview != null)
-				&& (glob.sess.ui.mainview.playergob == id)) {
+		if ((glob.sess.ui != null) && (glob.sess.ui.mainview != null) && (glob.sess.ui.mainview.playergob == id)) {
 			return true;
 		}
 		return false;
@@ -185,6 +185,8 @@ public class OCache implements Iterable<Gob> {
 			if (isplayer || isPlayerBoat(id)) {
 				ismoving = false;
 				checkqueue();
+				Tracker tracker = Tracker.getInstance();
+				tracker.track();
 			}
 		} else {
 			lm.setl(l);
