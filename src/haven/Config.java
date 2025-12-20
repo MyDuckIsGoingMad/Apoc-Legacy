@@ -207,6 +207,7 @@ public class Config {
 	public static boolean soundMemo = false;
 	public static boolean autoLand = false;
 	public static String javaPath = "";
+	public static String mapApiBaseUrl = null;
 
 	public static int[] hitboxCol = new int[8]; // red, green, blue, trans
 
@@ -687,42 +688,42 @@ public class Config {
 		}
 		for (char c : opt.parsed()) {
 			switch (c) {
-				case 'h':
-					usage(System.out);
-					System.exit(0);
-					break;
-				case 'd':
-					dbtext = true;
-					break;
-				case 'P':
-					profile = true;
-					break;
-				case 'f':
-					fullscreen = true;
-					break;
-				case 'r':
-					resdir = opt.arg;
-					break;
-				case 'A':
-					authserv = opt.arg;
-					break;
-				case 'U':
-					try {
-						resurl = new URL(opt.arg);
-					} catch (java.net.MalformedURLException e) {
-						System.err.println(e);
-						System.exit(1);
-					}
-					break;
-				case 'u':
-					authuser = opt.arg;
-					break;
-				case 'v':
-					apocScript = opt.arg.equals("script");
-					break;
-				case 'C':
-					authck = Utils.hex2byte(opt.arg);
-					break;
+			case 'h':
+				usage(System.out);
+				System.exit(0);
+				break;
+			case 'd':
+				dbtext = true;
+				break;
+			case 'P':
+				profile = true;
+				break;
+			case 'f':
+				fullscreen = true;
+				break;
+			case 'r':
+				resdir = opt.arg;
+				break;
+			case 'A':
+				authserv = opt.arg;
+				break;
+			case 'U':
+				try {
+					resurl = new URL(opt.arg);
+				} catch (java.net.MalformedURLException e) {
+					System.err.println(e);
+					System.exit(1);
+				}
+				break;
+			case 'u':
+				authuser = opt.arg;
+				break;
+			case 'v':
+				apocScript = opt.arg.equals("script");
+				break;
+			case 'C':
+				authck = Utils.hex2byte(opt.arg);
+				break;
 			}
 		}
 		if (opt.rest.length > 0)
@@ -879,6 +880,7 @@ public class Config {
 		speed = Integer.parseInt(options.getProperty("speed", "100")); // new
 		soundMemo = options.getProperty("soundMemo", "false").equals("true"); // new
 		javaPath = options.getProperty("javaPath", ""); // new
+		mapApiBaseUrl = options.getProperty("map_api_base_url", "");
 
 		hitboxCol[0] = Integer.parseInt(options.getProperty("red_col", "255")); // new
 		hitboxCol[1] = Integer.parseInt(options.getProperty("green_col", "0")); // new
@@ -1048,6 +1050,7 @@ public class Config {
 		options.setProperty("speed", String.valueOf(speed)); // new
 		options.setProperty("soundMemo", soundMemo ? "true" : "false"); // new
 		options.setProperty("javaPath", javaPath); // new
+		options.setProperty("map_api_base_url", mapApiBaseUrl); // new
 
 		options.setProperty("red_col", String.valueOf(hitboxCol[0]));
 		options.setProperty("green_col", String.valueOf(hitboxCol[1]));

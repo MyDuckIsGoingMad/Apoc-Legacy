@@ -44,8 +44,7 @@ public class OptWnd extends Window {
 			TextAttribute.SIZE, 10);
 	private static final BufferedImage cfgimgu = Resource.loadimg("gfx/hud/buttons/centeru");
 	private static final BufferedImage cfgimgd = Resource.loadimg("gfx/hud/buttons/centerd");
-	protected static BufferedImage[] charCross = new BufferedImage[] {
-			Resource.loadimg("gfx/hud/new/crossup"),
+	protected static BufferedImage[] charCross = new BufferedImage[] { Resource.loadimg("gfx/hud/new/crossup"),
 			Resource.loadimg("gfx/hud/new/crossdown") };
 	private Tabs body;
 	private String curcam;
@@ -57,16 +56,10 @@ public class OptWnd extends Window {
 	Scrollbar redScroll, greenScroll, blueScroll, transScroll, flaskScroll;
 
 	/*
-	 * private static class CamInfo {
-	 * String name, desc;
-	 * Tabs.Tab args;
+	 * private static class CamInfo { String name, desc; Tabs.Tab args;
 	 * 
-	 * public CamInfo(String name, String desc, Tabs.Tab args) {
-	 * this.name = name;
-	 * this.desc = desc;
-	 * this.args = args;
-	 * }
-	 * }
+	 * public CamInfo(String name, String desc, Tabs.Tab args) { this.name = name;
+	 * this.desc = desc; this.args = args; } }
 	 */
 
 	private Comparator<String> camcomp = new Comparator<String>() {
@@ -585,19 +578,9 @@ public class OptWnd extends Window {
 				}
 			}).a = Config.isMusicOn;
 
-			String[][] checkboxesList = {
-					{ "White", "white" },
-					{ "Red", "red" },
-					{ "Troll", "troll" },
-					{ "Bluebell", "bell" },
-					{ "Flotsam", "flotsam" },
-					{ "Bears", "bear" },
-					{ "Pearls", "pearl" },
-					{ "Aggro", "aggro" },
-					{ "Death", "death" },
-					{ "Ram", "ram" },
-					{ "Timer", "timer" },
-			};
+			String[][] checkboxesList = { { "White", "white" }, { "Red", "red" }, { "Troll", "troll" },
+					{ "Bluebell", "bell" }, { "Flotsam", "flotsam" }, { "Bears", "bear" }, { "Pearls", "pearl" },
+					{ "Aggro", "aggro" }, { "Death", "death" }, { "Ram", "ram" }, { "Timer", "timer" }, };
 			int y = 0;
 			for (final String[] checkbox : checkboxesList) {
 				CheckBox chkbox = new CheckBox(new Coord(370, y += 35), tab, checkbox[0]) {
@@ -637,25 +620,15 @@ public class OptWnd extends Window {
 
 			int y = 0;
 			int i = 0;
-			String[][] hitboxesList = {
-					{ "Walls", "gfx/arch/walls" },
-					{ "Gates", "gfx/arch/gates" },
-					{ "Wooden Houses", "gfx/arch/cabin" },
-					{ "Stone Mansions", "gfx/arch/inn" },
-					{ "Plants", "gfx/terobjs/plants" },
-					{ "Trees", "gfx/terobjs/trees" },
-					{ "Stones", "gfx/terobjs/bumlings" },
-					{ "Flavor objects", "flavobjs" },
-					{ "Bushes", "gfx/tiles/wald" },
-					{ "Supports", "gfx/terobjs/mining/minesupport" },
-					{ "Ridges", "gfx/terobjs/ridges" },
-					{ "Village Idol", "gfx/terobjs/vclaim" },
-					{ "Blood", "gfx/terobjs/blood" },
-					{ "Thicket", "gfx/tiles/dwald" }
-			};
+			String[][] hitboxesList = { { "Walls", "gfx/arch/walls" }, { "Gates", "gfx/arch/gates" },
+					{ "Wooden Houses", "gfx/arch/cabin" }, { "Stone Mansions", "gfx/arch/inn" },
+					{ "Plants", "gfx/terobjs/plants" }, { "Trees", "gfx/terobjs/trees" },
+					{ "Stones", "gfx/terobjs/bumlings" }, { "Flavor objects", "flavobjs" },
+					{ "Bushes", "gfx/tiles/wald" }, { "Supports", "gfx/terobjs/mining/minesupport" },
+					{ "Ridges", "gfx/terobjs/ridges" }, { "Village Idol", "gfx/terobjs/vclaim" },
+					{ "Blood", "gfx/terobjs/blood" }, { "Thicket", "gfx/tiles/dwald" } };
 			for (final String[] checkbox : hitboxesList) {
-				hitboxes[i] = new CheckBox(new Coord(10, y += 28), tab,
-						checkbox[0]) {
+				hitboxes[i] = new CheckBox(new Coord(10, y += 28), tab, checkbox[0]) {
 
 					public void changed(boolean val) {
 						if (val) {
@@ -1235,6 +1208,19 @@ public class OptWnd extends Window {
 			};
 			chkbox.a = Config.pathfinderRectangles;
 
+			new Label(new Coord(270, 390), tab, "Map API base URL:");
+			new TextEntry(new Coord(270, 410), new Coord(200, 20), tab, Config.mapApiBaseUrl) {
+				public void setFocus() {
+					hasfocus = false;
+				}
+
+				public boolean keydown(KeyEvent e) {
+					Config.mapApiBaseUrl = text;
+					Config.saveOptions();
+					return true;
+				}
+			};
+
 			if (Config.apocScript) {
 				new Label(new Coord(10, 390), tab, "Java path:");
 				new TextEntry(new Coord(10, 410), new Coord(200, 20), tab, Config.javaPath) {
@@ -1269,14 +1255,10 @@ public class OptWnd extends Window {
 		MapView mv = ui.mainview;
 		if (mv != null) {
 			/*
-			 * if (curcam.equals("clicktgt")) mv.cam = new MapView.OrigCam2(args);
-			 * else if(curcam.equals("fixedcake")) mv.cam = new MapView.FixedCakeCam(args);
-			 * else {
-			 * try {
-			 * mv.cam = MapView.camtypes.get(curcam).newInstance();
-			 * } catch (InstantiationException e) {
-			 * } catch(IllegalAccessException e) {}
-			 * }
+			 * if (curcam.equals("clicktgt")) mv.cam = new MapView.OrigCam2(args); else
+			 * if(curcam.equals("fixedcake")) mv.cam = new MapView.FixedCakeCam(args); else
+			 * { try { mv.cam = MapView.camtypes.get(curcam).newInstance(); } catch
+			 * (InstantiationException e) { } catch(IllegalAccessException e) {} }
 			 */
 
 			if (curcam.equals("orig"))
@@ -1443,22 +1425,13 @@ public class OptWnd extends Window {
 	}
 
 	static void updateCheckBoxes() {
-		String[][] hitboxesList = {
-				{ "Walls", "gfx/arch/walls" },
-				{ "Gates", "gfx/arch/gates" },
-				{ "Wooden Houses", "gfx/arch/cabin" },
-				{ "Stone Mansions", "gfx/arch/inn" },
-				{ "Plants", "gfx/terobjs/plants" },
-				{ "Trees", "gfx/terobjs/trees" },
-				{ "Stones", "gfx/terobjs/bumlings" },
-				{ "Flavor objects", "flavobjs" },
-				{ "Bushes", "gfx/tiles/wald" },
-				{ "Supports", "gfx/terobjs/mining/minesupport" },
-				{ "Ridges", "gfx/terobjs/ridges" },
-				{ "Village Idol", "gfx/terobjs/vclaim" },
-				{ "Blood", "gfx/terobjs/blood" },
-				{ "Thicket", "gfx/tiles/dwald" }
-		};
+		String[][] hitboxesList = { { "Walls", "gfx/arch/walls" }, { "Gates", "gfx/arch/gates" },
+				{ "Wooden Houses", "gfx/arch/cabin" }, { "Stone Mansions", "gfx/arch/inn" },
+				{ "Plants", "gfx/terobjs/plants" }, { "Trees", "gfx/terobjs/trees" },
+				{ "Stones", "gfx/terobjs/bumlings" }, { "Flavor objects", "flavobjs" }, { "Bushes", "gfx/tiles/wald" },
+				{ "Supports", "gfx/terobjs/mining/minesupport" }, { "Ridges", "gfx/terobjs/ridges" },
+				{ "Village Idol", "gfx/terobjs/vclaim" }, { "Blood", "gfx/terobjs/blood" },
+				{ "Thicket", "gfx/tiles/dwald" } };
 		int i = 0;
 		for (final String[] checkbox : hitboxesList) {
 			if (hitboxes[i] != null)

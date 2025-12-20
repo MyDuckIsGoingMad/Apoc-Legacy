@@ -57,6 +57,7 @@ public class Glob {
 		party = new Party(this);
 		// adding extended commands
 		paginae.add(Resource.load("paginae/act/add"));
+		paginae.add(Resource.load("paginae/act/gps"));
 		paginae.add(Resource.load("paginae/add/rad"));
 		paginae.add(Resource.load("paginae/add/radar"));
 		paginae.add(Resource.load("paginae/add/shhd"));
@@ -93,6 +94,11 @@ public class Glob {
 		paginae.add(Resource.load("paginae/add/runflask")); // new
 		paginae.add(Resource.load("paginae/add/animaltag")); // new
 		paginae.add(Resource.load("paginae/add/focushide")); // new
+
+		paginae.add(Resource.load("paginae/gps/sync"));
+		paginae.add(Resource.load("paginae/gps/checkout"));
+		paginae.add(Resource.load("paginae/gps/track"));
+		paginae.add(Resource.load("paginae/gps/prospect"));
 
 		// paginae.add(Resource.load("paginae/options/inventory")); // new
 		// paginae.add(Resource.load("paginae/options/equipment")); // new
@@ -134,21 +140,21 @@ public class Glob {
 	public void blob(Message msg) {
 		while (!msg.eom()) {
 			switch (msg.uint8()) {
-				case GMSG_TIME:
-					Timer.server = msg.int32();
-					;
-					Timer.local = System.currentTimeMillis() / 1000;
-					break;
-				case GMSG_ASTRO:
-					double dt = defix(msg.int32());
-					double mp = defix(msg.int32());
-					double yt = defix(msg.int32());
-					boolean night = (dt < 0.25) || (dt > 0.75);
-					ast = new Astronomy(dt, mp, yt, night);
-					break;
-				case GMSG_LIGHT:
-					amblight = msg.color();
-					break;
+			case GMSG_TIME:
+				Timer.server = msg.int32();
+				;
+				Timer.local = System.currentTimeMillis() / 1000;
+				break;
+			case GMSG_ASTRO:
+				double dt = defix(msg.int32());
+				double mp = defix(msg.int32());
+				double yt = defix(msg.int32());
+				boolean night = (dt < 0.25) || (dt > 0.75);
+				ast = new Astronomy(dt, mp, yt, night);
+				break;
+			case GMSG_LIGHT:
+				amblight = msg.color();
+				break;
 			}
 		}
 	}

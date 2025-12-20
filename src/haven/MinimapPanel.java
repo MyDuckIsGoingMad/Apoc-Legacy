@@ -3,14 +3,12 @@ package haven;
 import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import haven.geoloc.Geoloc;
 import haven.geoloc.GeolocException;
-import haven.geoloc.MapTileData;
 import jerklib.util.Pair;
+import myduckisgoingmad.Tracker;
 
 public class MinimapPanel extends Window {
 
@@ -203,8 +201,8 @@ public class MinimapPanel extends Window {
 			}
 		};
 
-		new IButton(new Coord(146, 8), this, Resource.loadimg("gfx/hud/buttons/geoloc"),
-				Resource.loadimg("gfx/hud/buttons/geoloc")) {
+		new IButton(new Coord(146, 8), this, Resource.loadimg("gfx/hud/buttons/compas"),
+				Resource.loadimg("gfx/hud/buttons/compas")) {
 			public void click() {
 				BufferedImage tmp = down;
 				down = up;
@@ -213,22 +211,8 @@ public class MinimapPanel extends Window {
 
 				Window wnd = new Window(new Coord(250, 100), Coord.z, UI.instance.root, "Current Location");
 
-				BufferedImage img;
 				try {
-					String mnm = mm.getCurrentMapTileHash();
-					img = mm.getCurrentMapTile(mnm);
-					Geoloc.storeCurrentTileHash(mnm);
-				} catch (Exception e) {
-					String error = "Something went wrong... Check console for any errors.";
-					new Label(new Coord(0, 5), wnd, error);
-					e.printStackTrace();
-					wnd.justclose = true;
-					wnd.pack();
-					return;
-				}
-
-				try {
-					Pair<Double, Double> playerGlobalCoords = Geoloc.getUserCoords(img);
+					Pair<Double, Double> playerGlobalCoords = Geoloc.getPlayerCoords();
 
 					String loc = String.format("X: %.2f    Y: %.2f", playerGlobalCoords.first,
 							playerGlobalCoords.second);
@@ -239,8 +223,8 @@ public class MinimapPanel extends Window {
 							Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 							if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
 								try {
-									desktop.browse(new URI(
-											String.format(Locale.ROOT, "http://localhost:3000/?z=9&x=%.2f&y=%.2f",
+									desktop.browse(
+											new URI(String.format(Locale.ROOT, "http://localhost:3000/?z=9&x=%f&y=%f",
 													playerGlobalCoords.first, playerGlobalCoords.second)));
 								} catch (Exception e) {
 									e.printStackTrace();
@@ -260,6 +244,21 @@ public class MinimapPanel extends Window {
 			}
 
 			private Text tooltip = Text.render("Show my location on the world map");
+
+			@Override
+			public Object tooltip(Coord c, boolean again) {
+				return checkhit(c) ? tooltip : null;
+			}
+		};
+
+		new IButton(new Coord(170, 8), this, Resource.loadimg("gfx/hud/buttons/marker"),
+				Resource.loadimg("gfx/hud/buttons/marker")) {
+			public void click() {
+				Tracker tracker = Tracker.getInstance();
+				tracker.checkout();
+			}
+
+			private Text tooltip = Text.render("Checkout my position");
 
 			@Override
 			public Object tooltip(Coord c, boolean again) {

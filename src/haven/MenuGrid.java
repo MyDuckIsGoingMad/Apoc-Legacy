@@ -28,6 +28,8 @@ package haven;
 
 import haven.Resource.AButton;
 import haven.ToolbarWnd.Slot;
+import haven.geoloc.Geoloc;
+import myduckisgoingmad.Tracker;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -318,25 +320,20 @@ public class MenuGrid extends Widget {
 				if ((ad == null) || (ad.length < 1)) {
 					return;
 				}
+
 				if (ad[0].equals("@")) {
 					usecustom(ad);
+				}
+				if (ad[0].equals("gps")) {
+					usegps(ad);
 				} else {
 					/*
-					 * int k = 0;
-					 * if (ad[0].equals("crime")){k = -1;}
-					 * if (ad[0].equals("tracking")){k = -2;}
-					 * if (ad[0].equals("swim")){k = -3;}
-					 * if(k<0){
-					 * synchronized (ui.sess.glob.buffs) {
-					 * if(ui.sess.glob.buffs.containsKey(k)){
-					 * ui.sess.glob.buffs.remove(k);
-					 * } else {
-					 * Buff buff = new Buff(k, r.indir());
-					 * buff.major = true;
-					 * ui.sess.glob.buffs.put(k, buff);
-					 * }
-					 * }
-					 * }
+					 * int k = 0; if (ad[0].equals("crime")){k = -1;} if
+					 * (ad[0].equals("tracking")){k = -2;} if (ad[0].equals("swim")){k = -3;}
+					 * if(k<0){ synchronized (ui.sess.glob.buffs) {
+					 * if(ui.sess.glob.buffs.containsKey(k)){ ui.sess.glob.buffs.remove(k); } else {
+					 * Buff buff = new Buff(k, r.indir()); buff.major = true;
+					 * ui.sess.glob.buffs.put(k, buff); } } }
 					 */
 
 					for (int i = 0; i < ad.length; i++) { // new
@@ -451,15 +448,11 @@ public class MenuGrid extends Widget {
 				Config.saveOptions();
 			}
 			/*
-			 * } else if(list[1].equals("inventory")) {
-			 * ui.slen.wdgmsg("inv");
-			 * } else if(list[1].equals("equipment")) {
-			 * ui.slen.wdgmsg("equ");
-			 * } else if(list[1].equals("character")) {
-			 * ui.uiThread.charWnd.toggle();
-			 * } else if(list[1].equals("kinlist")) {
-			 * ui.uiThread.buddyWnd.visible = !ui.uiThread.buddyWnd.visible;
-			 * } else if(list[1].equals("option")) {
+			 * } else if(list[1].equals("inventory")) { ui.slen.wdgmsg("inv"); } else
+			 * if(list[1].equals("equipment")) { ui.slen.wdgmsg("equ"); } else
+			 * if(list[1].equals("character")) { ui.uiThread.charWnd.toggle(); } else
+			 * if(list[1].equals("kinlist")) { ui.uiThread.buddyWnd.visible =
+			 * !ui.uiThread.buddyWnd.visible; } else if(list[1].equals("option")) {
 			 * ui.slen.toggleopts();
 			 */
 		} else if (list[1].equals("autoaggro")) {
@@ -476,6 +469,28 @@ public class MenuGrid extends Widget {
 			ui.cons.out.println(str);
 			ui.slen.error(str);
 			Config.saveOptions();
+		}
+		use(null);
+	}
+
+	public void usegps(String[] list) {
+		if (list[1].equals("sync")) {
+			try {
+				Geoloc.syncGeodataCoords();
+			} catch (Exception e) {
+				String str = "GPS Sync failed: " + e.getMessage();
+				ui.cons.out.println(str);
+				ui.slen.error(str);
+			}
+		} else if (list[1].equals("checkout")) {
+			Tracker tracker = Tracker.getInstance();
+			tracker.checkout();
+		} else if (list[1].equals("track")) {
+			Tracker tracker = Tracker.getInstance();
+			tracker.toggleTracking();
+		} else if (list[1].equals("prospect")) {
+			Tracker tracker = Tracker.getInstance();
+			tracker.prospect();
 		}
 		use(null);
 	}
@@ -537,19 +552,8 @@ public class MenuGrid extends Widget {
 
 	///////////
 
-	public static String[] moveAttacks = {
-			"thunder",
-			"berserk",
-			"dash",
-			"feignflight",
-			"flex",
-			"butterfly",
-			"jump",
-			"advpush",
-			"seize",
-			"slide",
-			"throwsand"
-	};
+	public static String[] moveAttacks = { "thunder", "berserk", "dash", "feignflight", "flex", "butterfly", "jump",
+			"advpush", "seize", "slide", "throwsand" };
 
 	boolean doubleTapAttack(String[] ad) {
 		Config.runFlaskSuppression = true;
@@ -608,12 +612,11 @@ public class MenuGrid extends Widget {
 	}
 
 	/*
-	 * boolean soakAttack(String[] ad){
-	 * long maxSoakTime = 500;
-	 * boolean soak = false;
+	 * boolean soakAttack(String[] ad){ long maxSoakTime = 500; boolean soak =
+	 * false;
 	 * 
-	 * String Aname = getAttackName(ad);
-	 * boolean fightSoak = getFightBackAttack() != null;
+	 * String Aname = getAttackName(ad); boolean fightSoak = getFightBackAttack() !=
+	 * null;
 	 * 
 	 * if(fightSoak) return true;
 	 * 
@@ -621,8 +624,7 @@ public class MenuGrid extends Widget {
 	 * 
 	 * if(Aname != null) soakTimer = System.currentTimeMillis();
 	 * 
-	 * return soak;
-	 * }
+	 * return soak; }
 	 */
 
 	Indir<Resource> getFightBackAttack() {

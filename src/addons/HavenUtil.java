@@ -83,124 +83,64 @@ public class HavenUtil {
 	public boolean runFlask = false;
 	public int drinkCount = 21;
 
-	public String[][] m_foodArray = {
-			{ "gfx/invobjs/ants-larvae", "10", "1" },
-			{ "gfx/invobjs/ants-pupae", "10", "1" },
-			{ "gfx/invobjs/ants-aphids", "10", "1" },
-			{ "gfx/invobjs/meat-cow", "40", "1" },
-			{ "gfx/invobjs/beetroot", "20", "1" },
-			{ "gfx/invobjs/beetrootleaves", "10", "1" },
-			{ "gfx/invobjs/egg-boiled", "20", "1" },
-			{ "gfx/invobjs/mussel-boiled", "10", "1" },
-			{ "gfx/invobjs/bread", "60", "1" },
-			{ "gfx/invobjs/carrot", "10", "1" },
-			{ "gfx/invobjs/cheese-curd", "40", "1" },
-			{ "gfx/invobjs/egg-fried", "20", "1" },
-			{ "gfx/invobjs/grapes", "10", "1" },
-			{ "gfx/invobjs/peapod", "5", "1" },
-			{ "gfx/invobjs/pumpkinflesh", "20", "1" },
-			{ "gfx/invobjs/ratonastick", "20", "1" },
-			{ "gfx/invobjs/raisins", "5", "2" },
-			{ "gfx/invobjs/bread-bark", "50", "2" },
-			{ "gfx/invobjs/wurst-bearsalami", "60", "2" },
-			{ "gfx/invobjs/wurst-bigbearbanger", "100", "2" },
-			{ "gfx/invobjs/wurst-boarbaloney", "50", "2" },
-			{ "gfx/invobjs/wurst-boarboudin", "60", "2" },
-			{ "gfx/invobjs/cheese-cellarcheddar", "40", "2" },
-			{ "gfx/invobjs/wurst-chickenchorizo", "45", "2" },
-			{ "gfx/invobjs/wurst-cowchorizo", "60", "2" },
-			{ "gfx/invobjs/wurst-foxfuet", "60", "2" },
-			{ "gfx/invobjs/wurst-fox", "40", "2" },
-			{ "gfx/invobjs/honeybun", "25", "2" },
-			{ "gfx/invobjs/wurst-lambsausages", "55", "2" },
-			{ "gfx/invobjs/cheese-mothzarella", "40", "2" },
-			{ "gfx/invobjs/cheese-muskymilben", "40", "2" },
-			{ "gfx/invobjs/onionrings", "45", "2" },
-			{ "gfx/invobjs/pancake", "40", "2" },
-			{ "gfx/invobjs/pie-pea", "35", "2" },
-			{ "gfx/invobjs/wurst-piglet", "30", "2" },
-			{ "gfx/invobjs/bread-pumpkin", "50", "2" },
-			{ "gfx/invobjs/meat-pig-r", "40", "2" },
-			{ "gfx/invobjs/feast-roachwrap", "30", "2" },
-			{ "gfx/invobjs/meat-bear-r", "40", "2" },
-			{ "gfx/invobjs/meat-cow-r", "40", "2" },
-			{ "gfx/invobjs/meat-boar-r", "40", "2" },
-			{ "gfx/invobjs/meat-bream-r", "30", "2" },
-			{ "gfx/invobjs/meat-brill-r", "30", "2" },
-			{ "gfx/invobjs/meat-chicken-r", "40", "2" },
-			{ "gfx/invobjs/meat-deer-r", "40", "2" },
-			{ "gfx/invobjs/meat-fox-r", "40", "2" },
-			{ "gfx/invobjs/meat-sheep-r", "40", "2" },
-			{ "gfx/invobjs/meat-perch-r", "30", "2" },
-			{ "gfx/invobjs/meat-pike-r", "30", "2" },
-			{ "gfx/invobjs/meat-plaice-r", "30", "2" },
-			{ "gfx/invobjs/meat-rabbit-r", "40", "2" },
-			{ "gfx/invobjs/meat-roach-r", "30", "2" },
-			{ "gfx/invobjs/meat-salmon-r", "30", "2" },
-			{ "gfx/invobjs/meat-sturgeon-r", "30", "2" },
-			{ "gfx/invobjs/wurst-runningrabbit", "50", "2" },
-			{ "gfx/invobjs/stew-spring", "30", "2" },
-			{ "gfx/invobjs/salad-beet", "30", "2" },
-			{ "gfx/invobjs/wurst-tamegame", "60", "2" },
-			{ "gfx/invobjs/cheese-temmentaler", "40", "2" },
-			{ "gfx/invobjs/pie-wellplaiced", "40", "2" },
-			{ "gfx/invobjs/salad-chicken", "50", "3" },
-			{ "gfx/invobjs/feast-fishsticks", "30", "3" },
-			{ "gfx/invobjs/pie-blueberry", "35", "3" },
-			{ "gfx/invobjs/cake-carrot", "30", "3" },
-			{ "gfx/invobjs/feast-pirozhki", "50", "3" },
-			{ "gfx/invobjs/cheese-creamycamembert", "40", "3" },
-			{ "gfx/invobjs/pie-pumpkin", "40", "3" },
-			{ "gfx/invobjs/cake-raisinbutter", "25", "3" },
-			{ "gfx/invobjs/bread-brodgar", "35", "3" },
-			{ "gfx/invobjs/meat-eel-r", "30", "3" },
-			{ "gfx/invobjs/pie-apple", "35", "4" },
-			{ "gfx/invobjs/cheese-brodgarblue", "40", "4" },
-			{ "gfx/invobjs/wurst-ddd", "80", "4" },
-			{ "gfx/invobjs/cheese-genericgouda", "40", "5" },
-			{ "gfx/invobjs/feast-perchedperch", "20", "5" },
-			{ "gfx/invobjs/cheese-jorbonzola", "40", "5" },
-			{ "gfx/invobjs/feast-cavebulb", "50", "5" },
-			{ "gfx/invobjs/creamycock", "60", "5" },
-			{ "gfx/invobjs/beetedbirdbreast", "50", "5" },
-			{ "gfx/invobjs/cheese-harmesan", "40", "5" },
-			{ "gfx/invobjs/feast-bbbb", "30", "5" },
-			{ "gfx/invobjs/wurst-bierwurst", "50", "5" },
-			{ "gfx/invobjs/feast-bbb", "30", "5" },
-			{ "gfx/invobjs/herbs/blueberry", "10", "5" },
-			{ "gfx/invobjs/herbs/chantrelle", "10", "5" },
-			{ "gfx/invobjs/pancake-crepecitrouille", "60", "5" },
-			{ "gfx/invobjs/pancake-crepenoisette", "60", "5" },
-			{ "gfx/invobjs/cheese-midnightblue", "40", "5" },
-			{ "gfx/invobjs/pancake-pommaceperdue", "60", "5" },
-			{ "gfx/invobjs/pancake-sacrebleu", "60", "5" },
-			{ "gfx/invobjs/cheese-sunlitstilton", "40", "5" },
-			{ "gfx/invobjs/wurst-www", "200", "5" },
-			{ "gfx/invobjs/zestybrill", "25", "5" },
-			{ "gfx/invobjs/ants-empress", "10", "10" },
-			{ "gfx/invobjs/ants-queen", "10", "10" },
-			{ "gfx/invobjs/ants-soldiers", "10", "10" },
-			{ "gfx/invobjs/apple", "10", "10" },
-			{ "gfx/invobjs/meat-bear", "40", "10" },
-			{ "gfx/invobjs/cake-bday", "35", "10" },
-			{ "gfx/invobjs/herbs/bloatedbolete", "10", "10" },
-			{ "gfx/invobjs/meat-boar", "40", "10" },
-			{ "gfx/invobjs/herbs/candleberry", "10", "10" },
-			{ "gfx/invobjs/cheese-cavecheddar", "40", "10" },
-			{ "gfx/invobjs/fishyeyeball", "20", "10" },
-			{ "gfx/invobjs/meat-fox", "40", "10" },
-			{ "gfx/invobjs/mulberry", "10", "10" },
-			{ "gfx/invobjs/meat-rabbit", "35", "10" },
-			{ "gfx/invobjs/meat-chicken", "40", "10" },
-			{ "gfx/invobjs/meat-deer", "40", "10" },
-			{ "gfx/invobjs/meat-sheep", "40", "10" },
-			{ "gfx/invobjs/meat-pig", "40", "10" },
-			{ "gfx/invobjs/meat-troll", "40", "10" },
-			{ "gfx/invobjs/feast-rob", "30", "10" },
-			{ "gfx/invobjs/meat-troll-r", "40", "10" },
-			{ "gfx/invobjs/bread-shew", "45", "10" },
-			{ "gfx/invobjs/onion", "20", "10" },
-	};
+	public String[][] m_foodArray = { { "gfx/invobjs/ants-larvae", "10", "1" }, { "gfx/invobjs/ants-pupae", "10", "1" },
+			{ "gfx/invobjs/ants-aphids", "10", "1" }, { "gfx/invobjs/meat-cow", "40", "1" },
+			{ "gfx/invobjs/beetroot", "20", "1" }, { "gfx/invobjs/beetrootleaves", "10", "1" },
+			{ "gfx/invobjs/egg-boiled", "20", "1" }, { "gfx/invobjs/mussel-boiled", "10", "1" },
+			{ "gfx/invobjs/bread", "60", "1" }, { "gfx/invobjs/carrot", "10", "1" },
+			{ "gfx/invobjs/cheese-curd", "40", "1" }, { "gfx/invobjs/egg-fried", "20", "1" },
+			{ "gfx/invobjs/grapes", "10", "1" }, { "gfx/invobjs/peapod", "5", "1" },
+			{ "gfx/invobjs/pumpkinflesh", "20", "1" }, { "gfx/invobjs/ratonastick", "20", "1" },
+			{ "gfx/invobjs/raisins", "5", "2" }, { "gfx/invobjs/bread-bark", "50", "2" },
+			{ "gfx/invobjs/wurst-bearsalami", "60", "2" }, { "gfx/invobjs/wurst-bigbearbanger", "100", "2" },
+			{ "gfx/invobjs/wurst-boarbaloney", "50", "2" }, { "gfx/invobjs/wurst-boarboudin", "60", "2" },
+			{ "gfx/invobjs/cheese-cellarcheddar", "40", "2" }, { "gfx/invobjs/wurst-chickenchorizo", "45", "2" },
+			{ "gfx/invobjs/wurst-cowchorizo", "60", "2" }, { "gfx/invobjs/wurst-foxfuet", "60", "2" },
+			{ "gfx/invobjs/wurst-fox", "40", "2" }, { "gfx/invobjs/honeybun", "25", "2" },
+			{ "gfx/invobjs/wurst-lambsausages", "55", "2" }, { "gfx/invobjs/cheese-mothzarella", "40", "2" },
+			{ "gfx/invobjs/cheese-muskymilben", "40", "2" }, { "gfx/invobjs/onionrings", "45", "2" },
+			{ "gfx/invobjs/pancake", "40", "2" }, { "gfx/invobjs/pie-pea", "35", "2" },
+			{ "gfx/invobjs/wurst-piglet", "30", "2" }, { "gfx/invobjs/bread-pumpkin", "50", "2" },
+			{ "gfx/invobjs/meat-pig-r", "40", "2" }, { "gfx/invobjs/feast-roachwrap", "30", "2" },
+			{ "gfx/invobjs/meat-bear-r", "40", "2" }, { "gfx/invobjs/meat-cow-r", "40", "2" },
+			{ "gfx/invobjs/meat-boar-r", "40", "2" }, { "gfx/invobjs/meat-bream-r", "30", "2" },
+			{ "gfx/invobjs/meat-brill-r", "30", "2" }, { "gfx/invobjs/meat-chicken-r", "40", "2" },
+			{ "gfx/invobjs/meat-deer-r", "40", "2" }, { "gfx/invobjs/meat-fox-r", "40", "2" },
+			{ "gfx/invobjs/meat-sheep-r", "40", "2" }, { "gfx/invobjs/meat-perch-r", "30", "2" },
+			{ "gfx/invobjs/meat-pike-r", "30", "2" }, { "gfx/invobjs/meat-plaice-r", "30", "2" },
+			{ "gfx/invobjs/meat-rabbit-r", "40", "2" }, { "gfx/invobjs/meat-roach-r", "30", "2" },
+			{ "gfx/invobjs/meat-salmon-r", "30", "2" }, { "gfx/invobjs/meat-sturgeon-r", "30", "2" },
+			{ "gfx/invobjs/wurst-runningrabbit", "50", "2" }, { "gfx/invobjs/stew-spring", "30", "2" },
+			{ "gfx/invobjs/salad-beet", "30", "2" }, { "gfx/invobjs/wurst-tamegame", "60", "2" },
+			{ "gfx/invobjs/cheese-temmentaler", "40", "2" }, { "gfx/invobjs/pie-wellplaiced", "40", "2" },
+			{ "gfx/invobjs/salad-chicken", "50", "3" }, { "gfx/invobjs/feast-fishsticks", "30", "3" },
+			{ "gfx/invobjs/pie-blueberry", "35", "3" }, { "gfx/invobjs/cake-carrot", "30", "3" },
+			{ "gfx/invobjs/feast-pirozhki", "50", "3" }, { "gfx/invobjs/cheese-creamycamembert", "40", "3" },
+			{ "gfx/invobjs/pie-pumpkin", "40", "3" }, { "gfx/invobjs/cake-raisinbutter", "25", "3" },
+			{ "gfx/invobjs/bread-brodgar", "35", "3" }, { "gfx/invobjs/meat-eel-r", "30", "3" },
+			{ "gfx/invobjs/pie-apple", "35", "4" }, { "gfx/invobjs/cheese-brodgarblue", "40", "4" },
+			{ "gfx/invobjs/wurst-ddd", "80", "4" }, { "gfx/invobjs/cheese-genericgouda", "40", "5" },
+			{ "gfx/invobjs/feast-perchedperch", "20", "5" }, { "gfx/invobjs/cheese-jorbonzola", "40", "5" },
+			{ "gfx/invobjs/feast-cavebulb", "50", "5" }, { "gfx/invobjs/creamycock", "60", "5" },
+			{ "gfx/invobjs/beetedbirdbreast", "50", "5" }, { "gfx/invobjs/cheese-harmesan", "40", "5" },
+			{ "gfx/invobjs/feast-bbbb", "30", "5" }, { "gfx/invobjs/wurst-bierwurst", "50", "5" },
+			{ "gfx/invobjs/feast-bbb", "30", "5" }, { "gfx/invobjs/herbs/blueberry", "10", "5" },
+			{ "gfx/invobjs/herbs/chantrelle", "10", "5" }, { "gfx/invobjs/pancake-crepecitrouille", "60", "5" },
+			{ "gfx/invobjs/pancake-crepenoisette", "60", "5" }, { "gfx/invobjs/cheese-midnightblue", "40", "5" },
+			{ "gfx/invobjs/pancake-pommaceperdue", "60", "5" }, { "gfx/invobjs/pancake-sacrebleu", "60", "5" },
+			{ "gfx/invobjs/cheese-sunlitstilton", "40", "5" }, { "gfx/invobjs/wurst-www", "200", "5" },
+			{ "gfx/invobjs/zestybrill", "25", "5" }, { "gfx/invobjs/ants-empress", "10", "10" },
+			{ "gfx/invobjs/ants-queen", "10", "10" }, { "gfx/invobjs/ants-soldiers", "10", "10" },
+			{ "gfx/invobjs/apple", "10", "10" }, { "gfx/invobjs/meat-bear", "40", "10" },
+			{ "gfx/invobjs/cake-bday", "35", "10" }, { "gfx/invobjs/herbs/bloatedbolete", "10", "10" },
+			{ "gfx/invobjs/meat-boar", "40", "10" }, { "gfx/invobjs/herbs/candleberry", "10", "10" },
+			{ "gfx/invobjs/cheese-cavecheddar", "40", "10" }, { "gfx/invobjs/fishyeyeball", "20", "10" },
+			{ "gfx/invobjs/meat-fox", "40", "10" }, { "gfx/invobjs/mulberry", "10", "10" },
+			{ "gfx/invobjs/meat-rabbit", "35", "10" }, { "gfx/invobjs/meat-chicken", "40", "10" },
+			{ "gfx/invobjs/meat-deer", "40", "10" }, { "gfx/invobjs/meat-sheep", "40", "10" },
+			{ "gfx/invobjs/meat-pig", "40", "10" }, { "gfx/invobjs/meat-troll", "40", "10" },
+			{ "gfx/invobjs/feast-rob", "30", "10" }, { "gfx/invobjs/meat-troll-r", "40", "10" },
+			{ "gfx/invobjs/bread-shew", "45", "10" }, { "gfx/invobjs/onion", "20", "10" }, };
 
 	public HavenUtil(UI u) {
 		m_ui = u;
@@ -328,6 +268,10 @@ public class HavenUtil {
 		m_ui.cons.out.println(str);
 		m_ui.slen.error(str);
 		System.out.println(str);
+	}
+
+	public void sendMessage(String str) {
+		m_ui.cons.out.println(str);
 	}
 
 	public void clickWorldObject(int button, Gob object) {
@@ -1840,9 +1784,8 @@ public class HavenUtil {
 				continue;
 			if (((Window) w).cap.text == null)
 				continue;
-			if (!(((Window) w).cap.text.equals("Boat") ||
-					((Window) w).cap.text.equals("Wagon") ||
-					((Window) w).cap.text.equals("Cart")))
+			if (!(((Window) w).cap.text.equals("Boat") || ((Window) w).cap.text.equals("Wagon")
+					|| ((Window) w).cap.text.equals("Cart")))
 				continue;
 
 			for (Widget wdg = w.child; wdg != null; wdg = wdg.next) {
@@ -2333,13 +2276,10 @@ public class HavenUtil {
 	}
 
 	/*
-	 * public void forceDropItemInInv(Coord c, Inventory inv){
-	 * if(inv == null){
-	 * return;
-	 * }
+	 * public void forceDropItemInInv(Coord c, Inventory inv){ if(inv == null){
+	 * return; }
 	 * 
-	 * inv.drop(new Coord(0,0), c);
-	 * }
+	 * inv.drop(new Coord(0,0), c); }
 	 */
 
 	public void useItem(Item item) {
@@ -3130,16 +3070,10 @@ public class HavenUtil {
 		Coord size = new Coord();
 
 		/*
-		 * if(!kritterFix(g, offcet, size) ){
-		 * Resource.Neg neg = g.getneg();
-		 * if(neg == null){
-		 * //System.out.println("Error neg");
-		 * return sPoints;
-		 * }
+		 * if(!kritterFix(g, offcet, size) ){ Resource.Neg neg = g.getneg(); if(neg ==
+		 * null){ //System.out.println("Error neg"); return sPoints; }
 		 * 
-		 * offcet = neg.bc;
-		 * size = neg.bs;
-		 * }
+		 * offcet = neg.bc; size = neg.bs; }
 		 */
 
 		offcet.x = rect.x;
@@ -3171,8 +3105,7 @@ public class HavenUtil {
 					}
 
 					for (Rectangle r : allRect) {
-						Rectangle2D shrunk = new Rectangle2D.Double(
-								(double) r.x + (double) delta - (double) fattener.x,
+						Rectangle2D shrunk = new Rectangle2D.Double((double) r.x + (double) delta - (double) fattener.x,
 								(double) r.y + (double) delta - (double) fattener.y,
 								(double) r.width - (double) delta * 2 + (double) fattener.width * 2,
 								(double) r.height - (double) delta * 2 + (double) fattener.height * 2);
@@ -3220,8 +3153,7 @@ public class HavenUtil {
 		}
 
 		/*
-		 * Resource.Neg neg = g.getneg();
-		 * if(neg == null) return new Rectangle();
+		 * Resource.Neg neg = g.getneg(); if(neg == null) return new Rectangle();
 		 */
 
 		return new Rectangle(offcet.x, offcet.y, size.x, size.y);
@@ -3339,9 +3271,7 @@ public class HavenUtil {
 			}
 
 			if (size.x != 0) {
-				Rectangle rect = new Rectangle(g.getr().x + offcet.x,
-						g.getr().y + offcet.y,
-						size.x, size.y);
+				Rectangle rect = new Rectangle(g.getr().x + offcet.x, g.getr().y + offcet.y, size.x, size.y);
 				negRec.add(rect);
 			}
 		}
@@ -3480,11 +3410,8 @@ public class HavenUtil {
 		// ArrayList<Rectangle2D> rect2d = ArrayList<Rectangle2D>();
 
 		for (Rectangle r : rect) {
-			Rectangle2D shrunk = new Rectangle2D.Double(
-					(double) r.x + (double) delta,
-					(double) r.y + (double) delta,
-					(double) r.width - (double) delta * 2,
-					(double) r.height - (double) delta * 2);
+			Rectangle2D shrunk = new Rectangle2D.Double((double) r.x + (double) delta, (double) r.y + (double) delta,
+					(double) r.width - (double) delta * 2, (double) r.height - (double) delta * 2);
 
 			if (shrunk.contains((double) coordCheck.x, (double) coordCheck.y))
 				return false;
@@ -3512,11 +3439,8 @@ public class HavenUtil {
 		// ArrayList<Rectangle2D> rect2d = ArrayList<Rectangle2D>();
 
 		for (Rectangle r : rect) {
-			Rectangle2D shrunk = new Rectangle2D.Double(
-					(double) r.x + (double) delta,
-					(double) r.y + (double) delta,
-					(double) r.width - (double) delta * 2,
-					(double) r.height - (double) delta * 2);
+			Rectangle2D shrunk = new Rectangle2D.Double((double) r.x + (double) delta, (double) r.y + (double) delta,
+					(double) r.width - (double) delta * 2, (double) r.height - (double) delta * 2);
 
 			if (shrunk.contains((double) coordCheck.x, (double) coordCheck.y))
 				return false;
@@ -3533,11 +3457,8 @@ public class HavenUtil {
 		Line2D.Double line = new Line2D.Double(From.x, From.y, To.x, To.y);
 
 		for (Rectangle r : rect) {
-			Rectangle2D shrunk = new Rectangle2D.Double(
-					(double) r.x + (double) delta,
-					(double) r.y + (double) delta,
-					(double) r.width - (double) delta * 2,
-					(double) r.height - (double) delta * 2);
+			Rectangle2D shrunk = new Rectangle2D.Double((double) r.x + (double) delta, (double) r.y + (double) delta,
+					(double) r.width - (double) delta * 2, (double) r.height - (double) delta * 2);
 
 			if (line.intersects(shrunk) && !shrunk.contains(From.x, From.y) && !shrunk.contains(To.x, To.y))
 				return false;
@@ -3552,11 +3473,8 @@ public class HavenUtil {
 		Line2D.Double line = new Line2D.Double(From.x, From.y, To.x, To.y);
 
 		for (Rectangle r : rect) {
-			Rectangle2D shrunk = new Rectangle2D.Double(
-					(double) r.x + (double) delta,
-					(double) r.y + (double) delta,
-					(double) r.width - (double) delta * 2,
-					(double) r.height - (double) delta * 2);
+			Rectangle2D shrunk = new Rectangle2D.Double((double) r.x + (double) delta, (double) r.y + (double) delta,
+					(double) r.width - (double) delta * 2, (double) r.height - (double) delta * 2);
 
 			if (line.intersects(shrunk) /* && !shrunk.contains(From.x, From.y) && !shrunk.contains(To.x, To.y) */ )
 				return false;
@@ -3573,20 +3491,16 @@ public class HavenUtil {
 
 		Rectangle boxR = new Rectangle(neg.bc.x + start.x, neg.bc.y + start.y, neg.bs.x, neg.bs.y);
 
-		Rectangle2D boxShrunk = new Rectangle2D.Double(
-				(double) boxR.x + (double) delta,
-				(double) boxR.y + (double) delta,
-				(double) boxR.width - (double) delta * 2,
+		Rectangle2D boxShrunk = new Rectangle2D.Double((double) boxR.x + (double) delta,
+				(double) boxR.y + (double) delta, (double) boxR.width - (double) delta * 2,
 				(double) boxR.height - (double) delta * 2);
 
 		boolean free = true;
 
 		if (idRectCheck(boxR)) {
 			for (Rectangle r : rects) {
-				Rectangle2D shrunk = new Rectangle2D.Double(
-						(double) r.x + (double) delta,
-						(double) r.y + (double) delta,
-						(double) r.width - (double) delta * 2,
+				Rectangle2D shrunk = new Rectangle2D.Double((double) r.x + (double) delta,
+						(double) r.y + (double) delta, (double) r.width - (double) delta * 2,
 						(double) r.height - (double) delta * 2);
 
 				if (boxShrunk.intersects(shrunk)) {
@@ -3610,11 +3524,8 @@ public class HavenUtil {
 		Line2D.Double line = new Line2D.Double(From.x, From.y, To.x, To.y);
 
 		for (Rectangle r : rects) {
-			Rectangle2D shrunk = new Rectangle2D.Double(
-					(double) r.x + (double) delta,
-					(double) r.y + (double) delta,
-					(double) r.width - (double) delta * 2,
-					(double) r.height - (double) delta * 2);
+			Rectangle2D shrunk = new Rectangle2D.Double((double) r.x + (double) delta, (double) r.y + (double) delta,
+					(double) r.width - (double) delta * 2, (double) r.height - (double) delta * 2);
 
 			if (line.intersects(shrunk))
 				return true;
@@ -3734,9 +3645,7 @@ public class HavenUtil {
 	}
 
 	public void addToFilterRect(ArrayList<Rectangle> filter, Coord prime, Coord sec) {
-		Rectangle r = new Rectangle(prime.x * 11 - 1,
-				prime.y * 11 - 1,
-				(sec.x - prime.x) * 11 + 12,
+		Rectangle r = new Rectangle(prime.x * 11 - 1, prime.y * 11 - 1, (sec.x - prime.x) * 11 + 12,
 				(sec.y - prime.y) * 11 + 12);
 
 		filter.add(r);
@@ -3837,9 +3746,7 @@ public class HavenUtil {
 					}
 
 					/*
-					 * a++;
-					 * if(a == 0 && b == 0) a++;
-					 * if(a > 1){ b++; a = -1;}
+					 * a++; if(a == 0 && b == 0) a++; if(a > 1){ b++; a = -1;}
 					 */
 
 					int temp = b;
@@ -4364,17 +4271,13 @@ public class HavenUtil {
 			boolean colision = false;
 			int id = getTileID(check.div(11));
 			if (id < 255 && id > 1) {
-				Rectangle2D checkShrunk = new Rectangle2D.Double(
-						(double) (check.x + rectCheck.x) + (double) delta,
+				Rectangle2D checkShrunk = new Rectangle2D.Double((double) (check.x + rectCheck.x) + (double) delta,
 						(double) (check.y + rectCheck.y) + (double) delta,
-						(double) rectCheck.width - (double) delta * 2,
-						(double) rectCheck.height - (double) delta * 2);
+						(double) rectCheck.width - (double) delta * 2, (double) rectCheck.height - (double) delta * 2);
 
 				for (Rectangle r : rects) {
-					Rectangle2D shrunk = new Rectangle2D.Double(
-							(double) r.x + (double) delta,
-							(double) r.y + (double) delta,
-							(double) r.width - (double) delta * 2,
+					Rectangle2D shrunk = new Rectangle2D.Double((double) r.x + (double) delta,
+							(double) r.y + (double) delta, (double) r.width - (double) delta * 2,
 							(double) r.height - (double) delta * 2);
 
 					if (checkShrunk.intersects(shrunk)) {
@@ -4440,17 +4343,13 @@ public class HavenUtil {
 			boolean colision = false;
 			int id = getTileID(checkSpot.div(11));
 			if (id < 255 && id > 1) {
-				Rectangle2D boxShrunk = new Rectangle2D.Double(
-						(double) (rectCheck.x + checkSpot.x) + (double) delta,
+				Rectangle2D boxShrunk = new Rectangle2D.Double((double) (rectCheck.x + checkSpot.x) + (double) delta,
 						(double) (rectCheck.y + checkSpot.y) + (double) delta,
-						(double) rectCheck.width - (double) delta * 2,
-						(double) rectCheck.height - (double) delta * 2);
+						(double) rectCheck.width - (double) delta * 2, (double) rectCheck.height - (double) delta * 2);
 
 				for (Rectangle r : rects) {
-					Rectangle2D shrunk = new Rectangle2D.Double(
-							(double) r.x + (double) delta,
-							(double) r.y + (double) delta,
-							(double) r.width - (double) delta * 2,
+					Rectangle2D shrunk = new Rectangle2D.Double((double) r.x + (double) delta,
+							(double) r.y + (double) delta, (double) r.width - (double) delta * 2,
 							(double) r.height - (double) delta * 2);
 
 					if (boxShrunk.intersects(shrunk)) {
@@ -4560,17 +4459,13 @@ public class HavenUtil {
 			boolean colision = false;
 
 			if (idRectCheck(check)) {
-				Rectangle2D checkShrunk = new Rectangle2D.Double(
-						(double) check.x + (double) delta,
-						(double) check.y + (double) delta,
-						(double) check.width - (double) delta * 2,
+				Rectangle2D checkShrunk = new Rectangle2D.Double((double) check.x + (double) delta,
+						(double) check.y + (double) delta, (double) check.width - (double) delta * 2,
 						(double) check.height - (double) delta * 2);
 
 				for (Rectangle r : rects) {
-					Rectangle2D shrunk = new Rectangle2D.Double(
-							(double) r.x + (double) delta,
-							(double) r.y + (double) delta,
-							(double) r.width - (double) delta * 2,
+					Rectangle2D shrunk = new Rectangle2D.Double((double) r.x + (double) delta,
+							(double) r.y + (double) delta, (double) r.width - (double) delta * 2,
 							(double) r.height - (double) delta * 2);
 
 					if (checkShrunk.intersects(shrunk)) {
@@ -4791,147 +4686,96 @@ public class HavenUtil {
 	//////////////////////// tile GPS /////////////////////////
 
 	/*
-	 * public Coord GPStile(Coord GPSthisLocation){
-	 * Coord c = new Coord(getPlayerCoord() );
-	 * ArrayList<Coord> tiles = getTilesInRegion(c.sub(2300,2300), c.add(2300,2300)
-	 * , 0);
+	 * public Coord GPStile(Coord GPSthisLocation){ Coord c = new
+	 * Coord(getPlayerCoord() ); ArrayList<Coord> tiles =
+	 * getTilesInRegion(c.sub(2300,2300), c.add(2300,2300) , 0);
 	 * 
-	 * for(int i = 0; i < 3; i++){
-	 * for(Coord tc : tiles){
-	 * if(getTileID(tc) == 7){
+	 * for(int i = 0; i < 3; i++){ for(Coord tc : tiles){ if(getTileID(tc) == 7){
 	 * if(getTileID(tc.add(1,0) ) == 6 && getTileID(tc.add(-1,0) ) == 6){
-	 * if(getTileID(tc.add(0,1) ) == 5 && getTileID(tc.add(0,-1) ) == 5){
-	 * Coord distFromUpperLeft = new Coord(-43, -3);
-	 * Coord worldPos = new Coord(-59, 92);
+	 * if(getTileID(tc.add(0,1) ) == 5 && getTileID(tc.add(0,-1) ) == 5){ Coord
+	 * distFromUpperLeft = new Coord(-43, -3); Coord worldPos = new Coord(-59, 92);
 	 * 
-	 * Coord upperLeft = tc.add(distFromUpperLeft ).mul(11);
-	 * Coord offcet = GPSthisLocation.sub(upperLeft);
+	 * Coord upperLeft = tc.add(distFromUpperLeft ).mul(11); Coord offcet =
+	 * GPSthisLocation.sub(upperLeft);
 	 * 
-	 * return worldPos.mul(100).add(offcet.div(11));
-	 * }
-	 * }
+	 * return worldPos.mul(100).add(offcet.div(11)); } }
 	 * 
 	 * if(getTileID(tc.add(1,0) ) == 5 && getTileID(tc.add(-1,0) ) == 5){
-	 * if(getTileID(tc.add(0,1) ) == 6 && getTileID(tc.add(0,-1) ) == 6){
-	 * Coord distFromUpperLeft = new Coord(-23, -87);
-	 * Coord worldPos = new Coord(-56, 92);
+	 * if(getTileID(tc.add(0,1) ) == 6 && getTileID(tc.add(0,-1) ) == 6){ Coord
+	 * distFromUpperLeft = new Coord(-23, -87); Coord worldPos = new Coord(-56, 92);
 	 * 
-	 * Coord upperLeft = tc.add(distFromUpperLeft ).mul(11);
-	 * Coord offcet = GPSthisLocation.sub(upperLeft);
+	 * Coord upperLeft = tc.add(distFromUpperLeft ).mul(11); Coord offcet =
+	 * GPSthisLocation.sub(upperLeft);
 	 * 
-	 * return worldPos.mul(100).add(offcet.div(11));
-	 * }
-	 * }
+	 * return worldPos.mul(100).add(offcet.div(11)); } }
 	 * 
 	 * if(getTileID(tc.add(1,0) ) == 5 && getTileID(tc.add(-1,0) ) == 5){
-	 * if(getTileID(tc.add(0,1) ) == 4 && getTileID(tc.add(0,-1) ) == 4){
-	 * Coord distFromUpperLeft = new Coord(-97, -2);
-	 * Coord worldPos = new Coord(-62, 92);
+	 * if(getTileID(tc.add(0,1) ) == 4 && getTileID(tc.add(0,-1) ) == 4){ Coord
+	 * distFromUpperLeft = new Coord(-97, -2); Coord worldPos = new Coord(-62, 92);
 	 * 
-	 * Coord upperLeft = tc.add(distFromUpperLeft ).mul(11);
-	 * Coord offcet = GPSthisLocation.sub(upperLeft);
+	 * Coord upperLeft = tc.add(distFromUpperLeft ).mul(11); Coord offcet =
+	 * GPSthisLocation.sub(upperLeft);
 	 * 
-	 * return worldPos.mul(100).add(offcet.div(11));
-	 * }
-	 * }
-	 * }
-	 * }
+	 * return worldPos.mul(100).add(offcet.div(11)); } } } }
 	 * 
-	 * if(i == 0) GPSupdate(getPlayerCoord() );
-	 * int count = 0;
-	 * while(!stop && count < 25){
-	 * count++;
-	 * }
-	 * }
+	 * if(i == 0) GPSupdate(getPlayerCoord() ); int count = 0; while(!stop && count
+	 * < 25){ count++; } }
 	 * 
-	 * return null;
-	 * }
+	 * return null; }
 	 * 
-	 * public void GPSupdate(Coord c){
-	 * Coord mc = c.div(1100);
-	 * Coord requl = mc.add(-1, -1);
-	 * Coord reqbr = mc.add(1, 1);
-	 * Coord cgc = new Coord(0, 0);
-	 * for(cgc.y = requl.y; cgc.y <= reqbr.y; cgc.y++) {
-	 * for(cgc.x = requl.x; cgc.x <= reqbr.x; cgc.x++) {
-	 * try{
-	 * if(m_ui.mainview.map.grids.get(cgc) == null){
-	 * m_ui.mainview.map.request(new Coord(cgc));
-	 * }
-	 * }catch(Exception e){
-	 * }
-	 * }
-	 * }
-	 * try{
-	 * m_ui.mainview.map.sendreqs();
-	 * }catch(Exception e){
-	 * }
+	 * public void GPSupdate(Coord c){ Coord mc = c.div(1100); Coord requl =
+	 * mc.add(-1, -1); Coord reqbr = mc.add(1, 1); Coord cgc = new Coord(0, 0);
+	 * for(cgc.y = requl.y; cgc.y <= reqbr.y; cgc.y++) { for(cgc.x = requl.x; cgc.x
+	 * <= reqbr.x; cgc.x++) { try{ if(m_ui.mainview.map.grids.get(cgc) == null){
+	 * m_ui.mainview.map.request(new Coord(cgc)); } }catch(Exception e){ } } } try{
+	 * m_ui.mainview.map.sendreqs(); }catch(Exception e){ }
 	 * 
 	 * }
 	 * 
-	 * public Coord unGPS(int x, int y){
-	 * return unGPS(new Coord(x, y) );
-	 * }
+	 * public Coord unGPS(int x, int y){ return unGPS(new Coord(x, y) ); }
 	 * 
-	 * public Coord unGPS(Coord GPSLocation){
-	 * Coord c = new Coord(getPlayerCoord() );
-	 * ArrayList<Coord> tiles = getTilesInRegion(c.sub(2300,2300), c.add(2300,2300)
-	 * , 0);
+	 * public Coord unGPS(Coord GPSLocation){ Coord c = new Coord(getPlayerCoord()
+	 * ); ArrayList<Coord> tiles = getTilesInRegion(c.sub(2300,2300),
+	 * c.add(2300,2300) , 0);
 	 * 
-	 * for(int i = 0; i < 3; i++){
-	 * for(Coord tc : tiles){
-	 * if(getTileID(tc) == 7){
+	 * for(int i = 0; i < 3; i++){ for(Coord tc : tiles){ if(getTileID(tc) == 7){
 	 * if(getTileID(tc.add(1,0) ) == 6 && getTileID(tc.add(-1,0) ) == 6){
-	 * if(getTileID(tc.add(0,1) ) == 5 && getTileID(tc.add(0,-1) ) == 5){
-	 * Coord distFromUpperLeft = new Coord(-43, -3);
-	 * Coord worldPos = new Coord(-5900, 9200);
+	 * if(getTileID(tc.add(0,1) ) == 5 && getTileID(tc.add(0,-1) ) == 5){ Coord
+	 * distFromUpperLeft = new Coord(-43, -3); Coord worldPos = new Coord(-5900,
+	 * 9200);
 	 * 
-	 * Coord upperLeftDistToGPS = GPSLocation.sub(worldPos );
-	 * Coord upperLeftCoord = tc.add(distFromUpperLeft );
-	 * Coord offcet = upperLeftCoord.add(upperLeftDistToGPS);
+	 * Coord upperLeftDistToGPS = GPSLocation.sub(worldPos ); Coord upperLeftCoord =
+	 * tc.add(distFromUpperLeft ); Coord offcet =
+	 * upperLeftCoord.add(upperLeftDistToGPS);
 	 * 
-	 * return offcet.mul(11);
-	 * }
-	 * }
+	 * return offcet.mul(11); } }
 	 * 
 	 * if(getTileID(tc.add(1,0) ) == 5 && getTileID(tc.add(-1,0) ) == 5){
-	 * if(getTileID(tc.add(0,1) ) == 6 && getTileID(tc.add(0,-1) ) == 6){
-	 * Coord distFromUpperLeft = new Coord(-23, -87);
-	 * Coord worldPos = new Coord(-5600, 9200);
+	 * if(getTileID(tc.add(0,1) ) == 6 && getTileID(tc.add(0,-1) ) == 6){ Coord
+	 * distFromUpperLeft = new Coord(-23, -87); Coord worldPos = new Coord(-5600,
+	 * 9200);
 	 * 
-	 * Coord upperLeftDistToGPS = GPSLocation.sub(worldPos );
-	 * Coord upperLeftCoord = tc.add(distFromUpperLeft );
-	 * Coord offcet = upperLeftCoord.add(upperLeftDistToGPS);
+	 * Coord upperLeftDistToGPS = GPSLocation.sub(worldPos ); Coord upperLeftCoord =
+	 * tc.add(distFromUpperLeft ); Coord offcet =
+	 * upperLeftCoord.add(upperLeftDistToGPS);
 	 * 
-	 * return offcet.mul(11);
-	 * }
-	 * }
+	 * return offcet.mul(11); } }
 	 * 
 	 * if(getTileID(tc.add(1,0) ) == 5 && getTileID(tc.add(-1,0) ) == 5){
-	 * if(getTileID(tc.add(0,1) ) == 4 && getTileID(tc.add(0,-1) ) == 4){
-	 * Coord distFromUpperLeft = new Coord(-97, -2);
-	 * Coord worldPos = new Coord(-6200, 9200);
+	 * if(getTileID(tc.add(0,1) ) == 4 && getTileID(tc.add(0,-1) ) == 4){ Coord
+	 * distFromUpperLeft = new Coord(-97, -2); Coord worldPos = new Coord(-6200,
+	 * 9200);
 	 * 
-	 * Coord upperLeftDistToGPS = GPSLocation.sub(worldPos );
-	 * Coord upperLeftCoord = tc.add(distFromUpperLeft );
-	 * Coord offcet = upperLeftCoord.add(upperLeftDistToGPS);
+	 * Coord upperLeftDistToGPS = GPSLocation.sub(worldPos ); Coord upperLeftCoord =
+	 * tc.add(distFromUpperLeft ); Coord offcet =
+	 * upperLeftCoord.add(upperLeftDistToGPS);
 	 * 
-	 * return offcet.mul(11);
-	 * }
-	 * }
-	 * }
-	 * }
+	 * return offcet.mul(11); } } } }
 	 * 
-	 * if(i == 0) GPSupdate(getPlayerCoord() );
-	 * int count = 0;
-	 * while(!stop && count < 25){
-	 * count++;
-	 * wait(200);
-	 * }
-	 * }
+	 * if(i == 0) GPSupdate(getPlayerCoord() ); int count = 0; while(!stop && count
+	 * < 25){ count++; wait(200); } }
 	 * 
-	 * return null;
-	 * }
+	 * return null; }
 	 */
 
 	//////////////////////// ender timer ////////////////////////
@@ -5632,8 +5476,7 @@ public class HavenUtil {
 				return;
 
 			/*
-			 * Inventory inv = getInventory("Inventory");
-			 * int check = itemCount(inv);
+			 * Inventory inv = getInventory("Inventory"); int check = itemCount(inv);
 			 */
 
 			for (int i = 0; i < 48 && !stop; i++) {
@@ -5653,12 +5496,9 @@ public class HavenUtil {
 			}
 
 			/*
-			 * if(!loadBoat && !stop)
-			 * while( itemCount(chestInv) > 0 && !stop) wait(200);
-			 * if(loadBoat && !stop){
-			 * if(check > 48) check = 48;
-			 * while( itemCount(chestInv) < check && !stop) wait(200);
-			 * }
+			 * if(!loadBoat && !stop) while( itemCount(chestInv) > 0 && !stop) wait(200);
+			 * if(loadBoat && !stop){ if(check > 48) check = 48; while( itemCount(chestInv)
+			 * < check && !stop) wait(200); }
 			 */
 
 			if (!stop)
@@ -5801,8 +5641,7 @@ public class HavenUtil {
 				return;
 
 			/*
-			 * Inventory inv = getInventory("Inventory");
-			 * int check = itemCount(inv);
+			 * Inventory inv = getInventory("Inventory"); int check = itemCount(inv);
 			 */
 
 			for (int i = 0; i < 48 && !stop; i++) {
@@ -5822,12 +5661,9 @@ public class HavenUtil {
 			}
 
 			/*
-			 * if(!loadBoat && !stop)
-			 * while( itemCount(chestInv) > 0 && !stop) wait(200);
-			 * if(loadBoat && !stop){
-			 * if(check > 48) check = 48;
-			 * while( itemCount(chestInv) < check && !stop) wait(200);
-			 * }
+			 * if(!loadBoat && !stop) while( itemCount(chestInv) > 0 && !stop) wait(200);
+			 * if(loadBoat && !stop){ if(check > 48) check = 48; while( itemCount(chestInv)
+			 * < check && !stop) wait(200); }
 			 */
 
 			if (!stop)
@@ -6068,8 +5904,7 @@ public class HavenUtil {
 
 			if (invCub == null) {
 				/*
-				 * if(redoCount < redoCyckles) redo = true;
-				 * redoCount++;
+				 * if(redoCount < redoCyckles) redo = true; redoCount++;
 				 */
 				redo = true;
 			}

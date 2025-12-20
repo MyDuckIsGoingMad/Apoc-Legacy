@@ -1,0 +1,17 @@
+#ABUTTON LAYER FOR RES decode//\paginae\gps\track.res
+#String pr
+paginae/act/gps
+#uint16 pver
+2
+#String name
+Track
+#String preq
+
+#uint16 hk
+0
+#uint16 ad length
+2
+#String ad[0]
+gps
+#String ad[1]
+track

@@ -32,7 +32,7 @@ public class Geoloc {
 
 	public static String lastCheckedTileHash = null;
 	public static String lastFoundTileHash = null;
-	public static Coord lastFoundTileCoord = null;
+	public static Coord lastFoundTileGlobalCoord = null;
 
 	public static void loadGeoloc() {
 		DataInputStream is = null;
@@ -62,13 +62,8 @@ public class Geoloc {
 		}
 	}
 
-	public static void storeCurrentTileHash(String mnm) {
-		System.out.println("Storing last checked tile hash: " + mnm);
-		lastCheckedTileHash = mnm;
-	}
-
 	public static MapTileData findMapTileMatch(BufferedImage img) throws GeolocException {
-		int THRESHOLD = 300;
+		int THRESHOLD = 200;
 
 		img = Geoloc.preprocessMapTile(img);
 		MapTileData curMtd = Geoloc.getHash(img);
@@ -102,13 +97,61 @@ public class Geoloc {
 			}
 		}
 
+		System.out.println("Total matches: " + mtds.size() + "; Best match has hamming distance: " + best);
+
 		return bestMatch;
 	}
 
-	public static Pair<Double, Double> getUserCoords(BufferedImage img) throws GeolocException {
+	public static Coord syncGeodataCoords() throws GeolocException {
+		MiniMap mm = UI.instance.m_util.m_ui.slen.mini;
+		String tileHash = mm.getCurrentMapTileHash();
+
+		if (tileHash == null) {
+			throw new GeolocException("Could not get current map tile hash.");
+		}
+
+		BufferedImage img = mm.getCurrentMapTile(tileHash);
+
+		if (img == null) {
+			throw new GeolocException("Could not get current map tile image.");
+		}
+
+		MapTileData geodata = Geoloc.findMapTileMatch(img);
+
+		lastFoundTileHash = tileHash;
+		lastFoundTileGlobalCoord = new Coord(geodata.c1, geodata.c2);
+		System.out.println("Synchronized geodata coords to: " + lastFoundTileGlobalCoord);
+
+		return lastFoundTileGlobalCoord;
+	}
+
+	public static Coord getCurrentTileGlobalCoord() throws GeolocException {
+		if (lastFoundTileGlobalCoord == null) {
+			syncGeodataCoords();
+		}
+
+		MiniMap mm = UI.instance.m_util.m_ui.slen.mini;
+		String tileHash = mm.getCurrentMapTileHash();
+
+		if (tileHash == null) {
+			throw new GeolocException("Could not get current map tile hash.");
+		}
+
+		Coord prev = mm.gridsHashes.get(lastFoundTileHash);
+		Coord curr = mm.gridsHashes.get(tileHash);
+
+		if (prev == null || curr == null) {
+			throw new GeolocException("Could not get map tile grid coords.");
+		}
+
+		Coord delta = curr.sub(prev);
+		return lastFoundTileGlobalCoord.add(delta);
+	}
+
+	public static Pair<Double, Double> getPlayerCoords() throws GeolocException {
 		final Gob player = UI.instance.m_util.getPlayerGob();
 
-		if (player == null || lastCheckedTileHash == null) {
+		if (player == null) {
 			throw new GeolocException("Could not get player gob.");
 		}
 
@@ -121,48 +164,21 @@ public class Geoloc {
 		Coord tilePos = playerPos.div(MCache.tilesz);
 		Coord withinGrid = tilePos.mod(MCache.cmaps);
 		Coord withinTile = playerPos.mod(MCache.tilesz);
-		MapTileData geodata = null;
 
-		try {
-			geodata = Geoloc.findMapTileMatch(img);
-		} catch (GeolocException e) {
-			geodata = null;
-		}
-
-		double preciseX;
-		double preciseY;
-
-		Coord tileCoord;
-
-		if (geodata != null) {
-			tileCoord = new Coord(geodata.c1, geodata.c2);
-
-			lastFoundTileHash = lastCheckedTileHash;
-			lastFoundTileCoord = tileCoord;
-		} else if (lastFoundTileHash != null) {
-			System.out.println(
-					"Using last found tile hash as fallback: " + lastFoundTileHash + " at coord " + lastFoundTileCoord);
-			MiniMap mm = UI.instance.m_util.m_ui.slen.mini;
-
-			Coord prev = mm.gridsHashes.get(lastFoundTileHash);
-			Coord curr = mm.gridsHashes.get(lastCheckedTileHash);
-			Coord delta = curr.sub(prev);
-			tileCoord = lastFoundTileCoord.add(delta);
-		} else {
-			throw new GeolocException("Could not geolocate current position.");
-		}
+		Coord tileCoord = getCurrentTileGlobalCoord();
 
 		double fracX = withinTile.x / (double) MCache.tilesz.x;
 		double fracY = withinTile.y / (double) MCache.tilesz.y;
-		preciseX = tileCoord.x + (withinGrid.x + fracX) / 100.0;
-		preciseY = tileCoord.y + (withinGrid.y + fracY) / 100.0;
+		double preciseX = tileCoord.x + (withinGrid.x + fracX) / 100.0;
+		double preciseY = tileCoord.y + (withinGrid.y + fracY) / 100.0;
 
 		return new Pair<Double, Double>(preciseX, preciseY);
+
 	}
 
 	public static void clear() {
 		lastFoundTileHash = null;
-		lastFoundTileCoord = null;
+		lastFoundTileGlobalCoord = null;
 	}
 
 	public static BufferedImage preprocessMapTile(BufferedImage img) {

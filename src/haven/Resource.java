@@ -97,18 +97,16 @@ public class Resource implements Comparable<Resource>, Prioritized, Serializable
 			chainloader(new Loader(new FileSource(new File("./custom_res"))));
 		} catch (Exception e) {
 			/*
-			 * Ignore these. We don't want to be crashing the client
-			 * for users just because of errors in development
-			 * aids.
+			 * Ignore these. We don't want to be crashing the client for users just because
+			 * of errors in development aids.
 			 */
 		}
 		try {
 			chainloader(new Loader(new FileSource(new File("./res"))));
 		} catch (Exception e) {
 			/*
-			 * Ignore these. We don't want to be crashing the client
-			 * for users just because of errors in development
-			 * aids.
+			 * Ignore these. We don't want to be crashing the client for users just because
+			 * of errors in development aids.
 			 */
 		}
 		try {
@@ -119,9 +117,8 @@ public class Resource implements Comparable<Resource>, Prioritized, Serializable
 				chainloader(new Loader(new FileSource(new File(dir))));
 		} catch (Exception e) {
 			/*
-			 * Ignore these. We don't want to be crashing the client
-			 * for users just because of errors in development
-			 * aids.
+			 * Ignore these. We don't want to be crashing the client for users just because
+			 * of errors in development aids.
 			 */
 		}
 		if (!Config.nolocalres)
@@ -400,8 +397,8 @@ public class Resource implements Comparable<Resource>, Prioritized, Serializable
 
 		private URL encodeurl(URL raw) throws IOException {
 			/*
-			 * This is "kinda" ugly. It is, actually, how the Java
-			 * documentation recommend that it be done, though...
+			 * This is "kinda" ugly. It is, actually, how the Java documentation recommend
+			 * that it be done, though...
 			 */
 			try {
 				return (new URL(

@@ -19,13 +19,24 @@ public class MapAPIClient {
         this.apiBase = apiBase.endsWith("/") ? apiBase.substring(0, apiBase.length() - 1) : apiBase;
     }
 
+    public Player checkout(String username, double x, double y) throws MapAPIException {
+        try {
+            Player player = new Player(username, x, y);
+            JSONObject requestJson = createPlayerDTO(player);
+
+            return parsePlayer(postRequest("/players/checkout", requestJson));
+        } catch (Exception e) {
+            throw new MapAPIException("Failed to checkout", e);
+        }
+    }
+
     public Location createClaim(double x, double y, ClaimType type) throws MapAPIException {
         try {
             Location location = new Location(x, y);
             location.claim = new Claim(type);
             JSONObject requestJson = createLocationDTO(location);
 
-            return postRequest("/api/locations", requestJson);
+            return parseLocation(postRequest("/locations", requestJson));
         } catch (Exception e) {
             throw new MapAPIException("Failed to create claim", e);
         }
@@ -37,7 +48,7 @@ public class MapAPIClient {
             location.poi = new PointOfInterest(category);
             JSONObject requestJson = createLocationDTO(location);
 
-            return postRequest("/api/locations", requestJson);
+            return parseLocation(postRequest("/locations", requestJson));
         } catch (Exception e) {
             throw new MapAPIException("Failed to create POI", e);
         }
@@ -50,7 +61,7 @@ public class MapAPIClient {
             location.resource = resource;
             JSONObject requestJson = createLocationDTO(location);
 
-            return postRequest("/api/locations", requestJson);
+            return parseLocation(postRequest("/locations", requestJson));
         } catch (Exception e) {
             throw new MapAPIException("Failed to create resource", e);
         }
@@ -60,7 +71,7 @@ public class MapAPIClient {
         try {
             JSONObject requestJson = createLocationDTO(location);
 
-            return postRequest("/api/locations", requestJson);
+            return parseLocation(postRequest("/locations", requestJson));
         } catch (Exception e) {
             throw new MapAPIException("Failed to create location", e);
         }
@@ -71,7 +82,7 @@ public class MapAPIClient {
         conn.setRequestProperty("Accept", "application/json");
     }
 
-    private Location postRequest(String endpoint, JSONObject requestJson) throws Exception {
+    private JSONObject postRequest(String endpoint, JSONObject requestJson) throws Exception {
         URL url = new URL(apiBase + endpoint);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -88,7 +99,7 @@ public class MapAPIClient {
             int responseCode = conn.getResponseCode();
             if (responseCode >= 200 && responseCode < 300) {
                 String responseBody = readResponse(conn.getInputStream());
-                return parseLocation(new JSONObject(responseBody));
+                return new JSONObject(responseBody);
             } else {
                 String error = readResponse(conn.getErrorStream());
                 throw new Exception("API request failed with code " + responseCode + ": " + error);
@@ -118,6 +129,16 @@ public class MapAPIClient {
         if (value != null) {
             json.put(key, value);
         }
+    }
+
+    private JSONObject createPlayerDTO(Player player) throws JSONException {
+        JSONObject requestJson = new JSONObject();
+
+        requestJson.put("username", player.username);
+        requestJson.put("lastX", player.lastX);
+        requestJson.put("lastY", player.lastY);
+
+        return requestJson;
     }
 
     private JSONObject createLocationDTO(Location location) throws JSONException, IllegalArgumentException {
@@ -172,6 +193,18 @@ public class MapAPIClient {
         }
 
         return requestJson;
+    }
+
+    private Player parsePlayer(JSONObject json) throws JSONException {
+        String id = json.getString("id");
+        String username = json.getString("username");
+        double lastX = json.getDouble("lastX");
+        double lastY = json.getDouble("lastY");
+
+        Player player = new Player(username, lastX, lastY);
+        player.id = id;
+
+        return player;
     }
 
     private Location parseLocation(JSONObject json) throws JSONException {
