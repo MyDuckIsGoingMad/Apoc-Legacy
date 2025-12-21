@@ -9,11 +9,10 @@ import jerklib.util.Pair;
 import myduckisgoingmad.api.MapAPIClient;
 import myduckisgoingmad.api.MapAPIException;
 
-public class Tracker {
+public class Tracker extends Thread {
     MapAPIClient client;
     boolean tracking = false;
     HavenUtil m_util;
-    String username;
     String lastTileHash = null;
     Pair<Double, Double> lastPlayerCoord = null;
     int trackCount = 0;
@@ -29,8 +28,6 @@ public class Tracker {
     private Tracker() {
         UI ui = UI.instance;
         m_util = ui.m_util;
-        username = ui.root.ui.sess.charname;
-
         client = new MapAPIClient(Config.mapApiBaseUrl);
 
     }
@@ -38,7 +35,7 @@ public class Tracker {
     public void checkout() {
         try {
             Pair<Double, Double> coords = Geoloc.getPlayerCoords();
-            client.checkout(username, coords.first, coords.second);
+            client.checkout(m_util.myName(), coords.first, coords.second);
             m_util.sendMessage(String.format("[GPS] Check out position: %.2f, %.2f", coords.first, coords.second));
         } catch (MapAPIException e) {
             m_util.sendErrorMessage("Failed to checkout position");
@@ -64,7 +61,7 @@ public class Tracker {
             return;
         }
 
-        String currentTileHash = UI.instance.m_util.m_ui.slen.mini.getCurrentMapTileHash();
+        String currentTileHash = m_util.m_ui.slen.mini.getCurrentMapTileHash();
 
         if (lastTileHash == null || !lastTileHash.equals(currentTileHash)) {
             try {
@@ -83,7 +80,7 @@ public class Tracker {
                         coords.second, dist));
                 lastTileHash = currentTileHash;
                 lastPlayerCoord = coords;
-                client.checkout(username, coords.first, coords.second, true, trackCount == 0);
+                client.checkout(m_util.myName(), coords.first, coords.second, true, trackCount == 0);
                 ++trackCount;
             } catch (MapAPIException e) {
                 m_util.sendErrorMessage("Failed to checkout position");
@@ -94,6 +91,7 @@ public class Tracker {
     }
 
     public void prospect() {
-        m_util.sendMessage("[GPS] Prospecting ...");
+        Prospector prospector = new Prospector(client, m_util);
+        prospector.start();
     }
 }
