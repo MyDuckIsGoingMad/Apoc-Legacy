@@ -396,6 +396,9 @@ public class Item extends Widget implements DTarget {
 			FEP = "\n";
 			for (String key : fep.keySet()) {
 				double k = fep.get(key);
+				if (Double.isNaN(qmult)) {
+					qmult = 1;
+				}
 				float val = (float) (k * qmult);
 				boolean hunger = false;
 				if (key.equals("HUNGER")) {
