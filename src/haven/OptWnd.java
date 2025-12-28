@@ -1208,6 +1208,14 @@ public class OptWnd extends Window {
 			};
 			chkbox.a = Config.pathfinderRectangles;
 
+			chkbox = new CheckBox(new Coord(270, (y += 35)), tab, "Pathfinder Nearest Target") {
+				public void changed(boolean val) {
+					Config.pathfinderNearestTarget = val;
+					Config.saveOptions();
+				}
+			};
+			chkbox.a = Config.pathfinderNearestTarget;
+
 			new Label(new Coord(270, 390), tab, "Map API base URL:");
 			new TextEntry(new Coord(270, 410), new Coord(200, 20), tab, Config.mapApiBaseUrl) {
 				public void setFocus() {

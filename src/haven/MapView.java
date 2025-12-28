@@ -939,6 +939,21 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 		if (Config.landMemo && modflag == 2 && button == 3)
 			modflag = 0; // remove land memo from regular use
 
+		// Click on nearest herb or critters
+		if (Config.pathfinderNearestTarget && modflag == 3 && hit == null) {
+			synchronized (glob.oc) {
+				double nearestDist = Double.MAX_VALUE;
+				for (Gob g : glob.oc) {
+					double dist = g.getc().dist(mc);
+					if (dist <= 30 && dist < nearestDist && (g.resname().startsWith("gfx/terobjs/herbs/")
+							|| g.resname().startsWith("gfx/terobjs/critter/"))) {
+						nearestDist = dist;
+						hit = g;
+					}
+				}
+			}
+		}
+
 		if (pathfinder(button, hit, c, modflag))
 			return true;
 
@@ -997,7 +1012,7 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 				wdgmsg("click", new Coord(0, 0), player.getc(), 3, 0);
 		}
 
-		return (true);
+		return true;
 	}
 
 	public boolean mouseup(Coord c, int button) {

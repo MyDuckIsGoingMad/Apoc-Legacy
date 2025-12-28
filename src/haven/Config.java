@@ -173,6 +173,7 @@ public class Config {
 	public static boolean pathfinder = false;
 	public static boolean pathfinderLine = false;
 	public static boolean pathfinderRectangles = false;
+	public static boolean pathfinderNearestTarget = false;
 
 	public static boolean autoAggro = false;
 
@@ -858,6 +859,7 @@ public class Config {
 		pathfinder = options.getProperty("pathfinder", "false").equals("true"); // new
 		pathfinderLine = options.getProperty("pathfinderLine", "false").equals("true"); // new
 		pathfinderRectangles = options.getProperty("pathfinderRectangles", "false").equals("true"); // new
+		pathfinderRectangles = options.getProperty("pathfinderNearestTarget", "true").equals("true"); // new
 
 		autoAggro = options.getProperty("autoAggro", "false").equals("true"); // new
 
@@ -1028,7 +1030,7 @@ public class Config {
 		options.setProperty("truePlayerPosition", truePlayerPosition ? "true" : "false"); // new
 		options.setProperty("pathfinder", pathfinder ? "true" : "false"); // new
 		options.setProperty("pathfinderLine", pathfinderLine ? "true" : "false"); // new
-		options.setProperty("pathfinderRectangles", pathfinderRectangles ? "true" : "false"); // new
+		options.setProperty("pathfinderNearestTarget", pathfinderNearestTarget ? "true" : "false"); // new
 
 		options.setProperty("autoAggro", autoAggro ? "true" : "false"); // new
 
