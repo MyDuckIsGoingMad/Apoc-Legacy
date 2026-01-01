@@ -58,7 +58,7 @@ public class CharWnd extends Window {
 	FoodMeter foodm;
 	Study study;
 	public static ArrayList<SCapVal> sCaps = new ArrayList<SCapVal>();
-	static Map<String, Attr> attrs = new TreeMap<String, Attr>();
+	public Map<String, Attr> attrs = new TreeMap<String, Attr>();
 	private static final BufferedImage ilockc = Resource.loadimg("gfx/hud/lockc");
 	private static final BufferedImage ilockch = Resource.loadimg("gfx/hud/lockch");
 	private static final BufferedImage ilocko = Resource.loadimg("gfx/hud/locko");
@@ -1033,7 +1033,7 @@ public class CharWnd extends Window {
 		hide();
 	}
 
-	public static int getStat(String name) {
+	public int getStat(String name) {
 		int ret = 0;
 		for (Attr attr : attrs.values()) {
 			if (attr.attr.nm.equals(name)) {
@@ -1043,7 +1043,7 @@ public class CharWnd extends Window {
 		return ret;
 	}
 
-	public static int getStatTotal(String name) {
+	public int getStatTotal(String name) {
 		int ret = 0;
 		for (Attr attr : attrs.values()) {
 			if (attr.attr.nm.equals(name)) {
