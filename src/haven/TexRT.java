@@ -31,8 +31,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
 public abstract class TexRT extends TexGL {
 	static Map<GL, Collection<TexRT>> current = new WeakHashMap<GL, Collection<TexRT>>();

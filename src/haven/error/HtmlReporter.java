@@ -55,23 +55,15 @@ import java.util.regex.Pattern;
 public class HtmlReporter {
 	public static final DateFormat dfmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final NumberFormat ifmt = NumberFormat.getInstance();
-	public static final String[] idxprops = {
-			"java.vendor", "java.version",
-			"os.arch", "os.name", "os.version",
-			"thnm", "usr",
-	};
-	public static final Class[] boring = {
-			RuntimeException.class,
-			javax.media.opengl.GLException.class,
-	};
+	public static final String[] idxprops = { "java.vendor", "java.version", "os.arch", "os.name", "os.version", "thnm",
+			"usr", };
+	public static final Class[] boring = { RuntimeException.class, com.jogamp.opengl.GLException.class, };
 
 	public static class ErrorIdentity implements Comparable<ErrorIdentity> {
 		public String jarrev;
 		public Throwable t;
-		private Pattern[] ignclass = new Pattern[] {
-				Pattern.compile("sun\\.reflect\\..*"),
-				Pattern.compile("java\\.lang\\.reflect\\..*"),
-		};
+		private Pattern[] ignclass = new Pattern[] { Pattern.compile("sun\\.reflect\\..*"),
+				Pattern.compile("java\\.lang\\.reflect\\..*"), };
 
 		private int equals(String a, String b) {
 			if ((a == null) && (b == null))
@@ -208,7 +200,7 @@ public class HtmlReporter {
 			List<String> classes = new LinkedList<String>();
 			String pkg = e.getClassName();
 			if (pkg != null) {
-				if (pkg.startsWith("javax.media.opengl.") || pkg.startsWith("com.sun.opengl.")) {
+				if (pkg.startsWith("com.jogamp.opengl.") || pkg.startsWith("com.sun.opengl.")) {
 					classes.add("pkg-jogl");
 				} else if (pkg.startsWith("java.") || pkg.startsWith("javax.")) {
 					classes.add("pkg-java");

@@ -29,12 +29,12 @@ package haven;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GLContext;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLContext;
 
 public class GOut {
-	GL2 gl;
+	public GL2 gl;
 	public Coord ul, sz;
 	private Color color = Color.WHITE;
 	final GLContext ctx;
@@ -67,7 +67,7 @@ public class GOut {
 	public static class GLException extends RuntimeException {
 		public int code;
 		public String str;
-		private static javax.media.opengl.glu.GLU glu = new javax.media.opengl.glu.GLU();
+		private static com.jogamp.opengl.glu.GLU glu = new com.jogamp.opengl.glu.GLU();
 
 		public GLException(int code) {
 			super("GL Error: " + code + " (" + glu.gluErrorString(code) + ")");
@@ -87,10 +87,8 @@ public class GOut {
 	}
 
 	private void glcolor() {
-		gl.glColor4f((float) color.getRed() / 255.0f,
-				(float) color.getGreen() / 255.0f,
-				(float) color.getBlue() / 255.0f,
-				(float) color.getAlpha() / 255.0f);
+		gl.glColor4f((float) color.getRed() / 255.0f, (float) color.getGreen() / 255.0f,
+				(float) color.getBlue() / 255.0f, (float) color.getAlpha() / 255.0f);
 	}
 
 	public GOut root() {

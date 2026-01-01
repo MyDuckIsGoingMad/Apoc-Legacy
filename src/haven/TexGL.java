@@ -34,8 +34,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
 public abstract class TexGL extends Tex {
 	protected int id = -1;
@@ -72,10 +72,8 @@ public abstract class TexGL extends Tex {
 
 	Color blend(GOut g, Color amb) {
 		Color c = g.getcolor();
-		Color n = new Color((c.getRed() * amb.getRed()) / 255,
-				(c.getGreen() * amb.getGreen()) / 255,
-				(c.getBlue() * amb.getBlue()) / 255,
-				(c.getAlpha() * amb.getAlpha()) / 255);
+		Color n = new Color((c.getRed() * amb.getRed()) / 255, (c.getGreen() * amb.getGreen()) / 255,
+				(c.getBlue() * amb.getBlue()) / 255, (c.getAlpha() * amb.getAlpha()) / 255);
 		return (n);
 	}
 
@@ -98,9 +96,7 @@ public abstract class TexGL extends Tex {
 			float t = ((float) ul.y) / ((float) tdim.y);
 			float r = ((float) br.x) / ((float) tdim.x);
 			float b = ((float) br.y) / ((float) tdim.y);
-			gl.glColor4f((float) amb.getRed() / 255.0f,
-					(float) amb.getGreen() / 255.0f,
-					(float) amb.getBlue() / 255.0f,
+			gl.glColor4f((float) amb.getRed() / 255.0f, (float) amb.getGreen() / 255.0f, (float) amb.getBlue() / 255.0f,
 					(float) amb.getAlpha() / 255.0f);
 			gl.glTexCoord2f(l, t);
 			gl.glVertex3i(c.x, c.y, 0);
