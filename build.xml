@@ -96,6 +96,7 @@
     </copy>
     <copy todir="build/simplemap" file="resources/simplemap/currentsession.js"/>
     <copy todir="build" file="run.bat"/>
+    <copy todir="build" file="run.sh"/>
     <copy todir="build/scripts">
     <fileset dir="scripts"/>
     </copy>
