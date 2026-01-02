@@ -39,11 +39,13 @@
         <classpath>
             <pathelement path="lib/gluegen-rt-natives-macosx-universal.jar" />
             <pathelement path="lib/gluegen-rt-natives-windows-amd64.jar" />
+            <pathelement path="lib/gluegen-rt-natives-linux-amd64.jar" />
             <pathelement path="lib/gluegen-rt.jar" />
             <pathelement path="lib/jnlp.jar" />
             <pathelement path="lib/jogg.jar" />
             <pathelement path="lib/jogl-all-natives-macosx-universal.jar" />
             <pathelement path="lib/jogl-all-natives-windows-amd64.jar" />
+            <pathelement path="lib/jogl-all-natives-linux-amd64.jar" />
             <pathelement path="lib/jogl-all.jar" />
             <pathelement path="lib/jogl.jar" />
             <pathelement path="lib/jorbis.jar" />
@@ -119,7 +121,7 @@
       <fileset dir="build/classes-lib" />
       <manifest>
           <attribute name="Main-Class" value="haven.MainFrame" />
-          <attribute name="Class-Path" value="haven-res.jar gluegen-rt-natives-macosx-universal.jar gluegen-rt-natives-windows-amd64.jar gluegen-rt-natives-windows-i586.jar gluegen-rt.jar jnlp.jar jogg.jar jogl-all-natives-macosx-universal.jar jogl-all-natives-windows-amd64.jar jogl-all-natives-windows-i586.jar jogl-all.jar jogl.jar jorbis.jar" />
+          <attribute name="Class-Path" value="haven-res.jar gluegen-rt-natives-macosx-universal.jar gluegen-rt-natives-windows-amd64.jar gluegen-rt-natives-linux-amd64.jar gluegen-rt.jar jnlp.jar jogg.jar jogl-all-natives-macosx-universal.jar jogl-all-natives-windows-amd64.jar jogl-all-natives-linux-amd64.jar jogl-all.jar jogl.jar jorbis.jar" />
       </manifest>
     </jar>
     <chmod file="build/haven.jar" perm="a+x" />
