@@ -859,7 +859,7 @@ public class Config {
 		pathfinder = options.getProperty("pathfinder", "false").equals("true"); // new
 		pathfinderLine = options.getProperty("pathfinderLine", "false").equals("true"); // new
 		pathfinderRectangles = options.getProperty("pathfinderRectangles", "false").equals("true"); // new
-		pathfinderRectangles = options.getProperty("pathfinderNearestTarget", "true").equals("true"); // new
+		pathfinderNearestTarget = options.getProperty("pathfinderNearestTarget", "true").equals("true"); // new
 
 		autoAggro = options.getProperty("autoAggro", "false").equals("true"); // new
 
