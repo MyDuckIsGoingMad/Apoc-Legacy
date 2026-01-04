@@ -491,7 +491,7 @@ public class HavenUtil {
 		return null;
 	}
 
-	Item findFlask() {
+	public Item findFlask() {
 		Item flask = getItemFromBag("waterskin");
 		if (flask == null) {
 			flask = getItemFromBag("waterflask");

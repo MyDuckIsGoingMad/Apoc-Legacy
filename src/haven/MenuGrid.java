@@ -491,6 +491,9 @@ public class MenuGrid extends Widget {
 		} else if (list[1].equals("prospect")) {
 			Tracker tracker = Tracker.getInstance();
 			tracker.prospect();
+		} else if (list[1].equals("waterprobe")) {
+			Tracker tracker = Tracker.getInstance();
+			tracker.dowse();
 		}
 		use(null);
 	}

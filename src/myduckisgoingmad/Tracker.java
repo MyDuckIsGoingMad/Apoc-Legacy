@@ -94,4 +94,9 @@ public class Tracker extends Thread {
         Prospector prospector = new Prospector(client, m_util);
         prospector.start();
     }
+
+    public void dowse() {
+        Dowser dowser = new Dowser(client, m_util);
+        dowser.start();
+    }
 }
