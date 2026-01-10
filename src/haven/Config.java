@@ -106,6 +106,7 @@ public class Config {
 	public static boolean showRadius = false;
 	public static boolean showHidden = false;
 	public static boolean showBeast = false;
+	public static boolean showCropsStage = false;
 	public static boolean showDirection;
 	public static boolean showNames;
 	public static boolean showOtherNames;
@@ -801,6 +802,7 @@ public class Config {
 		showBeast = options.getProperty("showBeast", "false").equals("true");
 		showRadius = options.getProperty("showRadius", "false").equals("true");
 		showHidden = options.getProperty("showHidden", "false").equals("true");
+		showCropsStage = options.getProperty("showCropsStage", "false").equals("true");
 		simple_plants = options.getProperty("simple_plants", "false").equals("true");
 		fastFlowerAnim = options.getProperty("fastFlowerAnim", "false").equals("true");
 		sshot_compress = options.getProperty("sshot_compress", "false").equals("true");
@@ -978,6 +980,7 @@ public class Config {
 		options.setProperty("showBeast", showBeast ? "true" : "false");
 		options.setProperty("showRadius", showRadius ? "true" : "false");
 		options.setProperty("showHidden", showHidden ? "true" : "false");
+		options.setProperty("showCropsStage", showCropsStage ? "true" : "false");
 		options.setProperty("simple_plants", simple_plants ? "true" : "false");
 		options.setProperty("fastFlowerAnim", fastFlowerAnim ? "true" : "false");
 		options.setProperty("sshot_compress", sshot_compress ? "true" : "false");

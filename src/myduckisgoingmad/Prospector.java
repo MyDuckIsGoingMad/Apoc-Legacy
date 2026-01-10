@@ -38,7 +38,7 @@ public class Prospector extends Thread {
         Inventory bag = m_util.getInventory("Inventory");
 
         if (bag == null) {
-            m_util.sendErrorMessage("Cannot find player inventory");
+            m_util.sendErrorMessage("[GPS] Cannot find player inventory");
             return;
         }
         ArrayList<Item> items = m_util.getItemsFromBag();

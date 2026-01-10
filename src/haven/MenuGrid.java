@@ -469,6 +469,12 @@ public class MenuGrid extends Widget {
 			ui.cons.out.println(str);
 			ui.slen.error(str);
 			Config.saveOptions();
+		} else if (list[1].equals("crops stage")) {
+			Config.showCropsStage = !Config.showCropsStage;
+			String str = "Crops stage highlight is turned " + ((Config.showCropsStage) ? "ON" : "OFF");
+			ui.cons.out.println(str);
+			ui.slen.error(str);
+			Config.saveOptions();
 		}
 		use(null);
 	}

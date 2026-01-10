@@ -101,6 +101,8 @@ public class Glob {
 		paginae.add(Resource.load("paginae/gps/prospect"));
 		paginae.add(Resource.load("paginae/gps/waterprobe"));
 
+		paginae.add(Resource.load("paginae/add/cstage"));
+
 		// paginae.add(Resource.load("paginae/options/inventory")); // new
 		// paginae.add(Resource.load("paginae/options/equipment")); // new
 		// paginae.add(Resource.load("paginae/options/character")); // new

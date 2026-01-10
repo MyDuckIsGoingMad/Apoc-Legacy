@@ -1850,6 +1850,45 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 				curf = null;
 			}
 		}
+
+		if (Config.showCropsStage) {
+			drawCropsStage(g);
+		}
+	}
+
+	private void drawCropsStage(GOut g) {
+		String name;
+
+		synchronized (glob.oc) {
+			for (Gob tg : glob.oc) {
+				name = tg.resname();
+				if (tg.sc == null || !name.contains("gfx/terobjs/plants/")) {
+					continue;
+				}
+
+				Byte stage = tg.GetBlob(0);
+
+				if (stage == null || stage < 3) {
+					continue;
+				}
+
+				// Carrot and hemp have 4 stages and produce a different output at stage 3.
+				if (stage == 3 && (name.contains("carrot") || name.contains("hemp"))) {
+					g.chcolor(255, 215, 0, 48);
+					// Tobacco and poppy have 4 stages as well
+				} else if (stage == 3 && (name.contains("tobacco") || name.contains("poppy"))) {
+					continue;
+					// Pumpkin will be ready only at stage 6
+				} else if (stage < 6 && name.contains("pumpkin")) {
+					continue;
+				} else {
+					g.chcolor(10, 255, 0, 48);
+				}
+
+				drawradius(g, tg.sc, 4);
+			}
+		}
+		g.chcolor();
 	}
 
 	public void drawHitbox(GOut g, Coord oc) {

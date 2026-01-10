@@ -30,7 +30,7 @@ public class Dowser extends Thread {
         Inventory bag = m_util.getInventory("Inventory");
 
         if (bag == null) {
-            m_util.sendErrorMessage("Cannot find player inventory");
+            m_util.sendErrorMessage("[GPS] Cannot find player inventory");
             return;
         }
 
@@ -59,7 +59,7 @@ public class Dowser extends Thread {
             return;
         }
 
-        m_util.sendMessage(String.format("Found Q%d water", flask.q2));
+        m_util.sendMessage(String.format("[GPS] Found Q%d water", flask.q2));
 
         Pair<Double, Double> globalCoords;
         try {
