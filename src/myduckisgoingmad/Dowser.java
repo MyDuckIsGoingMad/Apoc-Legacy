@@ -39,6 +39,7 @@ public class Dowser extends Thread {
         if (!flask.tooltip.contains("Empty")) {
             m_util.itemAction(flask);
             m_util.autoFlowerMenu("Empty");
+            m_util.wait(200);
         }
 
         Coord playerCoord = m_util.getPlayerCoord();
@@ -46,9 +47,9 @@ public class Dowser extends Thread {
         m_util.pickUpItem(flask);
         m_util.wait(200);
         m_util.itemAction(playerCoord);
-        m_util.wait(200);
+        m_util.wait(300);
         m_util.dropItemInBag(flaskBagCoord);
-        m_util.wait(200);
+        m_util.wait(400);
 
         flask = findFlaskOrBucket();
 

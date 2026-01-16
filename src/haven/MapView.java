@@ -1875,8 +1875,9 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 				// Carrot and hemp have 4 stages and produce a different output at stage 3.
 				if (stage == 3 && (name.contains("carrot") || name.contains("hemp"))) {
 					g.chcolor(255, 215, 0, 48);
-					// Tobacco and poppy have 4 stages as well
-				} else if (stage == 3 && (name.contains("tobacco") || name.contains("poppy"))) {
+					// Tobacco, poppy and pea have 4 stages as well
+				} else if (stage == 3
+						&& (name.contains("tobacco") || name.contains("poppy") || name.contains("peas"))) {
 					continue;
 					// Pumpkin will be ready only at stage 6
 				} else if (stage < 6 && name.contains("pumpkin")) {
