@@ -91,7 +91,7 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 	long lastah = 0;
 
 	boolean fixCameraBug = false; // new
-	public static Gob gobAtMouse; // new
+	public Gob gobAtMouse; // new
 	static Color grayRect = new Color(50, 50, 50, 170); // new
 	static Color goldenText = new Color(179, 162, 104, 255); // new
 	static Color offcol = new Color(255, 0, 0, 128), defcol = new Color(0, 0, 255, 128);
@@ -1153,14 +1153,14 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 		this.mc = mc;
 	}
 
-	private static Coord tilify(Coord c) {
+	public static Coord tilify(Coord c) {
 		c = c.div(tilesz);
 		c = c.mul(tilesz);
 		c = c.add(tilesz.div(2));
 		return (c);
 	}
 
-	private static Coord tileUL(Coord c) {
+	public static Coord tileUL(Coord c) {
 		c = c.div(tilesz);
 		c = c.mul(tilesz);
 		return (c);

@@ -311,19 +311,37 @@ public class HavenPanel extends GLCanvas implements Runnable {
 			curf.tick("draw");
 
 		if (Config.dbtext) {
-			g.atext("FPS: " + fps, new Coord(10, 545), 0, 1);
-			g.atext("Texhit: " + dth, new Coord(10, 530), 0, 1);
-			g.atext("Texmiss: " + dtm, new Coord(10, 515), 0, 1);
+			int ay = 300;
+			int margin = 15;
+			g.atext("FPS: " + fps, new Coord(10, ay += margin), 0, 1);
+			g.atext("Texhit: " + dth, new Coord(10, ay += margin), 0, 1);
+			g.atext("Texmiss: " + dtm, new Coord(10, ay += margin), 0, 1);
 			Runtime rt = Runtime.getRuntime();
 			long free = rt.freeMemory(), total = rt.totalMemory();
 			g.atext(String.format("Mem: %,011d/%,011d/%,011d/%,011d", free, total - free, total, rt.maxMemory()),
-					new Coord(10, 500), 0, 1);
-			g.atext(String.format("LCache: %d/%d", Layered.cache.size(), Layered.cache.cached()), new Coord(10, 485), 0,
-					1);
-			g.atext(String.format("RT-current: %d", TexRT.current.get(gl).size()), new Coord(10, 470), 0, 1);
+					new Coord(10, ay += margin), 0, 1);
+			g.atext(String.format("LCache: %d/%d", Layered.cache.size(), Layered.cache.cached()),
+					new Coord(10, ay += margin), 0, 1);
+			g.atext(String.format("RT-current: %d", TexRT.current.get(gl).size()), new Coord(10, ay += margin), 0, 1);
 			if (Resource.qdepth() > 0)
-				g.atext(String.format("RQ depth: %d (%d)", Resource.qdepth(), Resource.numloaded()), new Coord(10, 455),
-						0, 1);
+				g.atext(String.format("RQ depth: %d (%d)", Resource.qdepth(), Resource.numloaded()),
+						new Coord(10, ay += margin), 0, 1);
+
+			MapView mv = UI.instance.mainview;
+
+			g.atext("Current cursor: " + UI.instance.root.cursor.name.replace("gfx/hud/curs/", ""),
+					new Coord(10, ay += margin), 0, 1);
+			g.atext("Player id: " + mv.playergob, new Coord(10, ay += margin), 0, 1);
+			if (mousepos != null) {
+				g.atext("Mouse map pos: " + mousepos.toString() + " Tile: " + mv.map.gettilen(mousepos) + " Tilify: "
+						+ MapView.tilify(mv.mousepos).toString(), new Coord(10, ay += margin), 0, 1);
+			}
+			if (mv.gobAtMouse != null) {
+				g.atext("Object id under mouse: " + mv.gobAtMouse.id + " Coords: " + mv.gobAtMouse.rc,
+						new Coord(10, ay += margin), 0, 1);
+				g.atext("Resource name: " + mv.gobAtMouse.resname() + " BLOB: " + mv.gobAtMouse.GetBlob(0),
+						new Coord(10, ay += margin), 0, 1);
+			}
 		}
 		Object tooltip = ui.root.tooltip(mousepos, true);
 		Tex tt = null;
