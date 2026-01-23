@@ -91,7 +91,7 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 	long lastah = 0;
 
 	boolean fixCameraBug = false; // new
-	public Gob gobAtMouse; // new
+	public static Gob gobAtMouse; // new
 	static Color grayRect = new Color(50, 50, 50, 170); // new
 	static Color goldenText = new Color(179, 162, 104, 255); // new
 	static Color offcol = new Color(255, 0, 0, 128), defcol = new Color(0, 0, 255, 128);

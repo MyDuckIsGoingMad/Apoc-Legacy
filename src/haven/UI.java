@@ -28,6 +28,7 @@ package haven;
 
 import haven.CharWnd.Study;
 import haven.CharWnd.Worship;
+import myduckisgoingmad.Storage;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -77,6 +78,8 @@ public class UI {
 	public Equipory equip = null;
 	public Aimview aim = null;
 	Widget temp = null;
+
+	public Storage storage;
 
 	public interface Receiver {
 		public void rcvmsg(int widget, String msg, Object... args);
@@ -152,6 +155,7 @@ public class UI {
 
 	private void conFuntions() {
 		m_util = new HavenUtil(this);
+		storage = new Storage();
 
 		if (sessBar == null) {
 			sessBar = new SessionBar(SessionBar.initPos, root);
@@ -244,12 +248,8 @@ public class UI {
 			createWidget(wdg);// new
 
 			/*
-			 * Widget wdg = f.create(c, pwdg, args);
-			 * bind(wdg, id);
-			 * wdg.binded();
-			 * if(wdg instanceof MapView)
-			 * mainview = (MapView)wdg;
-			 * createWidget(wdg);
+			 * Widget wdg = f.create(c, pwdg, args); bind(wdg, id); wdg.binded(); if(wdg
+			 * instanceof MapView) mainview = (MapView)wdg; createWidget(wdg);
 			 */
 		}
 	}
@@ -489,10 +489,7 @@ public class UI {
 	public int modflags() { // new
 		int num;
 
-		num = ((modshift ? 1 : 0) |
-				(modctrl ? 2 : 0) |
-				(modmeta ? 4 : 0) |
-				(modsuper ? 8 : 0));
+		num = ((modshift ? 1 : 0) | (modctrl ? 2 : 0) | (modmeta ? 4 : 0) | (modsuper ? 8 : 0));
 
 		return num;
 	}
@@ -500,8 +497,7 @@ public class UI {
 	public int modmouse() {
 		int num;
 
-		num = ((modLMB ? 1 : 0) |
-				(modRMB ? 2 : 0));
+		num = ((modLMB ? 1 : 0) | (modRMB ? 2 : 0));
 
 		return num;
 	}

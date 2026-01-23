@@ -70,10 +70,13 @@ public abstract class ImageSprite extends Sprite {
 					g.chcolor(new Color(RGB, RGB, RGB, trans));
 				}
 				g.image(img.tex(), sc().add(img.o));
-				if (Config.highlight) {
-					if (UI.instance.mainview == null) {
-						return;
-					}
+
+				Color highlightColor = UI.instance.storage.getHighlight(og);
+				if (highlightColor != null) {
+					drawol(g, highlightColor);
+				}
+
+				if (Config.highlight && UI.instance.mainview != null) {
 					Gob mg = UI.instance.mainview.onmouse;
 					if ((mg != null) && (og != null) && (og.id == mg.id)) {
 						drawol(g, Color.GREEN);
