@@ -86,7 +86,6 @@ public class GobPicker extends Window implements Grabber {
 			return;
 		}
 
-		util.sendMessage(String.format("Process gob: %s", gob.resname()));
 		if (selectedGobs.contains(gob)) {
 			util.m_ui.storage.clearHighlight(gob);
 			selectedGobs.remove(gob);
@@ -124,8 +123,6 @@ public class GobPicker extends Window implements Grabber {
 
 	@Override
 	public void mmousedown(Coord mc, int button) {
-		util.sendMessage(String.format("Button clicked: %d", button));
-
 		if (MapView.gobAtMouse != null) {
 			processGob(MapView.gobAtMouse);
 		}
