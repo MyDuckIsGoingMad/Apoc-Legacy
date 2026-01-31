@@ -881,10 +881,6 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 	}
 
 	public boolean mousedown(Coord c, int button) {
-		if ((button == 1 || button == 3) && (!ui.modshift || !ui.modmeta) /* && !Config.scriptTest */) {
-			ui.m_util.stop(button);
-		}
-
 		int modflag;
 		setfocus(this);
 		Coord c0 = c;
@@ -924,6 +920,10 @@ public class MapView extends Widget implements DTarget, Console.Directory {
 				return true;
 			} catch (GrabberException e) {
 			}
+		}
+
+		if ((button == 1 || button == 3) && (!ui.modshift || !ui.modmeta) /* && !Config.scriptTest */) {
+			ui.m_util.stop(button);
 		}
 
 		if (Config.minerSafety && button == 1)

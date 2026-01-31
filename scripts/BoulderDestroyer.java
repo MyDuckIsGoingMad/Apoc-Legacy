@@ -1,3 +1,5 @@
+import java.util.Set;
+
 import addons.*;
 import haven.*;
 import myduckisgoingmad.Storage;
@@ -33,18 +35,26 @@ public class BoulderDestroyer extends Thread {
 
 	public void run() {
 		scriptWnd = new ScriptWindow(new Coord(250, 100), UI.instance.root, this.scriptName) {
+			@Override
 			public void start() {
 				//
 			}
 
+			@Override
 			public void stop() {
 				m_util.forceStop();
 			}
 		};
 
 		pickerWnd = new GobPicker(new Coord(500, 100), UI.instance.root) {
-			//
+			@Override
+			public void select(Set<Gob> gobs) {
+				m_util.sendMessage("Selected " + gobs.size() + " gobs for Boulder Destroyer.");
+			}
 		};
+
+		pickerWnd.setMultiple(true);
+		pickerWnd.setFilter("gfx/terobjs/bumlings/02");
 
 		while (!m_util.stop) {
 			try {
