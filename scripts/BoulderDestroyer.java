@@ -53,6 +53,11 @@ public class BoulderDestroyer extends Thread {
 			return;
 		}
 
+		m_util.startRunFlask();
+
+		m_util.openInventory();
+		m_util.wait(500);
+
 		ArrayList<Gob> sortedBoulders = getSortedBouldersList();
 
 		for (Gob boulder : sortedBoulders) {
@@ -80,8 +85,12 @@ public class BoulderDestroyer extends Thread {
 	}
 
 	protected void destroyBoulder(Gob gob) {
-		m_util.sendMessage("Destroy boulder: " + gob);
 		while (!m_util.stop && m_util.findObject(gob)) {
+			// Check and manage stamina
+			// if (!checkAndManageStamina()) {
+			// return;
+			// }
+
 			m_util.walkTo(gob);
 			if (m_util.stop)
 				return;
@@ -103,7 +112,6 @@ public class BoulderDestroyer extends Thread {
 				return;
 
 			if (m_util.getPlayerBagSpace() == 0) {
-				m_util.sendMessage("Inventory full, dropping stones...");
 				dropAllStones();
 			}
 		}
@@ -117,6 +125,70 @@ public class BoulderDestroyer extends Thread {
 			}
 		}
 		m_util.wait(200);
+	}
+
+	protected boolean checkAndManageStamina() {
+		double stamina = m_util.getStamina();
+
+		if (stamina < 30) {
+			m_util.sendMessage("Stamina low (" + String.format("%.1f", stamina) + "%), attempting to drink...");
+
+			// Find flask in inventory
+			Item flask = m_util.findFlask();
+			if (flask == null) {
+				m_util.sendErrorMessage("No flask found in inventory! Cannot continue with low stamina.");
+				m_util.forceStop();
+				return false;
+			}
+
+			// Try to drink from flask
+			m_util.clickBagItem(flask, 1);
+			m_util.wait(500);
+
+			// Check if stamina improved
+			double newStamina = m_util.getStamina();
+			if (newStamina > stamina + 5) {
+				m_util.sendMessage("Drank from flask, stamina restored.");
+				return true;
+			}
+
+			// Flask might be empty, try to fill it from bucket
+			m_util.sendMessage("Flask appears empty, looking for water bucket...");
+			ArrayList<Item> bagItems = m_util.getItemsFromBag();
+			Item waterBucket = null;
+
+			for (Item item : bagItems) {
+				String resName = item.GetResName();
+				if (resName.contains("gfx/invobjs/bucket")) {
+					// Check if bucket has water (has contents)
+					// if (item.contents != null && !item.contents.isEmpty()) {
+					// waterBucket = item;
+					// break;
+					// }
+				}
+			}
+
+			if (waterBucket != null) {
+				m_util.sendMessage("Found water bucket, filling flask...");
+				// Click bucket with flask to fill
+				// m_util.takeItem(flask);
+				// m_util.wait(200);
+				// m_util.clickItem(waterBucket, 1);
+				// m_util.wait(500);
+
+				// // Now try drinking again
+				// m_util.clickItem(flask, 1);
+				// m_util.wait(500);
+				// m_util.sendMessage("Flask filled and consumed.");
+				return true;
+			} else {
+				m_util.sendErrorMessage("No water available! Stamina too low to continue. Stopping script.");
+				m_util.forceStop();
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public void run() {
