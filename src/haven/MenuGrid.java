@@ -152,7 +152,7 @@ public class MenuGrid extends Widget {
 			loadInfo.load(new FileInputStream(configFileName));
 		} catch (FileNotFoundException e) {
 		} catch (Exception e) {
-			System.out.println("Error causing belts to not load.");
+			System.out.println("Error causing belts to not load. " + e);
 		}
 		return loadInfo;
 	}
