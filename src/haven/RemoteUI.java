@@ -63,8 +63,10 @@ public class RemoteUI implements UI.Receiver {
 							c = MainFrame.getCenterPoint().add(-400, -300);
 						if (((String) args[0]).equals("gfx/logo2"))
 							c = MainFrame.getCenterPoint().add(-415, -300);
-						if (((String) args[0]).indexOf("gfx/hud/prog/") >= 0) // new
-							ui.m_util.HourglassID = id; // new
+						if (((String) args[0]).indexOf("gfx/hud/prog/") >= 0) {
+							ui.m_util.HourglassID = id;
+							c = MainFrame.getCenterPoint().add(0, -100);
+						}
 					} else if (type.equals("charlist") && args.length >= 1) {
 						c = MainFrame.getCenterPoint().add(-380, -50);
 					} else if (type.equals("ibtn") && args.length >= 2) {
@@ -72,7 +74,7 @@ public class RemoteUI implements UI.Receiver {
 								&& ((String) args[1]).equals("gfx/hud/buttons/ncd")) {
 							c = MainFrame.getCenterPoint().add(86, 214);
 						}
-					} else if (type.equals("wnd") && c.x == 400 && c.y == 200) {
+					} else if (type.equals("wnd") && ((c.x == 400 && c.y == 200) || (c.x == 300 && c.y == 100))) {
 						c = MainFrame.getCenterPoint().add(0, -100);
 					}
 					ui.newwidget(id, type, c, parent, args);
@@ -83,8 +85,9 @@ public class RemoteUI implements UI.Receiver {
 				} else if (msg.type == Message.RMSG_DSTWDG) {
 					int id = msg.uint16();
 					ui.destroy(id);
-					if (id == ui.m_util.HourglassID)
-						ui.m_util.HourglassID = -1; // new
+					if (id == ui.m_util.HourglassID) {
+						ui.m_util.HourglassID = -1;
+					}
 				}
 			}
 			synchronized (sess) {
