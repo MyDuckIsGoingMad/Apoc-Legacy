@@ -45,16 +45,13 @@ public class Widget {
 	private Widget prevtt;
 	public boolean isui = true;
 	static Map<String, WidgetFactory> types = new TreeMap<String, WidgetFactory>();
-	static Class<?>[] barda = { Img.class, TextEntry.class, MapView.class, FlowerMenu.class,
-			Window.class, Button.class, Inventory.class, Item.class, Listbox.class,
-			Makewindow.class, Chatwindow.class, Textlog.class, Equipory.class, IButton.class,
-			Cal.class, Avaview.class, NpcChat.class,
-			Label.class, Progress.class, VMeter.class, Partyview.class,
-			MenuGrid.class, SlenHud.class, HWindow.class, CheckBox.class, Logwindow.class,
-			MapMod.class, ISBox.class, ComMeter.class, Fightview.class, IMeter.class,
-			GiveButton.class, Charlist.class, ComWin.class, CharWnd.class, BuddyWnd.class,
-			ChatHW.class, Speedget.class, Bufflist.class, Shopbox.class, Landwindow.class,
-			Aimview.class, Landwindow2.class };
+	static Class<?>[] barda = { Img.class, TextEntry.class, MapView.class, FlowerMenu.class, Window.class, Button.class,
+			Inventory.class, Item.class, Listbox.class, Makewindow.class, Chatwindow.class, Textlog.class,
+			Equipory.class, IButton.class, Cal.class, Avaview.class, NpcChat.class, Label.class, Progress.class,
+			VMeter.class, Partyview.class, MenuGrid.class, SlenHud.class, HWindow.class, CheckBox.class,
+			Logwindow.class, MapMod.class, ISBox.class, ComMeter.class, Fightview.class, IMeter.class, GiveButton.class,
+			Charlist.class, ComWin.class, CharWnd.class, BuddyWnd.class, ChatHW.class, Speedget.class, Bufflist.class,
+			Shopbox.class, Landwindow.class, Aimview.class, Landwindow2.class };
 
 	static {
 		addtype("cnt", new WidgetFactory() {
@@ -516,6 +513,14 @@ public class Widget {
 
 	public void show() {
 		visible = true;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public boolean isVisible() {
+		return visible;
 	}
 
 	UI getRootUI() {
