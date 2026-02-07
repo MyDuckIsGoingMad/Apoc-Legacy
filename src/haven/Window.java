@@ -41,14 +41,10 @@ public class Window extends Widget implements DTarget {
 	static Tex cm = Resource.loadtex("gfx/hud/cmain");
 	static Tex cr = Resource.loadtex("gfx/hud/cright");
 	private final static Set<String> storePosSet = new HashSet<String>();
-	protected static BufferedImage[] cbtni = new BufferedImage[] {
-			Resource.loadimg("gfx/hud/cbtn"),
-			Resource.loadimg("gfx/hud/cbtnd"),
-			Resource.loadimg("gfx/hud/cbtnh") };
-	protected static BufferedImage[] fbtni = new BufferedImage[] {
-			Resource.loadimg("gfx/hud/fbtn"),
-			Resource.loadimg("gfx/hud/fbtnd"),
-			Resource.loadimg("gfx/hud/fbtnh") };
+	protected static BufferedImage[] cbtni = new BufferedImage[] { Resource.loadimg("gfx/hud/cbtn"),
+			Resource.loadimg("gfx/hud/cbtnd"), Resource.loadimg("gfx/hud/cbtnh") };
+	protected static BufferedImage[] fbtni = new BufferedImage[] { Resource.loadimg("gfx/hud/fbtn"),
+			Resource.loadimg("gfx/hud/fbtnd"), Resource.loadimg("gfx/hud/fbtnh") };
 	static final BufferedImage grip = Resource.loadimg("gfx/hud/gripbr");
 	static Color cc = Color.YELLOW;
 	static Text.Foundry cf = new Text.Foundry(new Font("Serif", Font.PLAIN, 12));
@@ -88,6 +84,23 @@ public class Window extends Widget implements DTarget {
 		storePosSet.add("Character Sheet");
 		storePosSet.add("Kin");
 		storePosSet.add("Study");
+		// storePosSet.add("Chest");
+		// storePosSet.add("Boat");
+		// storePosSet.add("Trough");
+		// storePosSet.add("Tanning Tube");
+		// storePosSet.add("Oven");
+		// storePosSet.add("Kiln");
+		// storePosSet.add("Cart");
+		// storePosSet.add("Drying Frame");
+		// storePosSet.add("Cauldron");
+		// storePosSet.add("Barrel");
+		// storePosSet.add("Demijohn");
+		// storePosSet.add("Herbalist Table");
+		// storePosSet.add("Cheese Rack");
+		// storePosSet.add("Curding Tub");
+		// storePosSet.add("Trough");
+		// storePosSet.add("Cattle Info");
+		// storePosSet.add("Chiken Coop");
 	}
 
 	protected void placecbtn() {
