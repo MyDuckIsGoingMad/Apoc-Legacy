@@ -364,7 +364,9 @@ public class Item extends Widget implements DTarget {
 			dm = true;
 			doff = drag;
 			ui.grabmouse(this);
-			this.c = ui.mc.add(doff.inv());
+			if (ui.mc != null) {
+				this.c = ui.mc.add(doff.inv());
+			}
 		}
 		qmult = Math.sqrt((float) q / 10);
 		calcFEP();
