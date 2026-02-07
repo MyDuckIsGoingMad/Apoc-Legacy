@@ -67,8 +67,14 @@ public class RootWidget extends ConsoleHost {
 			} else if ((code == KeyEvent.VK_N) && ctrl) {
 				Config.nightvision = !Config.nightvision;
 				Config.saveOptions();
+				String str = "Night vision is turned " + ((Config.nightvision) ? "ON" : "OFF");
+				ui.cons.out.println(str);
+				ui.slen.error(str);
 			} else if ((code == KeyEvent.VK_X) && ctrl) {
 				Config.xray = !Config.xray;
+				String str = "X-ray vision is turned " + ((Config.xray) ? "ON" : "OFF");
+				ui.cons.out.println(str);
+				ui.slen.error(str);
 			} else if ((code == KeyEvent.VK_C) && alt) {
 				Config.muteChat = !Config.muteChat;
 				String str = "Chat mute is turned " + ((Config.muteChat) ? "ON" : "OFF");
@@ -81,6 +87,9 @@ public class RootWidget extends ConsoleHost {
 				ui.slen.error(str);
 			} else if ((code == KeyEvent.VK_F) && ctrl) {
 				Config.fps = !Config.fps;
+				String str = "Turn fps counter " + ((Config.fps) ? "ON" : "OFF");
+				ui.cons.out.println(str);
+				ui.slen.error(str);
 			} else if ((code == KeyEvent.VK_K) && ctrl) {
 				Config.truePlayerPosition = !Config.truePlayerPosition;
 				String str = "Turn true position " + ((Config.truePlayerPosition) ? "ON" : "OFF");
@@ -89,11 +98,20 @@ public class RootWidget extends ConsoleHost {
 				Config.saveOptions();
 			} else if ((code == KeyEvent.VK_D) && ctrl) {
 				Config.dbtext = !Config.dbtext;
+				String str = "Turn debug text " + ((Config.dbtext) ? "ON" : "OFF");
+				ui.cons.out.println(str);
+				ui.slen.error(str);
 			} else if ((code == KeyEvent.VK_P) && ctrl) {
 				Config.highlight = !Config.highlight;
+				String str = "Highlight objects: " + ((Config.highlight) ? "ON" : "OFF");
+				ui.cons.out.println(str);
+				ui.slen.error(str);
 			} else if ((code == KeyEvent.VK_H) && ctrl) {
 				Config.hide = !Config.hide;
 				Config.saveOptions();
+				String str = "Hide objects: " + ((Config.hide) ? "ON" : "OFF");
+				ui.cons.out.println(str);
+				ui.slen.error(str);
 			} else if ((code == KeyEvent.VK_Q) && alt) {
 				ui.spd.setspeed(0, true);
 			} else if ((code == KeyEvent.VK_W) && alt) {
