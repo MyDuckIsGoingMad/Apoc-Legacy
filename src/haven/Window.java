@@ -101,6 +101,7 @@ public class Window extends Widget implements DTarget {
 		// storePosSet.add("Trough");
 		// storePosSet.add("Cattle Info");
 		// storePosSet.add("Chiken Coop");
+		// storePosSet.add("Crucible");
 	}
 
 	protected void placecbtn() {

@@ -74,9 +74,22 @@ public class RemoteUI implements UI.Receiver {
 								&& ((String) args[1]).equals("gfx/hud/buttons/ncd")) {
 							c = MainFrame.getCenterPoint().add(86, 214);
 						}
-					} else if (type.equals("wnd") && ((c.x == 400 && c.y == 200) || (c.x == 300 && c.y == 100))) {
+					} else if (type.equals("wnd") && ((c.x == 400 && c.y == 200) || (c.x == 300 && c.y == 100)
+							|| (c.x == 100 && c.y == 100))) {
 						c = MainFrame.getCenterPoint().add(0, -100);
 					}
+
+					if (type.equals("wnd") && args.length == 2) {
+						String title = (String) args[1];
+						if (title.equals("Cattle Info")) {
+							ui.storage.setCattleInfoWnd(id);
+						}
+					}
+
+					if (ui.storage.isCattleInfoWnd(parent)) {
+						ui.storage.processCattleInfo(type, args);
+					}
+
 					ui.newwidget(id, type, c, parent, args);
 				} else if (msg.type == Message.RMSG_WDGMSG) {
 					int id = msg.uint16();
@@ -87,6 +100,8 @@ public class RemoteUI implements UI.Receiver {
 					ui.destroy(id);
 					if (id == ui.m_util.HourglassID) {
 						ui.m_util.HourglassID = -1;
+					} else if (ui.storage.isCattleInfoWnd(id)) {
+						ui.storage.clearCattleInfoWnd();
 					}
 				}
 			}
