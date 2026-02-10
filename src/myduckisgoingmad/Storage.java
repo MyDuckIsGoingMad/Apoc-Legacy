@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.awt.Color;
 
-import haven.Coord;
 import haven.Gob;
-import haven.Label;
 import haven.UI;
 import haven.Widget;
 import myduckisgoingmad.api.entities.Cattle;
@@ -57,39 +55,12 @@ public class Storage {
 
         boolean complete = currentCattle.processInfo(type, args);
         if (complete) {
-            enrichCattleInfo();
+            Widget widget = UI.instance.widgets.get(cattleInfoWndID);
+            currentCattle.enrichCattleInfo(widget);
         }
     }
 
     public Cattle currentCattle(int id) {
         return currentCattle;
-    }
-
-    protected void enrichCattleInfo() {
-        if (currentCattle == null || cattleInfoWndID == 0) {
-            return;
-        }
-
-        Widget widget = UI.instance.widgets.get(cattleInfoWndID);
-
-        int posX = 170;
-        int posY = 105;
-        int valueDx = 65;
-
-        new Label(new Coord(posX, posY), widget, "Milk score:");
-        new Label(new Coord(posX + valueDx, posY), widget, String.valueOf(Math.round(currentCattle.getMilkScore())));
-        posY += 15;
-
-        new Label(new Coord(posX, posY), widget, "Meat score:");
-        new Label(new Coord(posX + valueDx, posY), widget, String.valueOf(Math.round(currentCattle.getMeatScore())));
-        posY += 15;
-
-        new Label(new Coord(posX, posY), widget, "Prod score:");
-        new Label(new Coord(posX + valueDx, posY), widget,
-                String.valueOf(Math.round(currentCattle.getProductionScore())));
-        posY += 15;
-
-        new Label(new Coord(posX, posY), widget, "Total score:");
-        new Label(new Coord(posX + valueDx, posY), widget, String.valueOf(Math.round(currentCattle.getTotalScore())));
     }
 }

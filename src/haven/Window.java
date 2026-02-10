@@ -92,7 +92,7 @@ public class Window extends Widget implements DTarget {
 		// storePosSet.add("Kiln");
 		// storePosSet.add("Cart");
 		// storePosSet.add("Drying Frame");
-		// storePosSet.add("Cauldron");
+		storePosSet.add("Cauldron");
 		// storePosSet.add("Barrel");
 		// storePosSet.add("Demijohn");
 		// storePosSet.add("Herbalist Table");

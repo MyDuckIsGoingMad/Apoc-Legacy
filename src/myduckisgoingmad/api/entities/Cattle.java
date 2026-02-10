@@ -1,5 +1,9 @@
 package myduckisgoingmad.api.entities;
 
+import haven.Coord;
+import haven.Label;
+import haven.Widget;
+
 public class Cattle {
     private int id;
     private String name;
@@ -19,11 +23,11 @@ public class Cattle {
         this.complete = false;
     }
 
-    public Cattle(int id, String name, String gender, int meatQuality, int milkQuality, int hideQuality,
+    public Cattle(int id, String name, Gender gender, int meatQuality, int milkQuality, int hideQuality,
             int meatQuantity, int milkQuantity, int breedingQuantity) {
         this.id = id;
         this.name = name;
-        this.gender = Gender.fromString(gender);
+        this.gender = gender;
         this.meatQuality = meatQuality;
         this.milkQuality = milkQuality;
         this.hideQuality = hideQuality;
@@ -55,6 +59,10 @@ public class Cattle {
 
     public void setGender(String gender) {
         this.gender = Gender.fromString(gender);
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public int getMeatQuality() {
@@ -187,6 +195,31 @@ public class Cattle {
         } else {
             return 0.6 * getProductionScore() + 0.4 * breedingQuantity;
         }
+    }
+
+    public void enrichCattleInfo(Widget widget) {
+        if (!complete || widget == null) {
+            return;
+        }
+
+        int posX = 170;
+        int posY = 105;
+        int valueDx = 65;
+
+        new Label(new Coord(posX, posY), widget, "Milk score:");
+        new Label(new Coord(posX + valueDx, posY), widget, String.valueOf(Math.round(getMilkScore())));
+        posY += 15;
+
+        new Label(new Coord(posX, posY), widget, "Meat score:");
+        new Label(new Coord(posX + valueDx, posY), widget, String.valueOf(Math.round(getMeatScore())));
+        posY += 15;
+
+        new Label(new Coord(posX, posY), widget, "Prod score:");
+        new Label(new Coord(posX + valueDx, posY), widget, String.valueOf(Math.round(getProductionScore())));
+        posY += 15;
+
+        new Label(new Coord(posX, posY), widget, "Total score:");
+        new Label(new Coord(posX + valueDx, posY), widget, String.valueOf(Math.round(getTotalScore())));
     }
 
 }
