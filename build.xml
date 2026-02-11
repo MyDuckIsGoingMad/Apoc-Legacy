@@ -62,15 +62,18 @@
     <mkdir dir="build/res" />
     <copy todir="build/config" >
     <fileset file="changelog.txt"/>
-    <fileset file="craft.conf"/>
-    <fileset file="curio.conf"/>
-    <fileset file="fep.conf"/>
-    <fileset file="haven.conf"/>
-    <fileset file="highlight.cfg"/>
-    <fileset file="highlight.conf"/>
-    <fileset file="smileys.conf"/>
-    <fileset file="sound.conf"/>
-    <fileset file="windows.conf"/>
+    <fileset file="config/craft.conf"/>
+    <fileset file="config/curio.conf"/>
+    <fileset file="config/fep.conf"/>
+    <fileset file="config/haven.conf"/>
+    <fileset file="config/highlight.cfg"/>
+    <fileset file="config/highlight.conf"/>
+    <fileset file="config/smileys.conf"/>
+    <fileset file="config/sound.conf"/>
+    <fileset file="config/windows.conf"/>
+    </copy>
+    <copy todir="build/belts">
+    <fileset file="config/belts_default.conf"/>
     </copy>
     <copy todir="build/cave">
     <fileset file="resources/cave/currentsession.js"/>
