@@ -148,18 +148,24 @@ public class MenuGrid extends Widget {
 	public Properties getBelts() {
 		Properties loadInfo = new Properties();
 		try {
-			String configFileName = "belts/belts_" + ui.sess.charname.replaceAll("[^a-zA-Z()]", "_") + ".conf";
-			loadInfo.load(new FileInputStream(configFileName));
-		} catch (FileNotFoundException e) {
+			if (ui.sess.charname != null) {
+				String configFileName = "belts/belts_" + ui.sess.charname.replaceAll("[^a-zA-Z()]", "_") + ".conf";
+				loadInfo.load(new FileInputStream(configFileName));
+			}
+		} catch (FileNotFoundException ignored) {
+		} catch (Exception e) {
+			System.out.println("Error causing belts to not load. " + e);
+		}
+
+		if (loadInfo.isEmpty()) {
 			try {
 				loadInfo.load(new FileInputStream("belts/belts_default.conf"));
 			} catch (FileNotFoundException ignored) {
 			} catch (Exception ex) {
 				System.out.println("Error causing default belts to not load. " + ex);
 			}
-		} catch (Exception e) {
-			System.out.println("Error causing belts to not load. " + e);
 		}
+
 		return loadInfo;
 	}
 
