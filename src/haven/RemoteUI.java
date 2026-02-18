@@ -65,7 +65,8 @@ public class RemoteUI implements UI.Receiver {
 							c = MainFrame.getCenterPoint().add(-415, -300);
 						if (((String) args[0]).indexOf("gfx/hud/prog/") >= 0) {
 							ui.m_util.HourglassID = id;
-							c = MainFrame.getCenterPoint().add(0, -100);
+							c = MainFrame.getCenterPoint().sub(32, 0);
+							c.y = 90;
 						}
 					} else if (type.equals("charlist") && args.length >= 1) {
 						c = MainFrame.getCenterPoint().add(-380, -50);
